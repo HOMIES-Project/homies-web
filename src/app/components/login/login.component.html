@@ -1,0 +1,53 @@
+<div class="container py-5 h-100">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-12 col-md-8 col-lg-6 p-0 ">
+      <div class="card card-login text-black  shadow-lg rounded" >
+        <div class="card-body p-5 text-center">
+          <div class="mb-md-1 mt-md-4 pb-2 ">
+            <img src="../../../assets/images/homies-logo.png" alt="" style="width: 150px;" class="mb-3">
+            <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+            <p class="text-50 mb-4">Introduce tu usuario y tu contraseña</p>
+            <form [formGroup]="loginForm" (ngSubmit)="submitForm()" class="">
+              <div class="d-flex flex-column col-8 m-auto justify-content-center ">
+
+
+              <!--EMAIL-->
+              <div class="form-outline form-white mb-4">
+                <input id="nombre" type="text" name="nombre" formControlName="username"
+                  class="fields form-control  is-invalid" [ngClass]="{
+                    'is-invalid': this.sent && this.loginForm.controls.username.errors
+                  }" placeholder="✉ Correo">
+                <!--Validation-->
+                <div class="invalid-feedback" *ngIf="sent && this.loginForm.controls.username.errors?.required">¡Tienes
+                  que rellenar este campo!</div>
+                <div class="invalid-feedback" *ngIf="sent && this.loginForm.controls.username.errors?.email">¡Esto no es
+                  un email!
+                </div>
+              </div>
+
+              <!--PASSWORD-->
+              <div class=" form-outline mb-4">
+                <input id="pass" type="password" name="pass" formControlName="password"
+                  class="fields form-control " [ngClass]="{
+                    'is-invalid':this.sent && this.loginForm.controls.password.errors
+                  }" placeholder="🔒 Password">
+
+                <!--Validation-->
+                <div class="invalid-feedback" *ngIf=" sent && this.loginForm.controls.password.errors?.required">¡Tienes
+                  que rellenar este campo!</div>
+
+              </div>
+
+            </div>
+              <button class="btn btn-outline-info btn-lg px-5 text-uppercase" type="submit" value="enviar">
+                <span class="spinner-border spinner-border-sm mr-1" *ngIf="isLoading"></span>
+                Login</button>
+              <div *ngIf="errorMsg" class="alert alert-danger text-center m-3 ">{{errorMsg}}</div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

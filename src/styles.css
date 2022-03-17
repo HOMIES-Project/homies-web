@@ -9,8 +9,12 @@
   --secondaryDarkColor: #0074ab;
   --primaryTextColor: #000000;
   --secondaryTextColor: #000000;
+  box-sizing: border-box;
+  height: 100%;
 }
 
 body{
   font-family:'Montserrat', sans-serif;
+  margin-bottom: 0;
+  margin-top: 0;
 }
