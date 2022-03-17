@@ -1,3 +1,12 @@
 .navbar {
-  background-color:var(--secondaryLightColor);
+  background-color:var(--secondaryColor);
+
+}
+
+.footer {
+  background-color: var(--secondaryColor);
+}
+
+.copyright {
+  background-color: var(--secondaryDarkColor);
 }
