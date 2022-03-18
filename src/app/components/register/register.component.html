@@ -1,0 +1,110 @@
+<div class="container py-5">
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col-12 col-md-8 col-lg-6 p-0">
+      <div class="card card-login text-black shadow-lg rounded">
+        <div class="card-body text-center">
+          <div class="mb-md-1 mt-md-4 pb-2">
+            <img
+              src="../../../assets/images/homies-logo.png"
+              alt=""
+              style="width: 20%"
+              class="m-5 rounded"
+            />      
+            <form>
+
+              <div
+                class="d-flex flex-column col-10 m-auto justify-content-center"
+              >
+                
+                <!--NOMBRE-->
+                <div class="form-outline form-white mb-4">
+                  <input
+                    id="firstName"
+                    type="text"
+                    name="firstName"
+                    formControlName="firstName"
+                    class="fields form-control"
+                    placeholder="Nombre"
+                  />
+                </div>
+                <!--APELLIDO-->
+                <div class="form-outline form-white mb-4">
+                  <input
+                    id="lastName"
+                    type="text"
+                    name="lastName"
+                    formControlName="lastName"
+                    class="fields form-control"
+                    placeholder="Apellido/s"
+                  />
+                </div>
+                <!--USUARIO-->
+                <div class="form-outline form-white mb-4">
+                  <input
+                    id="userName"
+                    type="text"
+                    name="userName"
+                    formControlName="userName"
+                    class="fields form-control"
+                    placeholder="Usuario"
+                  />
+                </div>
+                <!--EMAIL-->
+                <div class="form-outline form-white mb-4">
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    formControlName="email"
+                    class="fields form-control"
+                    placeholder="Email"
+                  />
+                </div>
+
+                <!--Validation-->
+
+
+                <!--PASSWORD-->
+                <div class="form-outline mb-4">              
+                    <input
+                      id="pass"
+                      type="password"
+                      name="pass"
+                      formControlName="password"
+                      class="fields form-control"
+                      placeholder="Contraseña"
+                    />
+                  </div>
+                <!--PASSWORD CONFIRMATION-->
+                <div class="form-outline mb-4">              
+                  <input
+                    id="passConfirm"
+                    type="password"
+                    name="passConfirm"
+                    formControlName="passConfirm"
+                    class="fields form-control"
+                    placeholder="Repitir contraseña"
+                  />    
+                  <!--Validation-->
+                  <div
+                    class="invalid-feedback"
+                  >
+                    ¡Tienes que rellenar este campo!
+                  </div>
+                </div>
+              </div>
+              <button
+                class="btn loginButton btn-lg px-5 text-uppercase mt-4 text-white"
+                type="submit"
+                value="enviar"
+              >
+                REGISTRARSE
+              </button>
+             
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -11,10 +11,18 @@
 
                 <!--EMAIL-->
                 <div class="form-outline form-white mb-4">
-                  <input id="nombre" type="text" name="nombre" formControlName="username"
+
+                  <div class="input-group-prepend">
+ 
+                    <!-- Icono Font Awesome (Usuario) -->
+                    <div class="input-group-text"><i class="fas fa-user"></i></div>
+                    <input id="nombre" type="text" name="nombre" formControlName="username"
                     class="fields form-control  is-invalid" [ngClass]="{
                     'is-invalid': this.sent && this.loginForm.controls.username.errors
-                  }" placeholder="✉ Correo">
+                  }" placeholder="Correo">
+               
+                 </div>
+                  
                   <!--Validation-->
                   <div class="invalid-feedback" *ngIf="sent && this.loginForm.controls.username.errors?.required">
                     ¡Tienes
@@ -27,12 +35,19 @@
 
                 <!--PASSWORD-->
                 <div class=" form-outline mb-4">
-
-                  <input id="pass" type="password" name="pass" formControlName="password" class="fields form-control "
+                  <div class="input-group-prepend">
+ 
+                    <!-- Icono Font Awesome (Candado) -->
+                    <div class="input-group-text"><i class="fas fa-lock"></i></div>
+                    <input id="pass" type="password" name="pass" formControlName="password" class="fields form-control "
                     [ngClass]="{
                     'is-invalid':this.sent && this.loginForm.controls.password.errors
                   }" placeholder=" Password">
+                    
+               
+                 </div>
 
+                 
                   <!--Validation-->
                   <div class="invalid-feedback" *ngIf=" sent && this.loginForm.controls.password.errors?.required">
                     ¡Tienes
