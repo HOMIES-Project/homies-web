@@ -1,0 +1,13 @@
+.navbar {
+  background-color:var(--secondaryColor);
+
+}
+
+.footer {
+  background-color: var(--secondaryColor);
+  position: ;
+}
+
+.copyright {
+  background-color: var(--secondaryDarkColor);
+}
