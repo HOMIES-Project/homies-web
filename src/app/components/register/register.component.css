@@ -13,11 +13,22 @@
     background-color: rgba(97, 212, 255, 0.2);
     font-size: 1.2rem;
     border: none;
+    border-radius: 0 5px 5px 0;
   
   }
   
   .help {
     color: var(--secondaryColor);
+  }
+
+  i {
+    color: var(--secondaryColor);
+  }
+  
+  .input-group-text {
+    background-color: rgba(97, 212, 255, 0.2);
+    border: 0ch;
+    border-radius: 5px 0 0 5px;
   }
   
   
