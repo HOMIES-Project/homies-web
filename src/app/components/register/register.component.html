@@ -18,6 +18,8 @@
                 
                 <!--NOMBRE-->
                 <div class="form-outline form-white mb-4">
+                  <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fa fa-vcard"></i></div>
                   <input
                     id="firstName"
                     type="text"
@@ -27,45 +29,57 @@
                     placeholder="Nombre"
                   />
                 </div>
+                </div>
                 <!--APELLIDO-->
                 <div class="form-outline form-white mb-4">
-                  <input
-                    id="lastName"
-                    type="text"
-                    name="lastName"
-                    formControlName="lastName"
-                    class="fields form-control"
-                    placeholder="Apellido/s"
-                  />
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fa fa-vcard"></i></div>
+                    <input
+                      id="lastName"
+                      type="text"
+                      name="lastName"
+                      formControlName="lastName"
+                      class="fields form-control"
+                      placeholder="Apellido/s"
+                    />
                 </div>
+              </div>
                 <!--USUARIO-->
                 <div class="form-outline form-white mb-4">
-                  <input
-                    id="userName"
-                    type="text"
-                    name="userName"
-                    formControlName="userName"
-                    class="fields form-control"
-                    placeholder="Usuario"
-                  />
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fa fa-user"></i></div>
+                    <input
+                      id="userName"
+                      type="text"
+                      name="userName"
+                      formControlName="userName"
+                      class="fields form-control"
+                      placeholder="Usuario"
+                    />
+                  </div>
                 </div>
                 <!--EMAIL-->
                 <div class="form-outline form-white mb-4">
-                  <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    formControlName="email"
-                    class="fields form-control"
-                    placeholder="Email"
-                  />
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fa fa-envelope"></i></div>
+                    <input
+                      id="email"
+                      type="email"
+                      name="email"
+                      formControlName="email"
+                      class="fields form-control"
+                      placeholder="Email"
+                    />
+                  </div>
                 </div>
 
                 <!--Validation-->
 
 
                 <!--PASSWORD-->
-                <div class="form-outline mb-4">              
+                <div class="form-outline mb-4">        
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fas fa-lock"></i></div>      
                     <input
                       id="pass"
                       type="password"
@@ -75,16 +89,20 @@
                       placeholder="Contraseña"
                     />
                   </div>
+                </div>
                 <!--PASSWORD CONFIRMATION-->
-                <div class="form-outline mb-4">              
-                  <input
-                    id="passConfirm"
-                    type="password"
-                    name="passConfirm"
-                    formControlName="passConfirm"
-                    class="fields form-control"
-                    placeholder="Repitir contraseña"
-                  />    
+                <div class="form-outline mb-4">       
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fas fa-lock"></i></div>       
+                    <input
+                      id="passConfirm"
+                      type="password"
+                      name="passConfirm"
+                      formControlName="passConfirm"
+                      class="fields form-control"
+                      placeholder="Repetir contraseña"
+                    />    
+                  </div>
                   <!--Validation-->
                   <div
                     class="invalid-feedback"

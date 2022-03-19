@@ -19,7 +19,7 @@
                     <input id="nombre" type="text" name="nombre" formControlName="username"
                     class="fields form-control  is-invalid" [ngClass]="{
                     'is-invalid': this.sent && this.loginForm.controls.username.errors
-                  }" placeholder="Correo">
+                  }" placeholder="Usuario">
                
                  </div>
                   
@@ -39,10 +39,10 @@
  
                     <!-- Icono Font Awesome (Candado) -->
                     <div class="input-group-text"><i class="fas fa-lock"></i></div>
-                    <input id="pass" type="password" name="pass" formControlName="password" class="fields form-control "
+                    <input id="pass" type="password" name="pass" formControlName="password" class="fields form-control password-field"
                     [ngClass]="{
                     'is-invalid':this.sent && this.loginForm.controls.password.errors
-                  }" placeholder=" Password">
+                  }" placeholder="Password">
                     
                
                  </div>

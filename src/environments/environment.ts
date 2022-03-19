@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  loginUrl: "https://homies-java-16.herokuapp.com/api/login",
+  registerUrl: "https://homies-java-16.herokuapp.com/api/register"
 };
 
 /*
