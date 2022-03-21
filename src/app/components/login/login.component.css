@@ -7,7 +7,7 @@
   background-color: var(--secondaryColor);
 }
 .loginButton:hover {
-  background-color: rgba(97, 212, 255, 0.8);;
+  background-color: rgba(97, 212, 255, 0.8);
 }
 input {
   background-color: rgba(97, 212, 255, 0.2);
@@ -42,4 +42,6 @@ input:focus {
 .password-field {
   border-radius: 0ch !important;
 }
+
+
 
