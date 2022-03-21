@@ -15,8 +15,9 @@ export class LoginComponent implements OnInit {
   sent: boolean = false;
   errorMsg!: string | null;
   isLoading: boolean = false;
+  showPassword: boolean = false
 
-  constructor(
+  constructor(    
     private formBuilder: FormBuilder,
     private usersService: UsersService,
     private router: Router)
@@ -56,6 +57,10 @@ export class LoginComponent implements OnInit {
       this.isLoading = false;
       this.router.navigate(['/home'])
     })
+  }
+
+  showPass() {
+    this.showPassword = !this.showPassword;
   }
 
 }
