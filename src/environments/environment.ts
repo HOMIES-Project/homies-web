@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  loginUrl: "https://homies-java-16.herokuapp.com/api/login",
-  registerUrl: "https://homies-java-16.herokuapp.com/api/register"
+  loginUrl: 'http://localhost:8080/api/authenticate',
+  registerUrl: 'http://localhost:8080/api/register'
 };
 
 /*

@@ -9,13 +9,13 @@
               alt=""
               style="width: 20%"
               class="m-5 rounded"
-            />      
-            <form>
+            />
+            <form [formGroup]="registerForm" (ngSubmit)="submitRegister()">
 
               <div
                 class="d-flex flex-column col-10 m-auto justify-content-center"
               >
-                
+
                 <!--NOMBRE-->
                 <div class="form-outline form-white mb-4">
                   <div class="input-group-prepend">
@@ -52,7 +52,7 @@
                       id="userName"
                       type="text"
                       name="userName"
-                      formControlName="userName"
+                      formControlName="login"
                       class="fields form-control"
                       placeholder="Usuario"
                     />
@@ -77,9 +77,9 @@
 
 
                 <!--PASSWORD-->
-                <div class="form-outline mb-4">        
+                <div class="form-outline mb-4">
                   <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="fas fa-lock"></i></div>      
+                    <div class="input-group-text"><i class="fas fa-lock"></i></div>
                     <input
                       id="pass"
                       type="password"
@@ -91,9 +91,9 @@
                   </div>
                 </div>
                 <!--PASSWORD CONFIRMATION-->
-                <div class="form-outline mb-4">       
+                <div class="form-outline mb-4">
                   <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="fas fa-lock"></i></div>       
+                    <div class="input-group-text"><i class="fas fa-lock"></i></div>
                     <input
                       id="passConfirm"
                       type="password"
@@ -101,7 +101,7 @@
                       formControlName="passConfirm"
                       class="fields form-control"
                       placeholder="Repetir contraseña"
-                    />    
+                    />
                   </div>
                   <!--Validation-->
                   <div
@@ -118,7 +118,7 @@
               >
                 REGISTRARSE
               </button>
-             
+
             </form>
           </div>
         </div>
