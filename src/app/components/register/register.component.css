@@ -30,5 +30,13 @@
     border: 0ch;
     border-radius: 5px 0 0 5px;
   }
+
+  .no-see {
+    border-radius: 0 5px 5px 0 !important;
+  }
+  
+  .password-field {
+    border-radius: 0ch !important;
+  }
   
   
