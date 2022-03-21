@@ -17,14 +17,14 @@ export class LoginComponent implements OnInit {
   isLoading: boolean = false;
   showPassword: boolean = false
 
-  constructor(    
+  constructor(
     private formBuilder: FormBuilder,
     private usersService: UsersService,
     private router: Router)
     {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(8)]],
     })
   }
 
