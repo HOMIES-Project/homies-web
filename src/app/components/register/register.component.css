@@ -2,7 +2,7 @@
     background-color: var(--primaryColor);
     border-radius: 0.5rem;
   }
-  
+
   .loginButton {
     background-color: var(--secondaryColor);
   }
@@ -14,9 +14,17 @@
     font-size: 1.2rem;
     border: none;
     border-radius: 0 5px 5px 0;
-  
   }
-  
+  input:focus {
+    background-color: rgba(97, 212, 255, 0.2);
+    font-size: 1.2rem;
+    border: none;
+  }
+
+  .form-control.is-invalid.normal-border {
+    border-radius: 0 5px 5px 0 !important;
+  }
+
   .help {
     color: var(--secondaryColor);
   }
@@ -24,7 +32,7 @@
   i {
     color: var(--secondaryColor);
   }
-  
+
   .input-group-text {
     background-color: rgba(97, 212, 255, 0.2);
     border: 0ch;
@@ -34,9 +42,8 @@
   .no-see {
     border-radius: 0 5px 5px 0 !important;
   }
-  
+
   .password-field {
     border-radius: 0ch !important;
   }
-  
-  
+
