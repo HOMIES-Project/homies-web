@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
   sent: boolean = false;
   errorMsg!: string | null;
   isLoading: boolean = false;
+  showPassword: boolean = false
 
   constructor(private formBuilder: FormBuilder, private router: Router, private usersService: UsersService) {
     this.registerForm = this.formBuilder.group({
@@ -51,6 +52,9 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login'])
       })
     console.log(userRegister)
+  }
+  showPass() {
+    this.showPassword = !this.showPassword;
   }
 
 }
