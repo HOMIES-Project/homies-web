@@ -1,15 +1,15 @@
-import { UsersService } from './../../services/users.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginModel } from 'src/app/models/login.model';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class LoginComponent implements OnInit {
+export class HomeComponent implements OnInit {
 
   loginForm: FormGroup;
   sent: boolean = false;
@@ -46,16 +46,17 @@ export class LoginComponent implements OnInit {
     this.usersService
     .performLogin(userLogin)
     .subscribe( response => {
+      console.log(JSON.stringify(response));
       this.isLoading = false;
       this.errorMsg = null;
-      this.router.navigate(['/landing'])
+      this.router.navigate(['/home'])
     }, error => {
       this.errorMsg = `⚠ El usuario no existe (${error.error?.error})`
       this.isLoading = false;
     },
     () => {
       this.isLoading = false;
-      this.router.navigate(['/landing'])
+      this.router.navigate(['/home'])
     })
   }
 

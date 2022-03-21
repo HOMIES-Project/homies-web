@@ -1,0 +1,162 @@
+<div class="container py-5">
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col-12 col-md-8 col-lg-6 p-0">
+      <div class="card card-login text-black shadow-lg rounded">
+        <div class="card-body text-center">
+          <div class="mb-5 mt-1 pb-2">
+            <img
+              src="../../../assets/images/homies-logo.png"
+              alt=""
+              style="width: 150px"
+              class="m-5 rounded"
+            />
+
+            <form [formGroup]="loginForm" (ngSubmit)="submitForm()" class="">
+              <div
+                class="d-flex flex-column col-10 m-auto justify-content-center"
+              >
+                <!--EMAIL-->
+                <div class="form-outline form-white mb-4">
+                  <div class="input-group">
+                    <!-- Icono Usuario -->
+                    <div class="input-group-text">
+                      <svg
+                        width="18"
+                        height="20"
+                        viewBox="0 0 18 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8.606 15C12.268 15 15.471 16.575 17.213 18.925L15.371 19.796C13.953 18.116 11.453 17 8.606 17C5.759 17 3.259 18.116 1.841 19.796L0 18.924C1.742 16.574 4.944 15 8.606 15ZM8.606 0C9.93208 0 11.2039 0.526784 12.1415 1.46447C13.0792 2.40215 13.606 3.67392 13.606 5V8C13.6059 9.28846 13.1085 10.5272 12.2173 11.4578C11.3262 12.3884 10.1102 12.9391 8.823 12.995L8.606 13C7.27992 13 6.00815 12.4732 5.07047 11.5355C4.13278 10.5979 3.606 9.32608 3.606 8V5C3.60607 3.71154 4.10354 2.47284 4.99466 1.54222C5.88578 0.611607 7.10175 0.0609194 8.389 0.00500011L8.606 0ZM8.606 2C7.84079 1.99996 7.10449 2.29233 6.54774 2.81728C5.99099 3.34224 5.65589 4.06011 5.611 4.824L5.606 5V8C5.60525 8.78091 5.90902 9.53133 6.45277 10.0918C6.99652 10.6523 7.73739 10.9787 8.51796 11.0016C9.29853 11.0245 10.0573 10.7422 10.633 10.2145C11.2087 9.68691 11.5559 8.9556 11.601 8.176L11.606 8V5C11.606 4.20435 11.2899 3.44129 10.7273 2.87868C10.1647 2.31607 9.40165 2 8.606 2V2Z"
+                          fill="#34ADE7"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      id="nombre"
+                      type="text"
+                      name="nombre"
+                      formControlName="username"
+                      class="fields form-control is-invalid username"
+                      placeholder="Usuario"
+                      [ngClass]="{
+                        'is-invalid':
+                          this.sent && this.loginForm.controls.username.errors
+                      }"
+                    />
+                    <!--Validation-->
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="
+                        sent &&
+                        this.loginForm.controls.username.errors?.required
+                      "
+                    >
+                      ¡Tienes que rellenar este campo!
+                    </div>
+                  </div>
+                </div>
+
+                <!--PASSWORD-->
+                <div class="form-outline mb-4">
+                  <div class="input-group">
+                    <!-- Icono Candado -->
+                    <div class="input-group-text">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M18 8H20C20.2652 8 20.5196 8.10536 20.7071 8.29289C20.8946 8.48043 21 8.73478 21 9V21C21 21.2652 20.8946 21.5196 20.7071 21.7071C20.5196 21.8946 20.2652 22 20 22H4C3.73478 22 3.48043 21.8946 3.29289 21.7071C3.10536 21.5196 3 21.2652 3 21V9C3 8.73478 3.10536 8.48043 3.29289 8.29289C3.48043 8.10536 3.73478 8 4 8H6V7C6 5.4087 6.63214 3.88258 7.75736 2.75736C8.88258 1.63214 10.4087 1 12 1C13.5913 1 15.1174 1.63214 16.2426 2.75736C17.3679 3.88258 18 5.4087 18 7V8ZM5 10V20H19V10H5ZM16 8V7C16 5.93913 15.5786 4.92172 14.8284 4.17157C14.0783 3.42143 13.0609 3 12 3C10.9391 3 9.92172 3.42143 9.17157 4.17157C8.42143 4.92172 8 5.93913 8 7V8H16Z"
+                          fill="#34ADE7"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      id="pass"
+                      type="password"
+                      name="pass"
+                      formControlName="password"
+                      class="fields form-control password-field"
+                      placeholder="Password"
+                      [type]="showPassword ? 'text' : 'password'"
+                      [ngClass]="{
+                        'is-invalid':
+                          this.sent && this.loginForm.controls.password.errors
+                      }"
+                    />
+                    <!-- ICONO NO SEE -->
+                    <div class="input-group-text no-see">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        (click)="showPass()"
+                        *ngIf="!this.showPassword"
+                      >
+                        <g opacity="0.3">
+                          <path
+                            d="M17.8822 19.2971C16.1234 20.4126 14.0829 21.0034 12.0002 21.0001C6.60815 21.0001 2.12215 17.1201 1.18115 12.0001C1.61118 9.67078 2.78278 7.54296 4.52115 5.93407L1.39215 2.80807L2.80715 1.39307L22.6062 21.1931L21.1912 22.6071L17.8812 19.2971H17.8822ZM5.93515 7.35007C4.57616 8.58566 3.62947 10.2089 3.22315 12.0001C3.53545 13.3665 4.16242 14.6412 5.05416 15.7227C5.94589 16.8041 7.07778 17.6625 8.3597 18.2294C9.64163 18.7963 11.0382 19.0561 12.4382 18.9882C13.8383 18.9203 15.2031 18.5264 16.4242 17.8381L14.3962 15.8101C13.5328 16.3539 12.5104 16.5882 11.4964 16.4745C10.4824 16.3608 9.53719 15.906 8.81572 15.1845C8.09425 14.463 7.63938 13.5178 7.52571 12.5038C7.41205 11.4899 7.64634 10.4674 8.19015 9.60407L5.93515 7.35007ZM12.9142 14.3281L9.67215 11.0861C9.49422 11.539 9.45234 12.034 9.55166 12.5104C9.65098 12.9868 9.88717 13.4238 10.2313 13.7679C10.5754 14.1121 11.0124 14.3482 11.4888 14.4476C11.9652 14.5469 12.4602 14.505 12.9132 14.3271L12.9142 14.3281ZM20.8072 16.5921L19.3762 15.1621C20.0446 14.2094 20.5205 13.1353 20.7772 12.0001C20.5054 10.8098 19.9944 9.68721 19.2753 8.70056C18.5562 7.71391 17.6439 6.88379 16.594 6.26067C15.5441 5.63755 14.3784 5.23443 13.1679 5.07583C11.9573 4.91723 10.7272 5.00645 9.55215 5.33807L7.97415 3.76007C9.22115 3.27007 10.5802 3.00007 12.0002 3.00007C17.3922 3.00007 21.8782 6.88007 22.8192 12.0001C22.5127 13.6658 21.824 15.2377 20.8072 16.5921V16.5921ZM11.7232 7.50807C12.3597 7.46873 12.9973 7.56513 13.5937 7.79088C14.1901 8.01663 14.7318 8.36658 15.1827 8.81752C15.6336 9.26846 15.9836 9.81009 16.2093 10.4065C16.4351 11.003 16.5315 11.6406 16.4922 12.2771L11.7222 7.50807H11.7232Z"
+                            fill="#1E2A0F"
+                          />
+                        </g>
+                      </svg>
+                      <i
+                        class="fa fa-eye"
+                        aria-hidden="true"
+                        (click)="showPass()"
+                        *ngIf="this.showPassword"
+                      ></i>
+                    </div>
+                    <!--Validation-->
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="
+                        sent &&
+                        this.loginForm.controls.password.errors?.required
+                      "
+                    >
+                      ¡Tienes que rellenar este campo!
+                    </div>
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="
+                        sent &&
+                        this.loginForm.controls.password.errors?.minlength
+                      "
+                    >
+                      ¡La contraseña debe tener mínimo 8 caracteres!
+                    </div>
+                  </div>
+                </div>
+                <div class="help mt-4">
+                  <a href="/recuperar" style="color:var(--secondaryDarkColor)">¿Has olvidado la contraseña?</a>
+                </div>
+              </div>
+              <button
+                class="btn loginButton btn-lg px-5 text-uppercase mt-4 text-white"
+                type="submit"
+                value="enviar"
+              >
+                <span
+                  class="spinner-border spinner-border-sm mr-1"
+                  *ngIf="isLoading"
+                ></span>
+                Login
+              </button>
+              <div *ngIf="errorMsg" class="alert alert-danger text-center m-3">
+                {{ errorMsg }}
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

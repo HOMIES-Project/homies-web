@@ -16,7 +16,7 @@ const REGISTER_KEY = 'register'
 })
 export class UsersService {
   private loginModelBehaviourSubject: BehaviorSubject<LoginModel | null>;
-  public login: Observable<LoginModel | null>;
+  public login: Observable<any | null>;
 
   constructor(private http: HttpClient, private route: Router) {
     this.loginModelBehaviourSubject = new BehaviorSubject<LoginModel | null>(
@@ -28,7 +28,7 @@ export class UsersService {
   /* LOGIN - POST */
 
   performLogin(entry: LoginModel): Observable<LoginModel> {
-    console.log('performLogin(' + JSON.stringify(entry) + ')');
+
 
     return this.http.post<LoginModel>(environment.loginUrl, entry).pipe(
       map((APIreturn) => {
@@ -39,6 +39,13 @@ export class UsersService {
         return APIreturn;
       })
     );
+  }
+
+  performLogout() {
+    localStorage.removeItem(LOGIN_KEY);
+    this.loginModelBehaviourSubject.next(null);
+    console.log(this.login)
+    this.route.navigate(['/login']);
   }
 
   /* REGISTER - POST */

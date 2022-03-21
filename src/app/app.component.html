@@ -2,26 +2,31 @@
   <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link home" routerLink="/landing">Home</a>
+        <a class="navbar-brand mx-auto" [routerLink]="['/landing']">
+          <img src="../assets/images/homies-logo.png" width="40" height="40" alt="">
+        </a>
       </li>
 
     </ul>
   </div>
   <div class="mx-auto order-0">
-    <a class="navbar-brand mx-auto" [routerLink]="['/home']">HOMIES</a>
+    <a class="navbar-brand mx-auto" [routerLink]="['/landing']">HOMIES</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
       <span class="navbar-toggler-icon"></span>
     </button>
   </div>
   <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
     <ul class="navbar-nav ml-auto">
+      <li class="nav-item text-white">
+        <a class="nav-link home" [routerLink]="['/home']" *ngIf="isLogged()">Home</a>
+      </li>
       <li class="nav-item">
         <button class="btn btn-outline-light my-2 my-sm-0" [routerLink]="['/login']"
-          routerLinkActive="active">Login</button>
-        <button class="btn btn-outline-light my-2 my-sm-0" [routerLink]="['/login']">Logout</button>
+          routerLinkActive="active" *ngIf="!isLogged()">Login</button>
+        <button class="btn btn-outline-light my-2 my-sm-0" [routerLink]="['/login']" *ngIf="isLogged()" (click)="logout()" >Logout</button>
       </li>
       <li class="nav-item mx-2">
-        <button class="btn btn-outline-light my-2 my-sm-0" [routerLink]="['/register']" routerLinkActive="active">Sign
+        <button class="btn btn-outline-light my-2 my-sm-0" [routerLink]="['/register']" routerLinkActive="active" >Sign
           up</button>
       </li>
     </ul>
