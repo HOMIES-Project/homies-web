@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
 import { LandingComponent } from './landing/landing.component';
+import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 
 
 
@@ -11,7 +12,8 @@ import { LandingComponent } from './landing/landing.component';
   declarations: [
     LoginComponent,
     RegisterComponent,
-    LandingComponent
+    LandingComponent,
+    RecoverPasswordComponent
   ],
   imports: [
     CommonModule,
