@@ -1,10 +1,10 @@
 export class LoginModel {
-  public email: String;
-  public password: String;
-  public token: String;
+  public username: string;
+  public password: string;
+  public token: string;
 
-  constructor(email: String, password: String, token: String) {
-    this.email = email
+  constructor(username: string, password: string, token: string) {
+    this.username = username
     this.password = password
     this.token = token
   }
