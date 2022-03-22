@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   loginUrl: 'https://homies-1854.herokuapp.com/api/authenticate',
-  registerUrl: 'https://homies-1854.herokuapp.com/api/user-data'
+  registerUrl: 'https://homies-1854.herokuapp.com/api/register'
 };
 
 /*

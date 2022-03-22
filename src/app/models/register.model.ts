@@ -1,5 +1,4 @@
 export class RegisterModel {
-
   public login: string;
   public email: string;
   public password: string;
@@ -14,15 +13,12 @@ export class RegisterModel {
     firstName: string,
     lastName: string,
     langkey: string
-) {
-    this.login = login
-    this.email = email
-    this.password = password
-    this.firstName = firstName
-    this.lastName = lastName
-    this.langKey = langkey
+  ) {
+    this.login = login;
+    this.email = email;
+    this.password = password;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.langKey = langkey;
   }
-
-
-
 }
