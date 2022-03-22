@@ -32,6 +32,7 @@ export class UsersService {
 
     return this.http.post<LoginModel>(environment.loginUrl, entry).pipe(
       map((APIreturn) => {
+        console.log(entry)
         //Hacer algo
         console.log('Login ok' + JSON.stringify(APIreturn));
         this.loginModelBehaviourSubject.next(APIreturn);

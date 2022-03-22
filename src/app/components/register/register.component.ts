@@ -11,6 +11,7 @@ import { LoginModel } from 'src/app/models/login.model';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+  langKey!: string;
   sent: boolean = false;
   errorMsg!: string | null;
   isLoading: boolean = false;
@@ -21,6 +22,10 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private usersService: UsersService
   ) {}
+  ngOnInit(): void {
+    this.langKey = navigator.language
+    console.log(this.langKey)
+  }
 
   mustMatchValidator: ValidatorFn = (
     control: AbstractControl
@@ -40,7 +45,7 @@ export class RegisterComponent implements OnInit {
     passConfirm: ['', Validators.required],
   },  { validators: this.mustMatchValidator });
 
-  ngOnInit(): void {}
+
 
   submitRegister() {
     let userRegister: RegisterModel = new RegisterModel(
@@ -49,6 +54,7 @@ export class RegisterComponent implements OnInit {
       this.registerForm.controls.password.value,
       this.registerForm.controls.firstName.value,
       this.registerForm.controls.lastName.value,
+      this.langKey
     );
     this.sent = true
 

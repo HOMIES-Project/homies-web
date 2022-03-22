@@ -12,6 +12,7 @@ import { LoginModel } from 'src/app/models/login.model';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  langkey!: string;
   sent: boolean = false;
   errorMsg!: string | null;
   isLoading: boolean = false;
@@ -33,10 +34,11 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm() {
+
     let userLogin: LoginModel = new LoginModel(
       this.loginForm.controls.username.value,
       this.loginForm.controls.password.value,
-      ""
+      "",
     );
     this.sent = true;
     if (!this.loginForm.valid)
