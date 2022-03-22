@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['../login/login.component.css']
 })
 export class RecoverPasswordComponent implements OnInit {
-  
+
   sent: boolean = false;
   recoveryForm: FormGroup;
   errorMsg!: string | null;
@@ -29,7 +29,7 @@ export class RecoverPasswordComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private usersService: UsersService,
-    private router: Router) 
+    private router: Router)
     {
     this.recoveryForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -47,17 +47,20 @@ export class RecoverPasswordComponent implements OnInit {
 
     let passRecovery: RecoveryModel = new RecoveryModel(
       this.recoveryForm.controls.email.value,
+
     );
     this.sent = true
     if (!this.recoveryForm.valid)
       return;
     this.isLoading = true;
-    
+
     this.usersService.performRecovery(passRecovery).subscribe(response => {
+      console.log(response)
       this.isLoading = false;
       this.errorMsg = null;
       this.router.navigate(['/login'])
     }, error =>{
+      console.log(error)
       this.errorMsg = `⚠ El usuario no existe (${error.error?.error})`
       this.isLoading = false;
     },
@@ -66,9 +69,10 @@ export class RecoverPasswordComponent implements OnInit {
       this.router.navigate(['/landing'])
     })
   }
-
   showPass() {
     this.showPassword = !this.showPassword;
   }
 
 }
+
+
