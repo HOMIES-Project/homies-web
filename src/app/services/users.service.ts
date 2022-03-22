@@ -54,7 +54,7 @@ export class UsersService {
 
   performRegister(entry: RegisterModel): Observable<RegisterModel> {
     console.log('performLogin(' + JSON.stringify(entry) + ')');
-    console.log("registrado")
+
     return this.http.post<RegisterModel>(environment.registerUrl, entry)
   }
 
