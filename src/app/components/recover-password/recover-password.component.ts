@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class RecoverPasswordComponent implements OnInit {
 
+  langKey!: string;
   sent: boolean = false;
   recoveryForm: FormGroup;
   errorMsg!: string | null;
@@ -41,6 +42,8 @@ export class RecoverPasswordComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.langKey = navigator.language;
+    console.log(this.langKey);
   }
 
   submitForm(){
@@ -62,6 +65,11 @@ export class RecoverPasswordComponent implements OnInit {
     }, error =>{
       console.log(error)
       this.errorMsg = `⚠ El usuario no existe (${error.error?.error})`
+      if (this.langKey.includes("en")) {
+        this.errorMsg = error.error.title
+      } else {
+        this.errorMsg = "El email ya existe"
+      }
       this.isLoading = false;
     },
     () => {
