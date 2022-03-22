@@ -1,24 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { LoginModel } from 'src/app/models/login.model';
 import { UsersService } from 'src/app/services/users.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
 
+  username!: string
 
-  constructor(
-    )
-    {
+  constructor(private usersService: UsersService) {
+    this.usersService.name.subscribe( response => {
+      this.username = response
+    })
   }
 
-  ngOnInit(): void {
-
-  }
-
+  ngOnInit(): void {}
 }

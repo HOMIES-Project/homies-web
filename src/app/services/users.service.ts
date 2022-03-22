@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginModel } from '../models/login.model';
 import { map } from 'rxjs/operators';
-import { RecoveryModel } from '../models/recoveryPassword.model';
+import { RecoveryCheckModel, RecoveryModel } from '../models/recoveryPassword.model';
 
 
 const LOGIN_KEY = 'login';
@@ -18,6 +18,8 @@ const REGISTER_KEY = 'register'
 export class UsersService {
   private loginModelBehaviourSubject: BehaviorSubject<LoginModel | null>;
   public login: Observable<any | null>;
+  private loginNameBehaviourSubject: BehaviorSubject<string | null>;
+  public name: Observable<any | null>;
 
 
   constructor(private http: HttpClient, private route: Router) {
@@ -25,6 +27,9 @@ export class UsersService {
       JSON.parse(<string>localStorage.getItem(LOGIN_KEY))
     );
     this.login = this.loginModelBehaviourSubject.asObservable();
+    this.loginNameBehaviourSubject = new BehaviorSubject<string | null> (
+    localStorage.getItem('username'))
+    this.name=this.loginNameBehaviourSubject.asObservable()
   }
 
   /* LOGIN - POST */
@@ -32,7 +37,8 @@ export class UsersService {
   performLogin(entry: LoginModel): Observable<LoginModel> {
     return this.http.post<LoginModel>(environment.loginUrl, entry).pipe(
       map((APIreturn) => {
-        console.log(entry)
+        this.loginNameBehaviourSubject.next(entry.username)
+        localStorage.setItem('username', entry.username)
         //Hacer algo
         console.log('Login ok' + JSON.stringify(APIreturn));
         this.loginModelBehaviourSubject.next(APIreturn);
@@ -45,7 +51,8 @@ export class UsersService {
   performLogout() {
     localStorage.removeItem(LOGIN_KEY);
     this.loginModelBehaviourSubject.next(null);
-    console.log(this.login)
+    this.loginNameBehaviourSubject.next(null);
+
     this.route.navigate(['/login']);
   }
 
@@ -57,10 +64,10 @@ export class UsersService {
 
   /* PASSWORD RECOVERY - POST */
 
-  performRecovery(entry: RecoveryModel): Observable<RecoveryModel> {
+  checkEmailForRecovery(entry: RecoveryCheckModel): Observable<any> {
     let entryString = entry.email
     console.log(entryString)
-    return this.http.post<RecoveryModel>(environment.recoveryUrl, entryString).pipe(
+    return this.http.post<RecoveryCheckModel>(environment.recoveryUrl, entryString).pipe(
       map(APIreturn => {
         console.log(APIreturn)
         //Hacer algo
@@ -68,5 +75,9 @@ export class UsersService {
       })
     );
   }
+
+  // performRecovery(entry: RecoveryModel): Observable<any> {
+  //   return this.http.post<RecoveryModel>(environment.recoveryUrl, entry)
+  // }
 
 }
