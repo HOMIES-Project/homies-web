@@ -12,6 +12,7 @@ import { LoginModel } from 'src/app/models/login.model';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  langkey!: string;
   sent: boolean = false;
   errorMsg!: string | null;
   isLoading: boolean = false;
@@ -29,13 +30,15 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
   submitForm() {
+
     let userLogin: LoginModel = new LoginModel(
       this.loginForm.controls.username.value,
       this.loginForm.controls.password.value,
-      ""
+      "",
     );
     this.sent = true;
     if (!this.loginForm.valid)
@@ -45,18 +48,21 @@ export class LoginComponent implements OnInit {
     this.usersService
     .performLogin(userLogin)
     .subscribe( response => {
-      console.log(JSON.stringify(response));
       this.isLoading = false;
       this.errorMsg = null;
-      this.router.navigate(['/home'])
+      this.router.navigate(['/landing'])
     }, error => {
       this.errorMsg = `⚠ El usuario no existe (${error.error?.error})`
       this.isLoading = false;
     },
     () => {
       this.isLoading = false;
-      this.router.navigate(['/home'])
+      this.router.navigate(['/landing'])
     })
+  }
+
+  logout() {
+    this.usersService.performLogout()
   }
 
   showPass() {
