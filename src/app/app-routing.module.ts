@@ -26,7 +26,7 @@ const routes: Routes = [
     component: LandingComponent
   },
   {
-    path: 'recover',
+    path: 'recovery',
     component: RecoverPasswordComponent
   },
   {

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginModel } from '../models/login.model';
 import { map } from 'rxjs/operators';
+import { RecoveryModel } from '../models/recoveryPassword.model';
 
 
 const LOGIN_KEY = 'login';
@@ -55,6 +56,14 @@ export class UsersService {
     console.log('performLogin(' + JSON.stringify(entry) + ')');
 
     return this.http.post<RegisterModel>(environment.registerUrl, entry)
+  }
+
+  /* PASSWORD RECOVERY - POST */
+
+  performRecovery(entry: RecoveryModel): Observable<RecoveryModel> {
+    console.log('performRecovery(' + JSON.stringify(entry) + ')');
+    console.log("Recuperacion enviada")
+    return this.http.post<RecoveryModel>(environment.recoveryUrl, entry)
   }
 
 }
