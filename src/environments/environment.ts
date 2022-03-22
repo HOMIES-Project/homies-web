@@ -6,8 +6,7 @@ export const environment = {
   production: false,
   loginUrl: 'https://homies-1854.herokuapp.com/api/authenticate',
   registerUrl: 'https://homies-1854.herokuapp.com/api/register',
-  recoveryUrl: 'https://homies-1854.herokuapp.com/api/account/reset-password/init', 
-
+  recoveryUrl: 'https://homies-1854.herokuapp.com/api/account/reset-password/init'
 };
 
 /*

@@ -1,6 +1,6 @@
 import { UsersService } from 'src/app/services/users.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { RecoveryModel } from 'src/app/models/recoveryPassword.model';
 import { Router } from '@angular/router';
 
@@ -15,6 +15,16 @@ export class RecoverPasswordComponent implements OnInit {
   recoveryForm: FormGroup;
   errorMsg!: string | null;
   isLoading: boolean = false;
+  showPassword: boolean = false;
+
+  mustMatchValidator: ValidatorFn = (
+    control: AbstractControl
+  ): ValidationErrors | null => {
+    let passVal = control.get('password');
+    let passConfirmVal = control.get('passConfirm');
+
+    return passVal?.value === passConfirmVal?.value ? null : { noMatch: true };
+  };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -23,7 +33,10 @@ export class RecoverPasswordComponent implements OnInit {
     {
     this.recoveryForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-    })
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      passConfirm: ['', Validators.required]
+    }, { validators: this.mustMatchValidator }
+    )
 
    }
 
@@ -52,6 +65,10 @@ export class RecoverPasswordComponent implements OnInit {
       this.isLoading = false;
       this.router.navigate(['/landing'])
     })
+  }
+
+  showPass() {
+    this.showPassword = !this.showPassword;
   }
 
 }
