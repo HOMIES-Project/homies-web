@@ -11,10 +11,14 @@ export class AppComponent {
   title = 'homies';
 
   user!: LoginModel | null;
+  username!: string
 
   constructor(private usersService: UsersService) {
     usersService.login.subscribe(user =>{
       this.user = user;
+    })
+    usersService.name.subscribe(username => {
+      this.username = username
     })
   }
 
