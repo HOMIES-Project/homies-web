@@ -52,7 +52,8 @@ export class LoginComponent implements OnInit {
       this.errorMsg = null;
       this.router.navigate(['/home'])
     }, error => {
-      this.errorMsg = `⚠ El usuario no existe (${error.error?.error})`
+      console.log(error)
+      this.errorMsg = "Usuario o contraseña incorrectos"
       this.isLoading = false;
     },
     () => {
