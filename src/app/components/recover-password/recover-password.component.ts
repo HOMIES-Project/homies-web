@@ -8,8 +8,13 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { RecoveryCheckModel, RecoveryModel } from 'src/app/models/recoveryPassword.model';
+import {
+  RecoveryCheckModel,
+  RecoveryModel,
+} from 'src/app/models/recoveryPassword.model';
 import { Router } from '@angular/router';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-recover-password',
@@ -17,7 +22,9 @@ import { Router } from '@angular/router';
   styleUrls: ['../login/login.component.css'],
 })
 export class RecoverPasswordComponent implements OnInit {
-  sent: boolean = false;
+  emailSent: boolean = false;
+  passwordSent: boolean = false;
+  recoveryFormEmail: FormGroup;
   recoveryForm: FormGroup;
   errorMsg!: string | null;
   isLoading: boolean = false;
@@ -38,9 +45,14 @@ export class RecoverPasswordComponent implements OnInit {
     private usersService: UsersService,
     private router: Router
   ) {
-    this.recoveryForm = this.formBuilder.group(
+    this.recoveryFormEmail = this.formBuilder.group(
       {
         email: ['', [Validators.required, Validators.email]],
+      },
+      { validators: this.mustMatchValidator }
+    );
+    this.recoveryForm = this.formBuilder.group(
+      {
         password: ['', [Validators.required, Validators.minLength(8)]],
         passConfirm: ['', Validators.required],
       },
@@ -50,26 +62,25 @@ export class RecoverPasswordComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  //TEMPORARY - TODO --> RECOVER BY EMAIL
   submitForm() {
     let passRecovery: RecoveryCheckModel = new RecoveryCheckModel(
-      this.recoveryForm.controls.email.value,
+      this.recoveryFormEmail.controls.email.value
     );
-    this.sent = true;
-    if (!this.recoveryForm.valid) return;
+    this.emailSent = true;
+    if (!this.recoveryFormEmail.valid) return;
     this.isLoading = true;
 
     this.usersService.checkEmailForRecovery(passRecovery).subscribe(
       (response) => {
         console.log(response.key);
-        this.key = response.key
-
-
+        this.key = response.key;
         this.isLoading = false;
         this.errorMsg = null;
       },
       (error) => {
         console.log(error);
-        this.errorMsg = `⚠ El usuario no existe (${error.error?.error})`;
+        this.errorMsg = `⚠ El usuario no existe `;
         this.isLoading = false;
       },
       () => {
@@ -81,18 +92,27 @@ export class RecoverPasswordComponent implements OnInit {
   submitForm1() {
     let recovery = new RecoveryModel(
       this.key,
-      this.recoveryForm.controls.password.value,
-
+      this.recoveryForm.controls.password.value
     );
-    console.log(recovery)
-    this.usersService.performRecovery(recovery).subscribe(
-      response =>{
-        console.log(response)
-      }
-    )
+    this.passwordSent = true;
+    if (!this.recoveryForm.valid) return;
+    this.isLoading = true;
+    console.log(recovery);
+    this.usersService.performRecovery(recovery).subscribe((response) => {
+      this.isLoading = false
+      Swal.fire({
+        title: '¡Contraseña cambiada!',
+        icon: 'success',
+        showCancelButton: false,
+        confirmButtonColor: '#61d4ff',
+        confirmButtonText: 'Confirmar'
+      }).then((result) => {
+        this.router.navigate(['/login']);
+      })
+
+
+    });
   }
-
-
 
   showPass() {
     this.showPassword = !this.showPassword;
