@@ -8,7 +8,7 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { RecoveryCheckModel } from 'src/app/models/recoveryPassword.model';
+import { RecoveryCheckModel, RecoveryModel } from 'src/app/models/recoveryPassword.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -60,12 +60,10 @@ export class RecoverPasswordComponent implements OnInit {
 
     this.usersService.checkEmailForRecovery(passRecovery).subscribe(
       (response) => {
-        console.log(response.reset_key);
-        this.key = response.reset_key
-        let recovery = new RecoveryCheckModel(
-          this.recoveryForm.controls.email.value,
+        console.log(response.key);
+        this.key = response.key
 
-        );
+
         this.isLoading = false;
         this.errorMsg = null;
       },
@@ -76,10 +74,26 @@ export class RecoverPasswordComponent implements OnInit {
       },
       () => {
         this.isLoading = false;
-        this.router.navigate(['/landing']);
+        // this.router.navigate(['/landing']);
       }
     );
   }
+  submitForm1() {
+    let recovery = new RecoveryModel(
+      this.key,
+      this.recoveryForm.controls.password.value,
+
+    );
+    console.log(recovery)
+    this.usersService.performRecovery(recovery).subscribe(
+      response =>{
+        console.log(response)
+      }
+    )
+  }
+
+
+
   showPass() {
     this.showPassword = !this.showPassword;
   }

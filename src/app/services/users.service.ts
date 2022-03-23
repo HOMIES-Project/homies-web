@@ -76,8 +76,8 @@ export class UsersService {
     );
   }
 
-  // performRecovery(entry: RecoveryModel): Observable<any> {
-  //   return this.http.post<RecoveryModel>(environment.recoveryUrl, entry)
-  // }
+  performRecovery(entry: RecoveryModel): Observable<any> {
+    return this.http.post<RecoveryModel>(environment.recoveryUrlKey, entry)
+  }
 
 }
