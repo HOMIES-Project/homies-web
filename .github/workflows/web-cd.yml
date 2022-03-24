@@ -1,0 +1,32 @@
+name: Deploy HOMIES web
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  firebase-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@master
+
+      - name: ✨ Setup Node
+        uses: actions/setup-node@master
+        with:
+          node-version: 12.x
+
+      - name: 📦 Install Dependencies
+        run: npm install
+
+      - name: 🔨 Build Web
+        run: npm run build
+
+      - name: 🛥 Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
