@@ -91,7 +91,7 @@ export class RegisterComponent implements OnInit {
         })
       },
       (error) => {
-        console.log(error.error.title);
+        console.log(error);
         this.loginErrorEN = error.error.title
         if (this.loginErrorEN.includes("login")) {
           if (this.langKey.includes("en")) {
