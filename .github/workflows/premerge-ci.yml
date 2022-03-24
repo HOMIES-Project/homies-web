@@ -1,4 +1,4 @@
-name: Deploy HOMIES web
+name: Pre merge
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
       - master
 
 jobs:
-  pre_merge_ci:
+  pre-merge-ci:
     runs-on: ubuntu-latest
 
     steps:
