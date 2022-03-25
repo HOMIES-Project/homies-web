@@ -6,6 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { LandingComponent } from './landing/landing.component';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 import { HomeComponent } from './home/home.component';
+import { ActivationComponent } from './activation/activation.component';
 
 
 
@@ -15,7 +16,8 @@ import { HomeComponent } from './home/home.component';
     RegisterComponent,
     LandingComponent,
     RecoverPasswordComponent,
-    HomeComponent
+    HomeComponent,
+    ActivationComponent
   ],
   imports: [
     CommonModule,

@@ -64,6 +64,14 @@ export class UsersService {
     return this.http.post<RegisterModel>(url, entry)
   }
 
+
+  /* ACTIVATION - POST */
+
+  performActivation(entry: any): Observable<any> {
+    let url =  `${environment.BASE_URL}/activate`;
+    return this.http.post<string>(url, entry)
+  }
+
   /* PASSWORD RECOVERY - POST */
 
   checkEmailForRecovery(entry: RecoveryCheckModel): Observable<any> {
