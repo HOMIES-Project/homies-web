@@ -38,7 +38,7 @@
                       type="text"
                       name="nombre"
                       formControlName="username"
-                      class="fields form-control is-invalid username"
+                      class="fields form-control is-invalid normal-border"
                       placeholder="Usuario"
                       [ngClass]="{
                         'is-invalid':
@@ -123,15 +123,6 @@
                     >
                       ¡Tienes que rellenar este campo!
                     </div>
-                    <div
-                      class="invalid-feedback"
-                      *ngIf="
-                        sent &&
-                        this.loginForm.controls.password.errors?.minlength
-                      "
-                    >
-                      ¡La contraseña debe tener mínimo 8 caracteres!
-                    </div>
                   </div>
                 </div>
                 <div class="help mt-4">
@@ -141,7 +132,7 @@
                 </div>
               </div>
               <button
-                class="btn loginButton btn-lg px-5 text-uppercase mt-4 text-white"
+                class="btn formButton btn-lg px-5 text-uppercase mt-4 text-white"
                 type="submit"
                 value="enviar"
               >

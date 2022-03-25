@@ -1,3 +1,4 @@
+import { ActivationComponent } from './components/activation/activation.component';
 import { HomeComponent } from './components/home/home.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { NgModule } from '@angular/core';
@@ -33,7 +34,11 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     canActivate: [AuthGuard]
-  }
+  },
+  {
+    path:'activation/:key',
+    component: ActivationComponent
+  },
 ];
 
 @NgModule({

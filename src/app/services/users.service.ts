@@ -35,7 +35,8 @@ export class UsersService {
   /* LOGIN - POST */
 
   performLogin(entry: LoginModel): Observable<LoginModel> {
-    return this.http.post<LoginModel>(environment.loginUrl, entry).pipe(
+    let url =  `${environment.BASE_URL}/authenticate`;
+    return this.http.post<LoginModel>(url, entry).pipe(
       map((APIreturn) => {
         this.loginNameBehaviourSubject.next(entry.username)
         localStorage.setItem('username', entry.username)
@@ -59,15 +60,25 @@ export class UsersService {
   /* REGISTER - POST */
 
   performRegister(entry: RegisterModel): Observable<RegisterModel> {
-    return this.http.post<RegisterModel>(environment.registerUrl, entry)
+    let url =  `${environment.BASE_URL}/register`;
+    return this.http.post<RegisterModel>(url, entry)
+  }
+
+
+  /* ACTIVATION - POST */
+
+  performActivation(entry: any): Observable<any> {
+    let url =  `${environment.BASE_URL}/activate`;
+    return this.http.post<string>(url, entry)
   }
 
   /* PASSWORD RECOVERY - POST */
 
   checkEmailForRecovery(entry: RecoveryCheckModel): Observable<any> {
     let entryString = entry.email
+    let url =  `${environment.BASE_URL}/account/reset-password/init`
     console.log(entryString)
-    return this.http.post<RecoveryCheckModel>(environment.recoveryUrl, entryString).pipe(
+    return this.http.post<RecoveryCheckModel>(url, entryString).pipe(
       map(APIreturn => {
         console.log(APIreturn)
         //Hacer algo
@@ -77,7 +88,8 @@ export class UsersService {
   }
 
   performRecovery(entry: RecoveryModel): Observable<any> {
-    return this.http.post<RecoveryModel>(environment.recoveryUrlKey, entry)
+    let url =  `${environment.BASE_URL}/account/reset-password/finish`
+    return this.http.post<RecoveryModel>(url, entry)
   }
 
 }

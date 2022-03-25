@@ -2,8 +2,21 @@
   <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
     <ul class="navbar-nav mr-auto d-flex">
       <li class="nav-item active">
-        <a class="navbar-brand mx-auto" [routerLink]="['/landing']">
-          <img src="../assets/images/homies-logo.png" width="40" height="40" alt="">
+        <a class="navbar-brand mx-auto" *ngIf="!isLogged()"  [routerLink]="['/landing']">
+          <div class="row">
+            <svg width="27" height="33" viewBox="0 0 27 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.8955 1.16989L0.616482 15.8833C0.364334 16.2122 0.59885 16.6875 1.0133 16.6875H5.46976C5.7459 16.6875 5.96976 16.9113 5.96976 17.1875V31.9073C5.96976 32.1834 6.19361 32.4073 6.46976 32.4073H12.2923C12.5685 32.4073 12.7923 32.1834 12.7923 31.9073V23.0824C12.7923 22.8063 13.0162 22.5824 13.2923 22.5824H19.1149C19.3911 22.5824 19.6149 22.8063 19.6149 23.0824V31.9073C19.6149 32.1834 19.8388 32.4073 20.1149 32.4073H25.9375C26.2136 32.4073 26.4375 32.1834 26.4375 31.9073V8.74395C26.4375 8.46781 26.2136 8.24395 25.9375 8.24395H20.1149C19.8388 8.24395 19.6149 8.46781 19.6149 8.74395V16.1875C19.6149 16.4636 19.3911 16.6875 19.1149 16.6875H13.2923C13.0162 16.6875 12.7923 16.4636 12.7923 16.1875V1.47409C12.7923 0.996242 12.1862 0.790656 11.8955 1.16989Z" fill="white"/>
+            </svg>   
+            <h4>omies</h4>
+          </div>
+        </a>
+        <a class="navbar-brand mx-auto" *ngIf="isLogged()" [routerLink]="['/home']">
+          <div class="row">
+            <svg width="27" height="33" viewBox="0 0 27 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.8955 1.16989L0.616482 15.8833C0.364334 16.2122 0.59885 16.6875 1.0133 16.6875H5.46976C5.7459 16.6875 5.96976 16.9113 5.96976 17.1875V31.9073C5.96976 32.1834 6.19361 32.4073 6.46976 32.4073H12.2923C12.5685 32.4073 12.7923 32.1834 12.7923 31.9073V23.0824C12.7923 22.8063 13.0162 22.5824 13.2923 22.5824H19.1149C19.3911 22.5824 19.6149 22.8063 19.6149 23.0824V31.9073C19.6149 32.1834 19.8388 32.4073 20.1149 32.4073H25.9375C26.2136 32.4073 26.4375 32.1834 26.4375 31.9073V8.74395C26.4375 8.46781 26.2136 8.24395 25.9375 8.24395H20.1149C19.8388 8.24395 19.6149 8.46781 19.6149 8.74395V16.1875C19.6149 16.4636 19.3911 16.6875 19.1149 16.6875H13.2923C13.0162 16.6875 12.7923 16.4636 12.7923 16.1875V1.47409C12.7923 0.996242 12.1862 0.790656 11.8955 1.16989Z" fill="white"/>
+            </svg>   
+            <h4>omies</h4>
+          </div>
         </a>
       </li>
       <li class="nav-item text-white mt-2">
@@ -13,7 +26,7 @@
     </ul>
   </div>
   <div class="mx-auto order-0">
-    <a class="navbar-brand mx-auto" [routerLink]="['/landing']">HOMIES</a>
+    <a class="navbar-brand mx-auto" *ngIf="!isLogged()">Tu aplicación para compartir piso</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
       <span class="navbar-toggler-icon"></span>
     </button>
