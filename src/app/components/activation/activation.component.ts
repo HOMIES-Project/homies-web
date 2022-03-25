@@ -21,7 +21,8 @@ export class ActivationComponent implements OnInit {
 
   getKey() {
   this.sub = this.route.queryParams.subscribe((params) =>{
-      let key = params.get('key');
+      let key = `https://homies-back-app.herokuapp.com/account/activate?key=${params.key}`
+      console.log(key)
       this.usersService.performActivation(key).subscribe(
         response =>{
           console.log("key OK")
