@@ -1,0 +1,28 @@
+body{
+    
+}
+
+h1 {
+    text-align: start;
+    font-size: 36px;
+    font-weight: bold;
+    text-shadow: gray 0 2px;
+}
+
+.containerPersonalize {
+    padding: 30px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.capture {
+    float: left;
+    width: 40%;
+}
+
+.info {
+    float: left;
+    width: 60%;
+}
