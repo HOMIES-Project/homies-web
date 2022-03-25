@@ -12,7 +12,7 @@ import {
   RecoveryCheckModel,
   RecoveryModel,
 } from 'src/app/models/recoveryPassword.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import Swal from 'sweetalert2';
 
@@ -30,6 +30,7 @@ export class RecoverPasswordComponent implements OnInit {
   isLoading: boolean = false;
   showPassword: boolean = false;
   key!: string;
+  public sub: any;
 
   mustMatchValidator: ValidatorFn = (
     control: AbstractControl
@@ -43,7 +44,8 @@ export class RecoverPasswordComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private usersService: UsersService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.recoveryFormEmail = this.formBuilder.group(
       {
@@ -60,7 +62,9 @@ export class RecoverPasswordComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getKeyToResetPassword()
+  }
 
   //TEMPORARY - TODO --> RECOVER BY EMAIL
   submitForm() {
@@ -73,10 +77,17 @@ export class RecoverPasswordComponent implements OnInit {
 
     this.usersService.checkEmailForRecovery(passRecovery).subscribe(
       (response) => {
-        console.log(response.key);
-        this.key = response.key;
         this.isLoading = false;
         this.errorMsg = null;
+        Swal.fire({
+          text: `Te hemos enviado un correo para cambiar la contraseña`,
+          icon: 'info',
+          showCancelButton: false,
+          confirmButtonColor: '#61d4ff',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          this.router.navigate(['/landing']);
+        })
       },
       (error) => {
         console.log(error);
@@ -88,6 +99,11 @@ export class RecoverPasswordComponent implements OnInit {
         // this.router.navigate(['/landing']);
       }
     );
+  }
+  getKeyToResetPassword() {
+    this.sub = this.route.queryParams.subscribe((params) => {
+      this.key = params.key;
+    });
   }
   submitForm1() {
     let recovery = new RecoveryModel(
