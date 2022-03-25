@@ -1,14 +1,4 @@
-.card-login {
-  background-color: var(--primaryColor);
-  border-radius: 0.5rem;
-}
 
-.loginButton {
-  background-color: var(--secondaryColor);
-}
-.loginButton:hover {
-  background-color: rgba(97, 212, 255, 0.8);
-}
 input {
   background-color: rgba(97, 212, 255, 0.2);
   font-size: 1.2rem;
@@ -20,28 +10,3 @@ input:focus {
   font-size: 1.2rem;
   border: none;
 }
-
-.form-control.is-invalid.username {
-  border-radius: 0 5px 5px 0 !important;
-}
-
-.help {
-  color: var(--secondaryColor);
-}
-
-.input-group-text {
-  background-color: rgba(97, 212, 255, 0.2);
-  border: 0ch;
-  border-radius: 5px 0 0 5px;
-}
-
-.no-see {
-  border-radius: 0 5px 5px 0 !important;
-}
-
-.password-field {
-  border-radius: 0ch !important;
-}
-
-
-
