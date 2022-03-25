@@ -68,8 +68,9 @@ export class UsersService {
   /* ACTIVATION - POST */
 
   performActivation(entry: any): Observable<any> {
-    let url =  `${environment.BASE_URL}/activate`;
-    return this.http.post<string>(url, entry)
+    let url =  `${environment.BASE_URL}/activate?key=${entry}`;
+    console.log(url)
+    return this.http.get(url)
   }
 
   /* PASSWORD RECOVERY - POST */
