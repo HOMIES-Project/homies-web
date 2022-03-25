@@ -20,7 +20,7 @@ export class ActivationComponent implements OnInit {
   }
 
   getKey() {
-  this.sub = this.route.paramMap.subscribe((params: ParamMap) =>{
+  this.sub = this.route.queryParams.subscribe((params) =>{
       let key = params.get('key');
       this.usersService.performActivation(key).subscribe(
         response =>{
