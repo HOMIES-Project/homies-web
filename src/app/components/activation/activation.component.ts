@@ -1,6 +1,7 @@
 import { UsersService } from 'src/app/services/users.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-activation',
@@ -22,12 +23,20 @@ export class ActivationComponent implements OnInit {
 
   getKeyToActivate() {
     this.sub = this.route.queryParams.subscribe((params) => {
-      let key = `?key=${params.key}`;
+      let key = params.key;
       console.log(key);
       this.usersService.performActivation(key).subscribe(
         (response) => {
-          console.log('key OK');
-          this.router.navigate(['/login']);
+          Swal.fire({
+            title: `¡Usuario activado!`,
+            text: "Logueate en tu cuenta",
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonColor: '#61d4ff',
+            confirmButtonText: 'Confirmar'
+          }).then((result) => {
+            this.router.navigate(['/login']);
+          })
         },
         (error) => {
           console.log('error');
