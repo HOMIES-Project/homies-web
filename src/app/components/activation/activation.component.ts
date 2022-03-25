@@ -16,12 +16,13 @@ export class ActivationComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.getKey()
+    this.getKeyToActivate()
   }
 
-  getKey() {
+  getKeyToActivate() {
   this.sub = this.route.queryParams.subscribe((params) =>{
-      let key = params.get('key');
+      let key = `https://homies-back-app.herokuapp.com/account/activate?key=${params.key}`
+      console.log(key)
       this.usersService.performActivation(key).subscribe(
         response =>{
           console.log("key OK")
