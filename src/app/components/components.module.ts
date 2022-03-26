@@ -7,6 +7,7 @@ import { LandingComponent } from './landing/landing.component';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 import { HomeComponent } from './home/home.component';
 import { ActivationComponent } from './activation/activation.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 
@@ -17,7 +18,8 @@ import { ActivationComponent } from './activation/activation.component';
     LandingComponent,
     RecoverPasswordComponent,
     HomeComponent,
-    ActivationComponent
+    ActivationComponent,
+    SidebarComponent
   ],
   imports: [
     CommonModule,
