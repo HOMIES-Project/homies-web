@@ -1,4 +1,4 @@
-import { UsersService } from 'src/app/services/users.service';
+import { UsersService } from 'src/app/core/services/users.service';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -11,7 +11,7 @@ import {
 import {
   RecoveryCheckModel,
   RecoveryModel,
-} from 'src/app/models/recoveryPassword.model';
+} from 'src/app/core/models/recoveryPassword.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import Swal from 'sweetalert2';

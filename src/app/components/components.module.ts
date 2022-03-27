@@ -7,6 +7,9 @@ import { LandingComponent } from './landing/landing.component';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 import { HomeComponent } from './home/home.component';
 import { ActivationComponent } from './activation/activation.component';
+import { TasksComponent } from './tasks/tasks.component';
+import { ExpensesComponent } from './expenses/expenses.component';
+import { GroceriesComponent } from './groceries/groceries.component';
 
 
 
@@ -17,7 +20,10 @@ import { ActivationComponent } from './activation/activation.component';
     LandingComponent,
     RecoverPasswordComponent,
     HomeComponent,
-    ActivationComponent
+    ActivationComponent,
+    TasksComponent,
+    ExpensesComponent,
+    GroceriesComponent
   ],
   imports: [
     CommonModule,

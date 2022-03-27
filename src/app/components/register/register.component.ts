@@ -1,5 +1,5 @@
-import { UsersService } from './../../services/users.service';
-import { RegisterModel } from './../../models/register.model';
+import { UsersService } from '../../core/services/users.service';
+import { RegisterModel } from '../../core/models/register.model';
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
