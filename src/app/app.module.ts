@@ -1,3 +1,4 @@
+import { AuthenticationModule } from './core/authentication/authentication.module';
 import { ServicesModule } from './core/services/services.module';
 import { InterceptorsModule } from './core/interceptors/interceptors.module';
 import { GuardsModule } from './core/guards/guards.module';
@@ -20,6 +21,7 @@ import { AuthHttpInterceptor } from './core/interceptors/auth-http.interceptor';
     AppRoutingModule,
     NgbModule,
     ComponentsModule,
+    AuthenticationModule,
     GuardsModule,
     InterceptorsModule,
     ServicesModule,

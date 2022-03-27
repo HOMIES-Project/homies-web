@@ -1,15 +1,15 @@
 import { ExpensesComponent } from './components/expenses/expenses.component';
 import { GroceriesComponent } from './components/groceries/groceries.component';
 import { TasksComponent } from './components/tasks/tasks.component';
-import { ActivationComponent } from './components/activation/activation.component';
 import { HomeComponent } from './components/home/home.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
+import { LoginComponent } from './core/authentication/login/login.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { ActivationComponent } from './core/authentication/activation/activation.component';
+import { RegisterComponent } from './core/authentication/register/register.component';
+import { RecoverPasswordComponent } from './core/authentication/recover-password/recover-password.component';
 
 const routes: Routes = [
   {
