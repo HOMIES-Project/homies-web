@@ -1,5 +1,4 @@
-import { UsersService } from './../../services/users.service';
-import { RegisterModel } from './../../models/register.model';
+
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -11,6 +10,8 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { RegisterModel } from '../../models/register.model';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-register',

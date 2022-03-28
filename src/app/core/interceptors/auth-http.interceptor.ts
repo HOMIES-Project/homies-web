@@ -1,4 +1,4 @@
-import { UsersService } from './../services/users.service';
+import { UsersService } from '../services/users.service';
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,

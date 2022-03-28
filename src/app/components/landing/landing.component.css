@@ -1,18 +1,25 @@
-body{
-    
+.text-info {
+    margin-top: 40px;
+    text-align: start;
+}
+
+p {
+    padding-bottom: -20px;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--secondaryColor);
 }
 
 h1 {
     text-align: start;
     font-size: 36px;
-    font-weight: bold;
-    text-shadow: gray 0 2px;
+    font-weight: 800;
+    text-shadow: gray 0 2px 4px;
 }
 
 .containerPersonalize {
     padding: 30px;
-    width: 100%;
-    max-width: 1000px;
+    max-width: 1500px;
     margin: 0 auto;
     overflow: hidden;
 }
@@ -20,9 +27,28 @@ h1 {
 .capture {
     float: left;
     width: 40%;
+    padding-right: 150px;
 }
 
 .info {
+    float: right;
+    width: 60%;
+    padding-left: 50px;
+}
+
+.capture2 {
+    float: right;
+    width: 40%;
+    padding-left: 150px;
+}
+
+.info2 {
     float: left;
     width: 60%;
+    padding-right: 50px;
+}
+
+img {
+    margin-top: 20px;
+    text-align: start;
 }

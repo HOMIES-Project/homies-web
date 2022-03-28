@@ -1,5 +1,5 @@
-import { RegisterModel } from './../models/register.model';
-import { environment } from './../../environments/environment';
+import { RegisterModel } from '../models/register.model';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';

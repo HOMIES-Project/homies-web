@@ -1,12 +1,15 @@
-import { ActivationComponent } from './components/activation/activation.component';
+import { ExpensesComponent } from './components/expenses/expenses.component';
+import { GroceriesComponent } from './components/groceries/groceries.component';
+import { TasksComponent } from './components/tasks/tasks.component';
 import { HomeComponent } from './components/home/home.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
-import { AuthGuard } from './guards/auth.guard';
+import { LoginComponent } from './core/authentication/login/login.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { ActivationComponent } from './core/authentication/activation/activation.component';
+import { RegisterComponent } from './core/authentication/register/register.component';
+import { RecoverPasswordComponent } from './core/authentication/recover-password/recover-password.component';
 
 const routes: Routes = [
   {
@@ -17,6 +20,10 @@ const routes: Routes = [
   {
     path:'login',
     component:LoginComponent
+  },
+  {
+    path:'activation',
+    component: ActivationComponent
   },
   {
     path:'register',
@@ -36,8 +43,19 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path:'activation',
-    component: ActivationComponent
+    path: 'tasks',
+    component: TasksComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'groceries',
+    component: GroceriesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'expenses',
+    component: ExpensesComponent,
+    canActivate: [AuthGuard]
   },
 ];
 
