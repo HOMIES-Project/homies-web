@@ -1,5 +1,6 @@
 import { UsersService } from 'src/app/core/services/users.service';
 import { Component, OnInit } from '@angular/core';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-home',
