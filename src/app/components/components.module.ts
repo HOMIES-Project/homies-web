@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { GroceriesComponent } from './groceries/groceries.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { GroceriesComponent } from './groceries/groceries.component';
     TasksComponent,
     ExpensesComponent,
     GroceriesComponent,
+    SidebarComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
 })
