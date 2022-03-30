@@ -76,10 +76,9 @@ export class UsersService {
   /* PASSWORD RECOVERY - POST */
 
   checkEmailForRecovery(entry: RecoveryCheckModel): Observable<any> {
-    let entryString = entry.email
+   
     let url =  `${environment.BASE_URL}/account/reset-password/init`
-    console.log(entryString)
-    return this.http.post<RecoveryCheckModel>(url, entryString).pipe(
+    return this.http.post<RecoveryCheckModel>(url, entry).pipe(
       map(APIreturn => {
         console.log(APIreturn)
         //Hacer algo
