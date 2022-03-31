@@ -1,0 +1,11 @@
+.dot {
+    height: 150px;
+    width: 150px;
+    background-color: var(--secondaryColor);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.initial {
+    color: var(--primaryColor);
+}
