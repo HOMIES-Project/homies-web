@@ -7,6 +7,7 @@ import { TasksComponent } from './tasks/tasks.component';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { GroceriesComponent } from './groceries/groceries.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { GroupCreationComponent } from './group-creation/group-creation.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     ExpensesComponent,
     GroceriesComponent,
     SidebarComponent,
+    GroupCreationComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  exports:[GroupCreationComponent]
 })
 export class ComponentsModule {}
