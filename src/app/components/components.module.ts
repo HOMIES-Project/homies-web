@@ -18,5 +18,6 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     SidebarComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  exports:[SidebarComponent]
 })
 export class ComponentsModule {}
