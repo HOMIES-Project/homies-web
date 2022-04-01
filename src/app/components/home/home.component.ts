@@ -21,9 +21,14 @@ export class HomeComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private groupsService: GroupsService,
+    private usersService: UsersService,
     private formBuilder: FormBuilder
   ) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.usersService.name.subscribe(username => {
+      this.username = username
+    })
+  }
 
   groupForm = this.formBuilder.group({
     user: 1,
