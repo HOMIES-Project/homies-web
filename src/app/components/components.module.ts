@@ -8,6 +8,7 @@ import { ExpensesComponent } from './expenses/expenses.component';
 import { GroceriesComponent } from './groceries/groceries.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
+
 @NgModule({
   declarations: [
     LandingComponent,
