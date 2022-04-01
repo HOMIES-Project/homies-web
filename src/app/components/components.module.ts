@@ -8,6 +8,7 @@ import { ExpensesComponent } from './expenses/expenses.component';
 import { GroceriesComponent } from './groceries/groceries.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
+
 @NgModule({
   declarations: [
     LandingComponent,
@@ -18,5 +19,6 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     SidebarComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
+
 })
 export class ComponentsModule {}
