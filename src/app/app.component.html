@@ -47,8 +47,10 @@
     </ul>
   </div>
 </nav>
-
 <section>
+  <div *ngIf="isLogged()">
+    <app-sidebar></app-sidebar>
+  </div>
   <router-outlet></router-outlet>
 </section>
 
