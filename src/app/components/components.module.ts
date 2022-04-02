@@ -7,6 +7,7 @@ import { TasksComponent } from './tasks/tasks.component';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { GroceriesComponent } from './groceries/groceries.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     ExpensesComponent,
     GroceriesComponent,
     SidebarComponent,
+    ProfileComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
   exports:[SidebarComponent]

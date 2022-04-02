@@ -1,3 +1,4 @@
+import { ProfileComponent } from './components/profile/profile.component';
 import { ExpensesComponent } from './components/expenses/expenses.component';
 import { GroceriesComponent } from './components/groceries/groceries.component';
 import { TasksComponent } from './components/tasks/tasks.component';
@@ -55,6 +56,11 @@ const routes: Routes = [
   {
     path: 'expenses',
     component: ExpensesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
     canActivate: [AuthGuard]
   },
 ];
