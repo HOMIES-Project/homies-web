@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
+  id!: number;
   username!: string
   name!: string
   surname!: string
@@ -18,14 +18,14 @@ export class ProfileComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private usersService: UsersService) {
-      
+
       this.userForm = this.formBuilder.group({
         username: ['', Validators.required],
         name: ['', Validators.required],
         surname: ['', Validators.required],
         email: ['', Validators.required, Validators.email],
       })
-    
+
   }
 
   ngOnInit(): void {

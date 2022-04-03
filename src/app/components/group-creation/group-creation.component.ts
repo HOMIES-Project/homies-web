@@ -24,9 +24,7 @@ export class GroupCreationComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
   ngOnInit(): void {
-    this.usersService.name.subscribe(username => {
-      this.username = username
-    })
+
   }
 
   groupForm = this.formBuilder.group({

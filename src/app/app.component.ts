@@ -12,14 +12,18 @@ export class AppComponent {
   title = 'homies';
 
   user!: LoginModel | null;
+  id!: number;
   username!: string
 
   constructor(private usersService: UsersService) {
     usersService.login.subscribe(user =>{
       this.user = user;
     })
-    usersService.name.subscribe(username => {
-      this.username = username
+    usersService.userId.subscribe(id => {
+      this.id = id
+    })
+    usersService.getUserInfo(this.id).subscribe(response =>{
+      this.username = response.user.firstName
     })
   }
 
