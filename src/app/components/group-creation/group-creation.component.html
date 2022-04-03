@@ -1,0 +1,72 @@
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Crea tu grupo</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true"> × </span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="this.groupForm">
+        <div class="form-group">
+          <label for="groupName"> Nombre del grupo * </label>
+          <div class="input-group">
+            <input id="groupName" class="form-control" placeholder="Nombre" formControlName="groupName" name="dp"
+              [ngClass]="{
+                'is-invalid':
+                  (this.groupForm.controls.groupName.touched &&
+                    this.groupForm.controls.groupName.errors?.required) ||
+                  this.groupForm.controls.groupName.errors?.minlength ||
+                  this.groupForm.controls.groupName.errors?.maxlength
+              }" />
+
+            <!-- Validation -->
+            <div class="invalid-feedback" *ngIf="this.groupForm.controls.groupName.errors?.required">
+              ¡Tienes que rellenar este campo!
+            </div>
+            <div class="invalid-feedback" *ngIf="this.groupForm.controls.groupName.errors?.minlength">
+              El mínimo son 3 caracteres
+            </div>
+            <div class="invalid-feedback" *ngIf="this.groupForm.controls.groupName.errors?.maxlength">
+              El máximo son 50 caracteres
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="groupRelation"> Descripción del grupo * </label>
+          <div class="input-group">
+            <textarea id="dateOfBirth" class="form-control" formControlName="groupRelation" placeholder="Nombre"
+              name="dp" [ngClass]="{
+                'is-invalid':
+                  (this.groupForm.controls.groupRelation.touched &&
+                    this.groupForm.controls.groupRelation.errors?.required) ||
+                  this.groupForm.controls.groupRelation.errors?.minlength ||
+                  this.groupForm.controls.groupRelation.errors?.maxlength
+              }"></textarea>
+            <!--Validation-->
+            <div class="invalid-feedback" *ngIf="this.groupForm.controls.groupRelation.errors?.required">
+              ¡Tienes que rellenar este campo!
+            </div>
+            <div class="invalid-feedback" *ngIf="this.groupForm.controls.groupRelation.errors?.minlength">
+              El mínimo son 3 caracteres
+            </div>
+            <div class="invalid-feedback" *ngIf="this.groupForm.controls.groupRelation.errors?.maxlength">
+              El máximo son 100 caracteres
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-info" (click)="modal.close('Save click')" [ngClass]="{
+          disabled: !this.groupForm.valid
+        }" [disabled]="!this.groupForm.valid">
+        Crear
+      </button>
+    </div>
+  </ng-template>
+
+  <a class="w3-bar-item w3-button" (click)="open(content)">
+    <i class="fa fa-plus"></i>
+  </a>
+
