@@ -8,12 +8,11 @@ import { UsersService } from 'src/app/core/services/users.service';
 @Component({
   selector: 'app-group-creation',
   templateUrl: './group-creation.component.html',
-  styleUrls: ['./group-creation.component.css']
+  styleUrls: ['./group-creation.component.css'],
 })
 export class GroupCreationComponent implements OnInit {
-
   username!: string;
-  user: number = 1;
+  id: number = 1;
   sent: boolean = false;
   closeResult = '';
 
@@ -24,11 +23,12 @@ export class GroupCreationComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
   ngOnInit(): void {
-
+    this.usersService.userId.subscribe((response) => {
+      this.id = response;
+    });
   }
 
   groupForm = this.formBuilder.group({
-    user: 1,
     groupName: [
       '',
       [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
@@ -40,19 +40,16 @@ export class GroupCreationComponent implements OnInit {
   });
 
   open(content: any) {
-
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
-
         (result) => {
-
           let group: GroupCreationModel = new GroupCreationModel(
-            this.user,
+            this.id,
             this.groupForm.controls.groupName.value,
             this.groupForm.controls.groupRelation.value
           );
-          this.sent = true
+          this.sent = true;
 
           this.groupsService.performGroupCreation(group).subscribe(
             (response) => {
@@ -82,5 +79,4 @@ export class GroupCreationComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
 }

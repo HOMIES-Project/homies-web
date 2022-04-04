@@ -4,7 +4,7 @@
   --primaryColor: #ffffff;
   --primaryLightColor: #ffffff;
   --primaryDarkColor: #cccccc;
-  --secondaryColor: #34ADE7;
+  --secondaryColor: #34ade7;
   --secondaryLightColor: #61d4ff;
   --secondaryDarkColor: #0074ab;
   --primaryTextColor: #000000;
@@ -13,9 +13,8 @@
   height: 100%;
 }
 
-body{
-  font-family:'Montserrat', sans-serif;
-
+body {
+  font-family: "Montserrat", sans-serif;
 }
 
 .card-login {
@@ -66,5 +65,3 @@ i {
 .password-field {
   border-radius: 0ch !important;
 }
-
-
