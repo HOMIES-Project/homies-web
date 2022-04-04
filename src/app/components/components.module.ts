@@ -9,6 +9,7 @@ import { GroceriesComponent } from './groceries/groceries.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ProfileComponent } from './profile/profile.component';
 import { GroupCreationComponent } from './group-creation/group-creation.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { GroupCreationComponent } from './group-creation/group-creation.componen
     ProfileComponent,
     GroupCreationComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgbModule],
   exports:[SidebarComponent]
 })
 export class ComponentsModule {}
