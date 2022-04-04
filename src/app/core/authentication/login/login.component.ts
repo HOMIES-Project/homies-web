@@ -48,7 +48,6 @@ export class LoginComponent implements OnInit {
     this.usersService
     .performLogin(userLogin)
     .subscribe( response => {
-      console.log(response)
       this.isLoading = false;
       this.errorMsg = null;
       this.router.navigate(['/home'])

@@ -24,7 +24,6 @@ export class ActivationComponent implements OnInit {
   getKeyToActivate() {
     this.sub = this.route.queryParams.subscribe((params) => {
       let key = params.key;
-      console.log(key);
       this.usersService.performActivation(key).subscribe(
         (response) => {
           Swal.fire({

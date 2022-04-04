@@ -13,7 +13,7 @@ export class AppComponent {
 
   user!: LoginModel | null;
   id!: number;
-  username!: string
+  username!: string |undefined
 
   constructor(private usersService: UsersService) {
     usersService.login.subscribe(user =>{
@@ -22,8 +22,8 @@ export class AppComponent {
     usersService.userId.subscribe(id => {
       this.id = id
     })
-    usersService.getUserInfo(this.id).subscribe(response =>{
-      this.username = response.user.firstName
+    usersService.user.subscribe(response =>{
+      this.username = response?.login
     })
   }
 

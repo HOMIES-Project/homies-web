@@ -1,3 +1,4 @@
+import { RegisterModel } from './../../core/models/register.model';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsersService } from 'src/app/core/services/users.service';
@@ -11,10 +12,10 @@ import Swal from 'sweetalert2';
 })
 export class ProfileComponent implements OnInit {
   id!: number;
-  username!: string;
-  name!: string;
-  surname!: string;
-  email!: string;
+  login!: string | undefined;
+  name!: string | undefined;
+  surname!: string | undefined;
+  email!: string | undefined;
   userForm: FormGroup;
 
   constructor(
@@ -23,7 +24,7 @@ export class ProfileComponent implements OnInit {
     private router: Router
   ) {
     this.userForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      login: ['', Validators.required],
       name: ['', Validators.required],
       surname: ['', Validators.required],
       email: ['', Validators.required, Validators.email],
@@ -33,6 +34,12 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.usersService.userId.subscribe((response) => {
       this.id = response;
+    });
+    this.usersService.user.subscribe((response) => {
+      this.login = response?.login;
+      this.email = response?.email;
+      this.name = response?.firstName;
+      this.surname = response?.lastName;
     });
   }
 
@@ -47,7 +54,7 @@ export class ProfileComponent implements OnInit {
     }).then((result) => {
       this.usersService.performDeleteUser(this.id).subscribe(
         (response) => {
-          this.usersService.performLogout()
+          this.usersService.performLogout();
           console.log(response);
           this.router.navigate(['/landing']);
         },

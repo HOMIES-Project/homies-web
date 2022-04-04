@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -26,6 +25,8 @@ export class RegisterComponent implements OnInit {
   showPassword: boolean = false;
   loginErrorEN!: string;
   mailErrorEN!: string;
+  id!: string;
+  activated!: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,7 +35,6 @@ export class RegisterComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.langKey = navigator.language;
-    console.log(this.langKey);
   }
 
   mustMatchValidator: ValidatorFn = (
@@ -60,13 +60,14 @@ export class RegisterComponent implements OnInit {
 
   submitRegister() {
     let userRegister: RegisterModel = new RegisterModel(
+      this.id,
       this.registerForm.controls.login.value,
       this.registerForm.controls.email.value,
       this.registerForm.controls.password.value,
       this.registerForm.controls.firstName.value,
       this.registerForm.controls.lastName.value,
-      // this.langKey
-      'fr_FR'
+      this.langKey,
+      this.activated
     );
     this.sent = true;
 
@@ -77,34 +78,33 @@ export class RegisterComponent implements OnInit {
 
     this.usersService.performRegister(userRegister).subscribe(
       (response) => {
-        console.log(JSON.stringify(response));
         this.isLoading = false;
         this.errorMsg = null;
         Swal.fire({
           title: '¡Usuario registrado correctamente!',
-          text: "Comprueba tu correo para activar la cuenta",
+          text: 'Comprueba tu correo para activar la cuenta',
           icon: 'success',
           showCancelButton: false,
           confirmButtonColor: '#61d4ff',
-          confirmButtonText: 'Confirmar'
+          confirmButtonText: 'Confirmar',
         }).then((result) => {
           this.router.navigate(['/login']);
-        })
+        });
       },
       (error) => {
         console.log(error);
-        this.loginErrorEN = error.error.title
-        if (this.loginErrorEN.includes("login")) {
-          if (this.langKey.includes("en")) {
-            this.errorMsg = error.error.title
+        this.loginErrorEN = error.error.title;
+        if (this.loginErrorEN.includes('login')) {
+          if (this.langKey.includes('en')) {
+            this.errorMsg = error.error.title;
           } else {
-            this.errorMsg = "El nombre de usuario ya existe"
+            this.errorMsg = 'El nombre de usuario ya existe';
           }
         } else {
-          if (this.langKey.includes("en")) {
-            this.errorMsg = error.error.title
+          if (this.langKey.includes('en')) {
+            this.errorMsg = error.error.title;
           } else {
-            this.errorMsg = "El email ya existe"
+            this.errorMsg = 'El email ya existe';
           }
         }
 

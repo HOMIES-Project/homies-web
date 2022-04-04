@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
       this.id = response
     })
     this.usersService.getUserInfo(this.id).subscribe(response =>{
-      console.log(response)
+
       this.username = response.user.firstName
     })
   }
