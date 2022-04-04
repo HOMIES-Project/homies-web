@@ -18,8 +18,11 @@ const REGISTER_KEY = 'register'
 export class UsersService {
   private loginModelBehaviourSubject: BehaviorSubject<LoginModel | null>;
   public login: Observable<any | null>;
-  private loginNameBehaviourSubject: BehaviorSubject<string | null>;
-  public name: Observable<any | null>;
+  private userIdBehaviourSubject: BehaviorSubject<string | null>;
+  public userId: Observable<any | null>;
+
+  private userBehaviourSubject: BehaviorSubject<string | null>;
+  public user: Observable<any | null>;
 
 
   constructor(private http: HttpClient, private route: Router) {
@@ -27,21 +30,25 @@ export class UsersService {
       JSON.parse(<string>localStorage.getItem(LOGIN_KEY))
     );
     this.login = this.loginModelBehaviourSubject.asObservable();
-    this.loginNameBehaviourSubject = new BehaviorSubject<string | null> (
-    localStorage.getItem('username'))
-    this.name=this.loginNameBehaviourSubject.asObservable()
+    this.userIdBehaviourSubject = new BehaviorSubject<string | null> (
+    localStorage.getItem('id'))
+    this.userId=this.userIdBehaviourSubject.asObservable()
+    this.userBehaviourSubject = new BehaviorSubject<string | null> (
+      localStorage.getItem('user'))
+      this.user=this.userBehaviourSubject.asObservable()
   }
 
   /* LOGIN - POST */
 
   performLogin(entry: LoginModel): Observable<LoginModel> {
     let url =  `${environment.BASE_URL}/authenticate`;
-    return this.http.post<LoginModel>(url, entry).pipe(
+    return this.http.post<any>(url, entry).pipe(
       map((APIreturn) => {
-        this.loginNameBehaviourSubject.next(entry.username)
-        localStorage.setItem('username', entry.username)
+        console.log(APIreturn.id)
+        this.userIdBehaviourSubject.next(APIreturn.id)
+        localStorage.setItem('id', APIreturn.id)
         //Hacer algo
-        console.log('Login ok' + JSON.stringify(APIreturn));
+        console.log('Login ok' + JSON.stringify(APIreturn.id_token));
         this.loginModelBehaviourSubject.next(APIreturn);
         localStorage.setItem(LOGIN_KEY, JSON.stringify(APIreturn));
         return APIreturn;
@@ -52,7 +59,7 @@ export class UsersService {
   performLogout() {
     localStorage.removeItem(LOGIN_KEY);
     this.loginModelBehaviourSubject.next(null);
-    this.loginNameBehaviourSubject.next(null);
+    this.userIdBehaviourSubject.next(null);
 
     this.route.navigate(['/login']);
   }
@@ -82,7 +89,6 @@ export class UsersService {
     return this.http.post<RecoveryCheckModel>(url, entryString).pipe(
       map(APIreturn => {
         console.log(APIreturn)
-        //Hacer algo
         return APIreturn;
       })
     );
@@ -91,6 +97,20 @@ export class UsersService {
   performRecovery(entry: RecoveryModel): Observable<any> {
     let url =  `${environment.BASE_URL}/account/reset-password/finish`
     return this.http.post<RecoveryModel>(url, entry)
+  }
+
+  /* GET USER INFO - GET*/
+  getUserInfo(id: number): Observable<any> {
+    let url = `${environment.BASE_URL}/user-data/${id}`;
+    return this.http.get<any>(url).pipe(
+      map((APIreturn) => {
+        this.userBehaviourSubject.next(APIreturn.toString())
+        console.log(APIreturn)
+        localStorage.setItem('user', APIreturn)
+        //Hacer algo
+        return APIreturn;
+      })
+    );
   }
 
 }

@@ -1,3 +1,4 @@
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ExpensesComponent } from './components/expenses/expenses.component';
 import { GroceriesComponent } from './components/groceries/groceries.component';
@@ -11,6 +12,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { ActivationComponent } from './core/authentication/activation/activation.component';
 import { RegisterComponent } from './core/authentication/register/register.component';
 import { RecoverPasswordComponent } from './core/authentication/recover-password/recover-password.component';
+
 
 const routes: Routes = [
   {
