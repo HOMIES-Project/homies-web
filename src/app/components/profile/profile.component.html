@@ -12,11 +12,13 @@
             </span>
             <div class="buttonEdit">
               <div class="file-select">
-                <input type="file" name="imageProfile" accept="image/png, image/jpeg" />
+                <input type="file" name="imageProfile" accept="image/png, image/jpeg" (change)="getFile($event)" />
               </div>
+
+
             </div>
             <div class="mb-5 mt-1 pb-2">
-              <form [formGroup]="userForm">
+              <form [formGroup]="userForm" (submit)="submitChangeProfileForm()">
                 <div class="d-flex flex-column col-10 m-auto justify-content-center">
                   <h5 align="left">Datos personales</h5>
                   <!--USER-->
@@ -26,7 +28,7 @@
                       <div class="input-group-text">
                         <img src="../../../assets/svg/username.svg" class="svg-icon" alt="" />
                       </div>
-                      <input id="username" type="text" name="username" formControlName="login"
+                      <input id="username" type="text"  name="username" formControlName="login"
                         class="fields form-control normal-border" value="{{ this.login }}" placeholder="Usuario" />
                     </div>
                   </div>
@@ -101,7 +103,7 @@
                           </button>
                         </h5>
                       </div>
-                  
+
                       <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
                             <!--PASSWORD-->
@@ -185,7 +187,7 @@
                       </div>
                     </div>
                   </div>
-                  
+
 
                   <button class="btn formButton btn-lg px-5 text-uppercase mt-4 text-white" type="submit"
                     value="enviar">

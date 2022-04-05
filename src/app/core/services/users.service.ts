@@ -125,7 +125,7 @@ export class UsersService {
 
   /* DELETE USER - DELETE*/
 
-  performDeleteUser(id: number): Observable<any> {
+  performDeleteUser(id: string): Observable<any> {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.delete(url);
   }

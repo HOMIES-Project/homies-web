@@ -1,9 +1,18 @@
 import { RegisterModel } from './../../core/models/register.model';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { UsersService } from 'src/app/core/services/users.service';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
+import { Observable, ReplaySubject } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +20,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-  id!: number;
+  id!: string;
   login!: string | undefined;
   name!: string | undefined;
   surname!: string | undefined;
@@ -20,6 +29,9 @@ export class ProfileComponent implements OnInit {
   birth!: string | undefined;
   showPassword: boolean = false;
   userForm: FormGroup;
+  profilePicture!: File;
+
+  base64Output!: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -57,7 +69,60 @@ export class ProfileComponent implements OnInit {
       this.name = response?.firstName;
       this.surname = response?.lastName;
     });
+    this.userForm.patchValue({
+      login: this.login,
+      name: this.name,
+      surname: this.surname,
+      email: this.email,
+    });
+    this.userForm.controls.login.disable()
+    this.userForm.controls.email.disable()
+    console.log(this.login);
   }
+
+  showPass() {
+    this.showPassword = !this.showPassword;
+  }
+
+  /** PROFILE PICTURE **/
+
+  getFile(event: any): any {
+    this.convertFile(event.target.files[0]).subscribe((base64) => {
+      this.base64Output = base64;
+      console.log(this.base64Output);
+    });
+  }
+
+  convertFile(file: File): Observable<string> {
+    const result: ReplaySubject<string> | null = new ReplaySubject<string>(1);
+    const reader: FileReader | null = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = (event) => {
+      if (event != null) {
+        result.next(btoa(event.target!.result!.toString()));
+      }
+    };
+
+    return result;
+  }
+
+  /** SUBMIT CHANGES IN USER PROFILE **/
+
+  submitChangeProfileForm() {
+    let userChanged: RegisterModel = new RegisterModel(
+      this.id,
+      this.userForm.controls.login.value,
+      this.userForm.controls.email.value,
+      this.userForm.controls.password.value,
+      this.userForm.controls.name.value,
+      this.userForm.controls.surname.value,
+      '',
+      true
+    );
+    console.log(userChanged)
+  }
+
+  /** DELETE USER **/
 
   deleteUser() {
     Swal.fire({
@@ -79,9 +144,5 @@ export class ProfileComponent implements OnInit {
         }
       );
     });
-  }
-
-  showPass() {
-    this.showPassword = !this.showPassword;
   }
 }
