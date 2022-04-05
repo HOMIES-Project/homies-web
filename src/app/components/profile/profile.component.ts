@@ -1,3 +1,4 @@
+import { UserData } from './../../core/models/user-data.model';
 import { RegisterModel } from './../../core/models/register.model';
 import { Router } from '@angular/router';
 import {
@@ -26,7 +27,10 @@ export class ProfileComponent implements OnInit {
   surname!: string | undefined;
   email!: string | undefined;
   phone!: string | undefined;
-  birth!: string | undefined;
+  birth!: Date;
+  premium: boolean = false;
+  userChanged!: RegisterModel;
+  userDataChanged!: UserData;
   showPassword: boolean = false;
   userForm: FormGroup;
   profilePicture!: File;
@@ -75,8 +79,8 @@ export class ProfileComponent implements OnInit {
       surname: this.surname,
       email: this.email,
     });
-    this.userForm.controls.login.disable()
-    this.userForm.controls.email.disable()
+    this.userForm.controls.login.disable();
+    this.userForm.controls.email.disable();
     console.log(this.login);
   }
 
@@ -109,7 +113,7 @@ export class ProfileComponent implements OnInit {
   /** SUBMIT CHANGES IN USER PROFILE **/
 
   submitChangeProfileForm() {
-    let userChanged: RegisterModel = new RegisterModel(
+    this.userChanged = new RegisterModel(
       this.id,
       this.userForm.controls.login.value,
       this.userForm.controls.email.value,
@@ -119,7 +123,15 @@ export class ProfileComponent implements OnInit {
       '',
       true
     );
-    console.log(userChanged)
+    this.userDataChanged = new UserData(
+      this.id,
+      '',
+      this.userForm.controls.phone.value,
+      this.premium,
+      this.birth,
+      this.userChanged
+    );
+    console.log(this.userDataChanged);
   }
 
   /** DELETE USER **/
