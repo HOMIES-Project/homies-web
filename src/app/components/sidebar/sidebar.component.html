@@ -5,7 +5,7 @@
           <ngb-accordion>
             <ngb-panel>
               <ng-template ngbPanelTitle class="iconoGrupo w3-bar-item w3-button">
-                <i class="fa fa-users"></i>
+                <img src="../../../assets/svg/groupLogo.svg" class="svg-icon" alt="">
               </ng-template>
               <ng-template ngbPanelContent>
                 <li>
@@ -19,19 +19,19 @@
           </ngb-accordion>
         </li>
         <li>
-          <a href="/tasks" class="w3-bar-item w3-button"
-            ><i class="fa fa-calendar"></i
-          ></a>
+          <a [routerLink]="['/tasks']" class="w3-bar-item w3-button">
+            <img src="../../../assets/svg/tasksLogo.svg" class="svg-icon" alt="">
+          </a>
         </li>
         <li>
-          <a href="/groseries" class="w3-bar-item w3-button"
-            ><i class="fa fa-shopping-cart"></i
-          ></a>
+          <a [routerLink]="['/groceries']" class="w3-bar-item w3-button">
+            <img src="../../../assets/svg/groceriesLogo.svg" class="svg-icon" alt="">
+          </a>
         </li>
         <li>
-          <a href="/expenses" class="w3-bar-item w3-button"
-            ><i class="fa fa-money"></i
-          ></a>
+          <a [routerLink]="['/expenses']" class="w3-bar-item w3-button">
+            <img src="../../../assets/svg/expensesLogo.svg" class="svg-icon" alt="">
+          </a>
         </li>
         <li>
           <app-group-creation></app-group-creation>

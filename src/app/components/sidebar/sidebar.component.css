@@ -1,3 +1,11 @@
 .iconoGrupo{
     width: 50px;
 }
+
+.svg-icon {
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    filter: var(--secondaryColor);
+    /*filter: invert(62%) sepia(10%) saturate(5427%) hue-rotate(168deg) brightness(99%) contrast(83%);*/
+}

@@ -1,3 +1,5 @@
+import { AppRoutingModule } from './../app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,7 +25,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ProfileComponent,
     GroupCreationComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgbModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgbModule, BrowserModule,
+    AppRoutingModule,],
   exports:[SidebarComponent]
 })
 export class ComponentsModule {}
