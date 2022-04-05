@@ -84,9 +84,20 @@ h5 {
     filter: invert(11%) sepia(18%) saturate(1673%) hue-rotate(44deg) brightness(103%) contrast(91%) !important;
     opacity: 0.3 !important;
     width: 24px !important;
-  }
+}
   
-  .eye{
+.eye{
     height: 24px !important;
     width: 24px !important;
-  }
+}
+
+.passwordAccordion {
+    color: var(--primaryTextColor);
+    font-weight: 400;
+    font-size: 18px;
+    margin-left: -10px;
+}
+
+.card-header {
+    background-color: rgba(97, 212, 255, 0.2);
+}

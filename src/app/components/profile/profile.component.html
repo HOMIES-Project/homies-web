@@ -4,13 +4,15 @@
       <div class="card card-login text-black shadow-lg rounded">
         <div class="card-body text-center">
           <div class="mb-md-1 mt-md-4 pb-2">
-            <img src="" class="" alt="">
+            <img src="" class="" alt="" />
             <span class="dot">
-              <h2 class="initial center">{{this.name?.charAt(0)}}{{this.surname?.charAt(0)}}</h2>
+              <h2 class="initial center">
+                {{ this.name?.charAt(0) }}{{ this.surname?.charAt(0) }}
+              </h2>
             </span>
             <div class="buttonEdit">
               <div class="file-select">
-                <input type="file" name="imageProfile" accept="image/png, image/jpeg">
+                <input type="file" name="imageProfile" accept="image/png, image/jpeg" />
               </div>
             </div>
             <div class="mb-5 mt-1 pb-2">
@@ -21,11 +23,11 @@
                   <div class="form-outline form-white mb-4">
                     <div class="input-group">
                       <!-- Icono Usuario -->
-                      <div class="input-group-text ">
-                        <img src="../../../assets/svg/username.svg" class="svg-icon" alt="">
+                      <div class="input-group-text">
+                        <img src="../../../assets/svg/username.svg" class="svg-icon" alt="" />
                       </div>
                       <input id="username" type="text" name="username" formControlName="login"
-                        class="fields form-control normal-border" value="{{this.login}}" placeholder="Usuario" />
+                        class="fields form-control normal-border" value="{{ this.login }}" placeholder="Usuario" />
                     </div>
                   </div>
 
@@ -37,7 +39,7 @@
                         <i class="fa fa-vcard"></i>
                       </div>
                       <input id="name" type="text" name="name" formControlName="name"
-                        class="fields form-control normal-border" value="{{this.name}}" placeholder="Nombre" />
+                        class="fields form-control normal-border" value="{{ this.name }}" placeholder="Nombre" />
                     </div>
                   </div>
 
@@ -49,7 +51,7 @@
                         <i class="fa fa-vcard"></i>
                       </div>
                       <input id="surname" type="text" name="surname" formControlName="surname"
-                        class="fields form-control normal-border" value="{{this.surname}}" placeholder="Apellido" />
+                        class="fields form-control normal-border" value="{{ this.surname }}" placeholder="Apellido" />
                     </div>
                   </div>
 
@@ -58,10 +60,10 @@
                     <div class="input-group">
                       <!-- Icono Email -->
                       <div class="input-group-text">
-                        <img src="../../../assets/svg/email.svg" class="svg-icon" alt="">
+                        <img src="../../../assets/svg/email.svg" class="svg-icon" alt="" />
                       </div>
                       <input id="email" type="text" name="email" formControlName="email"
-                        class="fields form-control normal-border" value="{{this.email}}" placeholder="Email" />
+                        class="fields form-control normal-border" value="{{ this.email }}" placeholder="Email" />
                     </div>
                   </div>
 
@@ -73,7 +75,7 @@
                         <i class="fa fa-phone"></i>
                       </div>
                       <input id="phone" type="tel" name="phone" formControlName="phone"
-                        class="fields form-control normal-border" value="{{this.phone}}" placeholder="Teléfono" />
+                        class="fields form-control normal-border" value="{{ this.phone }}" placeholder="Teléfono" />
                     </div>
                   </div>
 
@@ -85,28 +87,63 @@
                         <i class="fa fa-calendar"></i>
                       </div>
                       <input id="birth" type="text" onfocus="(this.type='date')" name="birth" formControlName="birth"
-                        class="fields form-control normal-border" value="{{this.birth}}"
+                        class="fields form-control normal-border" value="{{ this.birth }}"
                         placeholder="Fecha de nacimiento" />
                     </div>
                   </div>
 
-                  <h5 align="left">Cambio de contraseña</h5>
-                  <!--PASSWORD-->
+                  <div id="accordion">
+                    <div class="card">
+                      <div class="card-header" id="headingOne">
+                        <h5 class="mb-0" align="left">
+                          <button class="btn btn-link passwordAccordion" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Cambiar la contraseña
+                          </button>
+                        </h5>
+                      </div>
+                  
+                      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <!--PASSWORD-->
                   <div class="form-outline mb-4">
                     <div class="input-group">
                       <!-- ICONO CANDADO -->
                       <div class="input-group-text">
-                        <img src="../../../assets/svg/password.svg" class="svg-icon" alt="">
+                        <img src="../../../assets/svg/password.svg" class="svg-icon" alt="" />
                       </div>
-                      <input id="pass" type="password" name="pass" formControlName="password" placeholder="Contraseña"
+                      <input id="pass" type="password" name="pass" formControlName="password" placeholder="Contraseña actual"
                         [type]="showPassword ? 'text' : 'password'"
                         class="fields form-control password-field is-invalid" [ngClass]="{}" />
                       <!-- ICONO NO SEE -->
                       <div class="input-group-text no-see">
                         <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
-                          *ngIf="!this.showPassword" alt="">
+                          *ngIf="!this.showPassword" alt="" />
                         <img src="../../../assets/svg/eye.svg" class="svg-icon eye" (click)="showPass()"
-                          *ngIf="this.showPassword" alt="">
+                          *ngIf="this.showPassword" alt="" />
+                      </div>
+                      <!--Validation-->
+                      <div class="invalid-feedback" *ngIf="">
+                        ¡Tienes que rellenar este campo!
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--NEW PASSWORD-->
+                  <div class="form-outline mb-4">
+                    <div class="input-group">
+                      <!-- ICONO CANDADO -->
+                      <div class="input-group-text">
+                        <img src="../../../assets/svg/password.svg" class="svg-icon" alt="" />
+                      </div>
+                      <input id="pass" type="password" name="pass" formControlName="password"
+                        placeholder="Nueva contraseña" [type]="showPassword ? 'text' : 'password'"
+                        class="fields form-control password-field is-invalid" [ngClass]="{}" />
+                      <!-- ICONO NO SEE -->
+                      <div class="input-group-text no-see">
+                        <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
+                          *ngIf="!this.showPassword" alt="" />
+                        <img src="../../../assets/svg/eye.svg" class="svg-icon eye" (click)="showPass()"
+                          *ngIf="this.showPassword" alt="" />
                       </div>
                       <!--Validation-->
                       <div class="invalid-feedback" *ngIf="">
@@ -119,21 +156,21 @@
                   </div>
 
                   <!--PASSWORD CONFIRMATION-->
-                  <div class="form-outline mb-4">
+                  <div class="form-outline mb-4 box-content">
                     <div class="input-group">
                       <!-- ICONO CANDADO -->
                       <div class="input-group-text">
-                        <img src="../../../assets/svg/password.svg" class="svg-icon" alt="">
+                        <img src="../../../assets/svg/password.svg" class="svg-icon" alt="" />
                       </div>
                       <input id="passConfirm" type="password" name="passConfirm" formControlName="passConfirm"
-                        class="fields form-control password-field is-invalid" placeholder="Repetir contraseña"
+                        class="fields form-control password-field is-invalid" placeholder="Repetir contraseña nueva"
                         [type]="showPassword ? 'text' : 'password'" [ngClass]="{}" />
                       <!-- ICONO NO SEE -->
                       <div class="input-group-text no-see">
                         <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
-                          *ngIf="!this.showPassword" alt="">
+                          *ngIf="!this.showPassword" alt="" />
                         <img src="../../../assets/svg/eye.svg" class="svg-icon eye" (click)="showPass()"
-                          *ngIf="this.showPassword" alt="">
+                          *ngIf="this.showPassword" alt="" />
                       </div>
                       <!--Validation-->
                       <div class="invalid-feedback" *ngIf="">
@@ -144,6 +181,11 @@
                       </div>
                     </div>
                   </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
 
                   <button class="btn formButton btn-lg px-5 text-uppercase mt-4 text-white" type="submit"
                     value="enviar">
