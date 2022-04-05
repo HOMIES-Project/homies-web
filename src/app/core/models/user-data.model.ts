@@ -4,7 +4,7 @@ export class UserData {
   public photo: string;
   public phone: string;
   public premium: boolean;
-  public birthDate: Date;
+  public birthDate: string;
   public user: RegisterModel;
 
   constructor(
@@ -12,7 +12,7 @@ export class UserData {
     photo: string,
     phone: string,
     premium: boolean,
-    birthDate: Date,
+    birthDate: string,
     user: RegisterModel
   ) {
     this.id = id;

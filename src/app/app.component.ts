@@ -23,7 +23,7 @@ export class AppComponent {
       this.id = id
     })
     usersService.user.subscribe(response =>{
-      this.username = response?.login
+      this.username = response?.user.login
     })
   }
 

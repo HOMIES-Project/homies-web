@@ -1,3 +1,4 @@
+import { UserData } from './../models/user-data.model';
 import { RegisterModel } from '../models/register.model';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -27,8 +28,8 @@ export class UsersService {
   public userId: Observable<any | null>;
 
   //OBSERVABLE - USER
-  private userBehaviourSubject: BehaviorSubject<RegisterModel | null>;
-  public user: Observable<RegisterModel | null>;
+  private userBehaviourSubject: BehaviorSubject<UserData | null>;
+  public user: Observable<UserData | null>;
 
   constructor(private http: HttpClient, private route: Router) {
     this.loginModelBehaviourSubject = new BehaviorSubject<LoginModel | null>(
@@ -39,7 +40,7 @@ export class UsersService {
       localStorage.getItem('id')
     );
     this.userId = this.userIdBehaviourSubject.asObservable();
-    this.userBehaviourSubject = new BehaviorSubject<RegisterModel | null>(
+    this.userBehaviourSubject = new BehaviorSubject<UserData | null>(
       JSON.parse(<string>localStorage.getItem('userInfo'))
     );
     this.user = this.userBehaviourSubject.asObservable();
@@ -105,19 +106,26 @@ export class UsersService {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        let user: RegisterModel = new RegisterModel(
-          response.user.id,
-          response.user.login,
-          response.user.email,
-          response.user.password,
-          response.user.firstName,
-          response.user.lastName,
-          response.user.langKey,
-          response.user.activated
-        );
-        this.userBehaviourSubject.next(user);
-        localStorage.setItem('userInfo', JSON.stringify(user));
-        console.log(localStorage.getItem('userInfo'));
+        let userData: UserData = new UserData(
+          response.id,
+          response.photo,
+          response.phone,
+          response.premium,
+          response.birthDate,
+          new RegisterModel(
+            response.user.id,
+            response.user.login,
+            response.user.email,
+            response.user.password,
+            response.user.firstName,
+            response.user.lastName,
+            response.user.langKey,
+            response.user.activated
+          )
+        )
+        this.userBehaviourSubject.next(userData);
+        localStorage.setItem('userInfo', JSON.stringify(userData));
+
         return response;
       })
     );

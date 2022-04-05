@@ -11,9 +11,10 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { UsersService } from 'src/app/core/services/users.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Observable, ReplaySubject } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -27,20 +28,25 @@ export class ProfileComponent implements OnInit {
   surname!: string | undefined;
   email!: string | undefined;
   phone!: string | undefined;
-  birth!: Date;
+  photo!: string | undefined;
+  birth!: string | undefined;
   premium: boolean = false;
   userChanged!: RegisterModel;
   userDataChanged!: UserData;
   showPassword: boolean = false;
   userForm: FormGroup;
   profilePicture!: File;
+  profilePicturePath!: any;
 
   base64Output!: string;
+  base64Image: any;
+  base64ProfileImage!: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private usersService: UsersService,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {
     this.userForm = this.formBuilder.group({
       login: new FormControl(),
@@ -59,7 +65,6 @@ export class ProfileComponent implements OnInit {
   ): ValidationErrors | null => {
     let passVal = control.get('password');
     let passConfirmVal = control.get('passConfirm');
-
     return passVal?.value === passConfirmVal?.value ? null : { noMatch: true };
   };
 
@@ -68,20 +73,30 @@ export class ProfileComponent implements OnInit {
       this.id = response;
     });
     this.usersService.user.subscribe((response) => {
-      this.login = response?.login;
-      this.email = response?.email;
-      this.name = response?.firstName;
-      this.surname = response?.lastName;
+      this.login = response?.user.login;
+      this.email = response?.user.email;
+      this.name = response?.user.firstName;
+      this.surname = response?.user.lastName;
+
+      (this.phone = response?.phone),
+        (this.birth = response?.birthDate),
+        (this.photo = response?.photo);
     });
+    /** ADD USER VALUES TO FORM DEFAULT VALUES  **/
     this.userForm.patchValue({
       login: this.login,
       name: this.name,
       surname: this.surname,
       email: this.email,
+      phone: this.phone,
     });
+
+    /** DISABLE NOT EDITABLE FIELDS **/
     this.userForm.controls.login.disable();
     this.userForm.controls.email.disable();
-    console.log(this.login);
+
+    /** DECODE BASE64 PROFILE PICTURE**/
+    this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
   }
 
   showPass() {
@@ -89,11 +104,16 @@ export class ProfileComponent implements OnInit {
   }
 
   /** PROFILE PICTURE **/
+  profilePictureImageDecoded() {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(
+      this.base64ProfileImage
+    );
+  }
 
   getFile(event: any): any {
     this.convertFile(event.target.files[0]).subscribe((base64) => {
-      this.base64Output = base64;
-      console.log(this.base64Output);
+      this.photo = base64;
+      console.log(this.photo )
     });
   }
 
@@ -106,30 +126,27 @@ export class ProfileComponent implements OnInit {
         result.next(btoa(event.target!.result!.toString()));
       }
     };
-
     return result;
   }
 
   /** SUBMIT CHANGES IN USER PROFILE **/
-
   submitChangeProfileForm() {
-    this.userChanged = new RegisterModel(
-      this.id,
-      this.userForm.controls.login.value,
-      this.userForm.controls.email.value,
-      this.userForm.controls.password.value,
-      this.userForm.controls.name.value,
-      this.userForm.controls.surname.value,
-      '',
-      true
-    );
     this.userDataChanged = new UserData(
       this.id,
       '',
       this.userForm.controls.phone.value,
       this.premium,
-      this.birth,
-      this.userChanged
+      '',
+      new RegisterModel(
+        this.id,
+        this.userForm.controls.login.value,
+        this.userForm.controls.email.value,
+        this.userForm.controls.password.value,
+        this.userForm.controls.name.value,
+        this.userForm.controls.surname.value,
+        '',
+        true
+      )
     );
     console.log(this.userDataChanged);
   }

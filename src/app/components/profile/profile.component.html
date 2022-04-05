@@ -4,8 +4,8 @@
       <div class="card card-login text-black shadow-lg rounded">
         <div class="card-body text-center">
           <div class="mb-md-1 mt-md-4 pb-2">
-            <img src="" class="" alt="" />
-            <span class="dot">
+            <div><img *ngIf="this.photo" [src]="profilePictureImageDecoded()" alt="" width="100px" height="100px" class="dot"></div>
+            <span class="dot" *ngIf="!this.photo">
               <h2 class="initial center">
                 {{ this.name?.charAt(0) }}{{ this.surname?.charAt(0) }}
               </h2>
