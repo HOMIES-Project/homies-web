@@ -1,98 +1,165 @@
-<div class="container text-center mt-5">
-    <img src="" class="" alt="">
-    <span class="dot"><h2 class="initial center">HG</h2></span>
-    <div class="buttonEdit">
-        <div class="file-select">
-            <input type="file" name="imageProfile" accept="image/png, image/jpeg">
-        </div>
-    </div>
-    <div class="mb-5 mt-1 pb-2">
-        <form [formGroup]="userForm">
-            <div class="d-flex flex-column col-10 m-auto justify-content-center">
-              <!--USER-->
-              <div class="form-outline form-white mb-4">
-                <div class="input-group">
-                  <!-- Icono Usuario -->
-                  <div class="input-group-text ">
-                      <img src="../../../assets/svg/username.svg" class="svg-icon" alt="">
-                  </div>
-                  <input
-                    id="username"
-                    type="text"
-                    name="username"
-                    formControlName="login"
-                    class="fields form-control normal-border"
-                    placeholder="{{this.login}}"
-                  />
-                </div>
+<div class="container py-5">
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col-12 col-md-8 col-lg-8 p-0">
+      <div class="card card-login text-black shadow-lg rounded">
+        <div class="card-body text-center">
+          <div class="mb-md-1 mt-md-4 pb-2">
+            <img src="" class="" alt="">
+            <span class="dot">
+              <h2 class="initial center">{{this.name?.charAt(0)}}{{this.surname?.charAt(0)}}</h2>
+            </span>
+            <div class="buttonEdit">
+              <div class="file-select">
+                <input type="file" name="imageProfile" accept="image/png, image/jpeg">
               </div>
-
-              <!--NAME-->
-              <div class="form-outline form-white mb-4">
-                <div class="input-group">
-                  <!-- Icono Usuario -->
-                  <div class="input-group-text">
-                    <img src="../../../assets/svg/username.svg" class="svg-icon" alt="">
+            </div>
+            <div class="mb-5 mt-1 pb-2">
+              <form [formGroup]="userForm">
+                <div class="d-flex flex-column col-10 m-auto justify-content-center">
+                  <h5 align="left">Datos personales</h5>
+                  <!--USER-->
+                  <div class="form-outline form-white mb-4">
+                    <div class="input-group">
+                      <!-- Icono Usuario -->
+                      <div class="input-group-text ">
+                        <img src="../../../assets/svg/username.svg" class="svg-icon" alt="">
+                      </div>
+                      <input id="username" type="text" name="username" formControlName="login"
+                        class="fields form-control normal-border" value="{{this.login}}" placeholder="Usuario" />
+                    </div>
                   </div>
-                  <input
-                    id="name"
-                    type="text"
-                    name="name"
-                    formControlName="name"
-                    class="fields form-control normal-border"
-                    placeholder="{{this.name}}"
-                  />
-                </div>
-              </div>
 
-              <!--SURNAME-->
-              <div class="form-outline form-white mb-4">
-                <div class="input-group">
-                  <!-- Icono Usuario -->
-                  <div class="input-group-text">
-                    <img src="../../../assets/svg/username.svg" class="svg-icon" alt="">
+                  <!--NAME-->
+                  <div class="form-outline form-white mb-4">
+                    <div class="input-group">
+                      <!-- Icono Nombre -->
+                      <div class="input-group-text">
+                        <i class="fa fa-vcard"></i>
+                      </div>
+                      <input id="name" type="text" name="name" formControlName="name"
+                        class="fields form-control normal-border" value="{{this.name}}" placeholder="Nombre" />
+                    </div>
                   </div>
-                  <input
-                    id="surname"
-                    type="text"
-                    name="surname"
-                    formControlName="surname"
-                    class="fields form-control normal-border"
-                    placeholder="{{this.surname}}"
-                  />
-                </div>
-              </div>
 
-              <!--EMAIL-->
-              <div class="form-outline form-white mb-4">
-                <div class="input-group">
-                  <!-- Icono Usuario -->
-                  <div class="input-group-text">
-                    <img src="../../../assets/svg/email.svg" class="svg-icon" alt="">
+                  <!--SURNAME-->
+                  <div class="form-outline form-white mb-4">
+                    <div class="input-group">
+                      <!-- Icono Apellido -->
+                      <div class="input-group-text">
+                        <i class="fa fa-vcard"></i>
+                      </div>
+                      <input id="surname" type="text" name="surname" formControlName="surname"
+                        class="fields form-control normal-border" value="{{this.surname}}" placeholder="Apellido" />
+                    </div>
                   </div>
-                  <input
-                    id="email"
-                    type="text"
-                    name="email"
-                    formControlName="email"
-                    class="fields form-control normal-border"
-                    placeholder="{{this.email}}"
-                  />
-                </div>
-              </div>
 
-              <button
-                class="btn formButton btn-lg px-5 text-uppercase mt-4 text-white"
-                type="submit"
-                value="enviar"
-              >
-                <span class="spinner-border spinner-border-sm mr-1" hidden></span>
-                Guardar cambios
+                  <!--EMAIL-->
+                  <div class="form-outline form-white mb-4">
+                    <div class="input-group">
+                      <!-- Icono Email -->
+                      <div class="input-group-text">
+                        <img src="../../../assets/svg/email.svg" class="svg-icon" alt="">
+                      </div>
+                      <input id="email" type="text" name="email" formControlName="email"
+                        class="fields form-control normal-border" value="{{this.email}}" placeholder="Email" />
+                    </div>
+                  </div>
+
+                  <!--PHONE-->
+                  <div class="form-outline form-white mb-4">
+                    <div class="input-group">
+                      <!-- Icono Teléfono -->
+                      <div class="input-group-text">
+                        <i class="fa fa-phone"></i>
+                      </div>
+                      <input id="phone" type="tel" name="phone" formControlName="phone"
+                        class="fields form-control normal-border" value="{{this.phone}}" placeholder="Teléfono" />
+                    </div>
+                  </div>
+
+                  <!--BIRTHDATE-->
+                  <div class="form-outline form-white mb-4">
+                    <div class="input-group">
+                      <!-- Icono Calendario -->
+                      <div class="input-group-text">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input id="birth" type="text" onfocus="(this.type='date')" name="birth" formControlName="birth"
+                        class="fields form-control normal-border" value="{{this.birth}}"
+                        placeholder="Fecha de nacimiento" />
+                    </div>
+                  </div>
+
+                  <h5 align="left">Cambio de contraseña</h5>
+                  <!--PASSWORD-->
+                  <div class="form-outline mb-4">
+                    <div class="input-group">
+                      <!-- ICONO CANDADO -->
+                      <div class="input-group-text">
+                        <img src="../../../assets/svg/password.svg" class="svg-icon" alt="">
+                      </div>
+                      <input id="pass" type="password" name="pass" formControlName="password" placeholder="Contraseña"
+                        [type]="showPassword ? 'text' : 'password'"
+                        class="fields form-control password-field is-invalid" [ngClass]="{}" />
+                      <!-- ICONO NO SEE -->
+                      <div class="input-group-text no-see">
+                        <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
+                          *ngIf="!this.showPassword" alt="">
+                        <img src="../../../assets/svg/eye.svg" class="svg-icon eye" (click)="showPass()"
+                          *ngIf="this.showPassword" alt="">
+                      </div>
+                      <!--Validation-->
+                      <div class="invalid-feedback" *ngIf="">
+                        ¡Tienes que rellenar este campo!
+                      </div>
+                      <div class="invalid-feedback" *ngIf="">
+                        La contraseña debe tener al menos 8 caracteres
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--PASSWORD CONFIRMATION-->
+                  <div class="form-outline mb-4">
+                    <div class="input-group">
+                      <!-- ICONO CANDADO -->
+                      <div class="input-group-text">
+                        <img src="../../../assets/svg/password.svg" class="svg-icon" alt="">
+                      </div>
+                      <input id="passConfirm" type="password" name="passConfirm" formControlName="passConfirm"
+                        class="fields form-control password-field is-invalid" placeholder="Repetir contraseña"
+                        [type]="showPassword ? 'text' : 'password'" [ngClass]="{}" />
+                      <!-- ICONO NO SEE -->
+                      <div class="input-group-text no-see">
+                        <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
+                          *ngIf="!this.showPassword" alt="">
+                        <img src="../../../assets/svg/eye.svg" class="svg-icon eye" (click)="showPass()"
+                          *ngIf="this.showPassword" alt="">
+                      </div>
+                      <!--Validation-->
+                      <div class="invalid-feedback" *ngIf="">
+                        ¡Tienes que rellenar este campo!
+                      </div>
+                      <div class="invalid-feedback" *ngIf="">
+                        Las contraseñas no coinciden
+                      </div>
+                    </div>
+                  </div>
+
+                  <button class="btn formButton btn-lg px-5 text-uppercase mt-4 text-white" type="submit"
+                    value="enviar">
+                    <span class="spinner-border spinner-border-sm mr-1" hidden></span>
+                    Guardar cambios
+                  </button>
+                </div>
+              </form>
+              <button type="button" class="btn btn-danger btn-lg px-5 text-uppercase mt-4 text-white"
+                (click)="deleteUser()">
+                Eliminar cuenta
               </button>
             </div>
-        </form>
-        <button type="button" class="btn btn-danger btn-lg px-5 text-uppercase mt-4 text-white" (click) ="deleteUser()">
-            Eliminar cuenta
-        </button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

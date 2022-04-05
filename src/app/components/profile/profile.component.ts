@@ -1,6 +1,6 @@
 import { RegisterModel } from './../../core/models/register.model';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { UsersService } from 'src/app/core/services/users.service';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
@@ -16,6 +16,9 @@ export class ProfileComponent implements OnInit {
   name!: string | undefined;
   surname!: string | undefined;
   email!: string | undefined;
+  phone!: string | undefined;
+  birth!: string | undefined;
+  showPassword: boolean = false;
   userForm: FormGroup;
 
   constructor(
@@ -24,12 +27,25 @@ export class ProfileComponent implements OnInit {
     private router: Router
   ) {
     this.userForm = this.formBuilder.group({
-      login: ['', Validators.required],
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
+      login: new FormControl(),
+      name: new FormControl(),
+      surname: new FormControl(),
+      email: new FormControl(),
+      phone: new FormControl(),
+      birth: new FormControl(),
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      passConfirm: ['', Validators.required],
     });
   }
+
+  mustMatchValidator: ValidatorFn = (
+    control: AbstractControl
+  ): ValidationErrors | null => {
+    let passVal = control.get('password');
+    let passConfirmVal = control.get('passConfirm');
+
+    return passVal?.value === passConfirmVal?.value ? null : { noMatch: true };
+  };
 
   ngOnInit(): void {
     this.usersService.userId.subscribe((response) => {
@@ -63,5 +79,9 @@ export class ProfileComponent implements OnInit {
         }
       );
     });
+  }
+
+  showPass() {
+    this.showPassword = !this.showPassword;
   }
 }

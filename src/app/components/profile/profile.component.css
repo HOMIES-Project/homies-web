@@ -75,4 +75,18 @@ input:focus {
     filter: invert(64%) sepia(13%) saturate(2576%) hue-rotate(163deg) brightness(93%) contrast(94%);
 }
 
+h5 {
+    padding-bottom: 5px;
+    font-weight: 400;    
+}
 
+.eye-off {
+    filter: invert(11%) sepia(18%) saturate(1673%) hue-rotate(44deg) brightness(103%) contrast(91%) !important;
+    opacity: 0.3 !important;
+    width: 24px !important;
+  }
+  
+  .eye{
+    height: 24px !important;
+    width: 24px !important;
+  }
