@@ -13,7 +13,6 @@ import {
   RecoveryModel,
 } from 'src/app/core/models/recoveryPassword.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -90,8 +89,6 @@ export class RecoverPasswordComponent implements OnInit {
         })
       },
       (error) => {
-        console.log(error);
-        this.errorMsg = `⚠ El usuario no existe `;
         this.isLoading = false;
       },
       () => {
