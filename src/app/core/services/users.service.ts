@@ -1,3 +1,4 @@
+import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
 import { UserData } from './../models/user-data.model';
 import { RegisterModel } from '../models/register.model';
 import { environment } from '../../../environments/environment';
@@ -122,7 +123,14 @@ export class UsersService {
             response.user.langKey,
             response.user.activated
           )
+
         )
+        let groupData: GroupCreationModel = new GroupCreationModel(
+          response.groups[0].id,
+          response.groups[0].groupName,
+          response.groups[0].groupRelationName
+        )
+        console.log(groupData)
         this.userBehaviourSubject.next(userData);
         localStorage.setItem('userInfo', JSON.stringify(userData));
 

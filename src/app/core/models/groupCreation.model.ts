@@ -8,4 +8,5 @@ export class GroupCreationModel {
     this.groupName = groupName
     this.groupRelation = groupRelation
   }
+
 }
