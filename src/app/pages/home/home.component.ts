@@ -5,6 +5,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import Swal from 'sweetalert2';
+import { GroupUserActionModel } from 'src/app/core/models/groupCreation.model';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  id!: string;
+  userID!: string;
   username!: string;
   groupID!: string | null;
   isLoading!: boolean;
@@ -25,8 +27,12 @@ export class HomeComponent implements OnInit {
   groupUsers!: Array<any>;
   groupUserID!: string | null;
 
+  usersNames: Array<string> = [];
+
   base64ProfileImage!: string;
   photo!: string | undefined;
+
+  paramID!: string | null;
 
   constructor(
     private groupsService: GroupsService,
@@ -39,9 +45,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.usersService.userId.subscribe((response) => {
-      this.id = response;
+      this.userID = response;
     });
-    this.groupsService.getUserInfo(this.id).subscribe(
+    this.groupsService.getUserInfo(this.userID).subscribe(
       (response) => {
         this.username = response.user.firstName;
 
@@ -51,10 +57,6 @@ export class HomeComponent implements OnInit {
         } else {
           this.isLoading = false;
           this.groupsExist = true;
-          // this.groupName = response.groups[1].groupName;
-          // this.groupRelationName = response.groups[1].groupRelationName;
-          // // this.groupUsers = response.groups[0].userData[0].id;
-          // this.groupUserID = response.groups[1].userData[0].id;
         }
       },
       (error) => {
@@ -72,6 +74,7 @@ export class HomeComponent implements OnInit {
   getGroupDetails() {
     this.sub = this.route.paramMap.subscribe((params: ParamMap) => {
       let id = params.get('id');
+      this.paramID = id;
       this.groupsService.getGroupInfo(id!).subscribe((response) => {
         console.log(response);
         this.groupName = response.groupName;
@@ -82,8 +85,56 @@ export class HomeComponent implements OnInit {
 
           this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
         }
+        this.getUsersNames();
         console.log(this.groupUsers);
+        console.log(this.groupUsers.length);
       });
+    });
+  }
+
+  getUsersNames() {
+    if (this.groupUsers.length > 0) {
+      for (var i = 0; i < this.groupUsers.length; i++) {
+        this.groupsService
+          .getUserInfo(this.groupUsers[i].id)
+          .subscribe((response) => {
+            this.usersNames.push(response.user.login);
+          });
+      }
+    }
+  }
+
+  deleteUserFromGroup(login: string) {
+    let userToDelete = new GroupUserActionModel(
+      this.userID,
+      login,
+      this.paramID!
+    );
+    console.log(this.groupUsers)
+
+    Swal.fire({
+      title: '¡Cuidado! Vas a eliminar un usuario',
+      text: '¿Estás seguro?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#34ade7',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: `Cancelar`,
+      cancelButtonColor: '#df4759',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.groupsService.performDeleteUserFromGroup(userToDelete).subscribe(
+          (response) => {
+            console.log("usuario eliminado")
+            window.location.reload()
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info');
+      }
     });
   }
 

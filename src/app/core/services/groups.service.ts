@@ -1,10 +1,10 @@
-import { UsersService } from 'src/app/core/services/users.service';
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { HttpClient } from '@angular/common/http';
-import { GroupCreationModel } from '../models/groupCreation.model';
+import { GroupCreationModel, GroupUserActionModel } from '../models/groupCreation.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -63,6 +63,16 @@ export class GroupsService {
         return response;
       })
     );
+  }
+
+  performAddUserToGroup(entry: GroupUserActionModel) {
+    let url = `${environment.BASE_URL}/groups/add-user`;
+    return this.http.post<GroupUserActionModel>(url, entry)
+  }
+
+  performDeleteUserFromGroup(entry: GroupUserActionModel) {
+    let url = `${environment.BASE_URL}/groups/delete-user`;
+    return this.http.post<GroupUserActionModel>(url, entry)
   }
 
 }

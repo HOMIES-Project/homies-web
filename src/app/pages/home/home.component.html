@@ -64,9 +64,6 @@
     </div>
 
 
-
-
-
     <div class="card">
       <div class="card-body">
 
@@ -78,17 +75,18 @@
 
     <div class="card">
       <div class="card-body">
-        <div class="d-flex " *ngFor="let user of this.groupUsers">
-          <img  *ngIf="this.photo" [src]="profilePictureImageDecoded()" width="25" height="25" alt="">
-          <p>{{this.user.id}}</p>
-          <img src="../../../assets/images/homies-logo.png" width="25" height="25" alt="" class="align-self-baseline">
+        <div class="d-flex " *ngFor="let user of this.groupUsers; let indexOfUser=index;"  >
+          <img *ngIf="this.photo" [src]="profilePictureImageDecoded()" width="25" height="25" alt="">
+          <p>{{this.usersNames[indexOfUser]}}</p>
+          <a class="ml-3" (click)="deleteUserFromGroup(this.usersNames[indexOfUser])">
+            <i class="fa fa-skull-crossbones"></i>
+          </a>
+
         </div>
       </div>
+      <app-user-add-group [idGroup]="this.paramID!" [idAdminGroup]="this.userID"></app-user-add-group>
 
-      <button class="btn btn-outline-info mt-3">Añadir usuario</button>
     </div>
-
-
 
   </div>
 </div>
