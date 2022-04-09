@@ -1,3 +1,5 @@
+import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
+import { UserData } from './../models/user-data.model';
 import { RegisterModel } from '../models/register.model';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -12,31 +14,38 @@ import {
 } from '../models/recoveryPassword.model';
 
 const LOGIN_KEY = 'login';
-const REGISTER_KEY = 'register';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
+
+  //OBSERVABLE - TOKEN
   private loginModelBehaviourSubject: BehaviorSubject<LoginModel | null>;
   public login: Observable<any | null>;
+
+  //OBSERVABLE - ID
   private userIdBehaviourSubject: BehaviorSubject<string | null>;
   public userId: Observable<any | null>;
 
-  private userBehaviourSubject: BehaviorSubject<string | null>;
-  public user: Observable<any | null>;
+  //OBSERVABLE - USER
+  private userBehaviourSubject: BehaviorSubject<UserData | null>;
+  public user: Observable<UserData | null>;
+
 
   constructor(private http: HttpClient, private route: Router) {
     this.loginModelBehaviourSubject = new BehaviorSubject<LoginModel | null>(
       JSON.parse(<string>localStorage.getItem(LOGIN_KEY))
     );
     this.login = this.loginModelBehaviourSubject.asObservable();
+
     this.userIdBehaviourSubject = new BehaviorSubject<string | null>(
       localStorage.getItem('id')
     );
     this.userId = this.userIdBehaviourSubject.asObservable();
-    this.userBehaviourSubject = new BehaviorSubject<string | null>(
-      localStorage.getItem('user')
+
+    this.userBehaviourSubject = new BehaviorSubject<UserData | null>(
+      JSON.parse(<string>localStorage.getItem('userInfo'))
     );
     this.user = this.userBehaviourSubject.asObservable();
   }
@@ -47,11 +56,8 @@ export class UsersService {
     let url = `${environment.BASE_URL}/authenticate`;
     return this.http.post<any>(url, entry).pipe(
       map((APIreturn) => {
-        console.log(APIreturn.id);
         this.userIdBehaviourSubject.next(APIreturn.id);
         localStorage.setItem('id', APIreturn.id);
-        //Hacer algo
-        console.log('Login ok' + JSON.stringify(APIreturn.id_token));
         this.loginModelBehaviourSubject.next(APIreturn);
         localStorage.setItem(LOGIN_KEY, JSON.stringify(APIreturn));
         return APIreturn;
@@ -63,19 +69,17 @@ export class UsersService {
     localStorage.removeItem(LOGIN_KEY);
     this.loginModelBehaviourSubject.next(null);
     this.userIdBehaviourSubject.next(null);
-
+    this.userBehaviourSubject.next(null);
     this.route.navigate(['/login']);
   }
 
   /* REGISTER - POST */
-
   performRegister(entry: RegisterModel): Observable<RegisterModel> {
     let url = `${environment.BASE_URL}/register`;
     return this.http.post<RegisterModel>(url, entry);
   }
 
   /* ACTIVATION - POST */
-
   performActivation(entry: any): Observable<any> {
     let url = `${environment.BASE_URL}/activate?key=${entry}`;
     console.log(url);
@@ -83,11 +87,10 @@ export class UsersService {
   }
 
   /* PASSWORD RECOVERY - POST */
-
   checkEmailForRecovery(entry: RecoveryCheckModel): Observable<any> {
     let entryString = entry;
     let url = `${environment.BASE_URL}/account/reset-password/init`;
-    console.log(entryString);
+
     return this.http.post<RecoveryCheckModel>(url, entryString).pipe(
       map((APIreturn) => {
         console.log(APIreturn);
@@ -106,22 +109,37 @@ export class UsersService {
   getUserInfo(id: number): Observable<any> {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.get<any>(url).pipe(
-      map((APIreturn) => {
-        this.userBehaviourSubject.next(APIreturn.toString());
-        console.log(APIreturn);
-        localStorage.setItem('user', APIreturn);
-        //Hacer algo
-        return APIreturn;
+      map((response) => {
+        let userData: UserData = new UserData(
+          response.id,
+          response.photo,
+          response.phone,
+          response.premium,
+          response.birthDate,
+          new RegisterModel(
+            response.user.id,
+            response.user.login,
+            response.user.email,
+            response.user.password,
+            response.user.firstName,
+            response.user.lastName,
+            response.user.langKey,
+            response.user.activated
+          )
+        )
+
+        this.userBehaviourSubject.next(userData);
+        localStorage.setItem('userInfo', JSON.stringify(userData));
+
+        return response;
       })
     );
   }
 
   /* DELETE USER - DELETE*/
 
-  performDeleteUser(id: number): Observable<any> {
+  performDeleteUser(id: string): Observable<any> {
     let url = `${environment.BASE_URL}/user-data/${id}`;
-
     return this.http.delete(url);
-
   }
 }

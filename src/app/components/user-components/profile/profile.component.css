@@ -30,7 +30,7 @@
     position: relative;
     display: inline-block;
 }
-  
+
 .file-select::before {
     background-color: var(--primaryTextColor);
     display: flex;
@@ -38,12 +38,12 @@
     align-items: center;
     border-radius: 50%;
     position: absolute;
-    content: url('../../../assets/svg/pencilEdit.svg');
+    content: url('../../../../assets/svg/pencilEdit.svg');
     width: 27px;
     height: 27px;
     padding-top: 5px;
 }
-  
+
 .file-select input[type="file"] {
     opacity: 0;
     width: 27px;
@@ -61,7 +61,7 @@ input {
     font-size: 1.2rem;
     border: none;
 }
-  
+
 input:focus {
     background-color: rgba(97, 212, 255, 0.2);
     font-size: 1.2rem;
@@ -73,6 +73,33 @@ input:focus {
     width: 18px;
     display: inline-block;
     filter: invert(64%) sepia(13%) saturate(2576%) hue-rotate(163deg) brightness(93%) contrast(94%);
+}
+
+h5 {
+    padding-bottom: 5px;
+    font-weight: 400;
+}
+
+.eye-off {
+    filter: invert(11%) sepia(18%) saturate(1673%) hue-rotate(44deg) brightness(103%) contrast(91%) !important;
+    opacity: 0.3 !important;
+    width: 24px !important;
+}
+
+.eye{
+    height: 24px !important;
+    width: 24px !important;
+}
+
+.passwordAccordion {
+    color: var(--primaryTextColor);
+    font-weight: 400;
+    font-size: 18px;
+    margin-left: -10px;
+}
+
+.card-header {
+    background-color: rgba(97, 212, 255, 0.2);
 }
 
 

@@ -11,6 +11,9 @@
         <div class="form-group">
           <label for="groupName"> Nombre del grupo * </label>
           <div class="input-group">
+            <div class="input-group-text">
+              <img src="../../../assets/svg/groupLogo.svg" class="svg-icon" alt="" />
+            </div>
             <input id="groupName" class="form-control" placeholder="Nombre" formControlName="groupName" name="dp"
               [ngClass]="{
                 'is-invalid':
@@ -35,7 +38,10 @@
         <div class="form-group">
           <label for="groupRelation"> Descripción del grupo * </label>
           <div class="input-group">
-            <textarea id="dateOfBirth" class="form-control" formControlName="groupRelation" placeholder="Nombre"
+            <div class="input-group-text">
+              <img src="../../../assets/svg/pencilEdit.svg" class="svg-icon" alt="" />
+            </div>
+            <textarea id="dateOfBirth" class="form-control" formControlName="groupRelation" placeholder="Descripción"
               name="dp" [ngClass]="{
                 'is-invalid':
                   (this.groupForm.controls.groupRelation.touched &&

@@ -1,0 +1,39 @@
+<div class="w3-sidebar w3-white w3-xxlarge" style="width: max-content">
+    <ul class="nav nav-pills flex-column mb-auto">
+      <div class="d-flex flex-column">
+        <li>
+          <ngb-accordion>
+            <ngb-panel>
+              <ng-template ngbPanelTitle class="iconoGrupo w3-bar-item w3-button">
+                <img src="../../../assets/svg/groupLogo.svg" class="svg-icon" alt="">
+              </ng-template>
+              <ng-template ngbPanelContent>
+                <li *ngFor="let group of this.groups">
+                  <a href="#" class="w3-bar-item w3-button">{{group.groupName}}</a>
+                </li>
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+
+        </li>
+        <li>
+          <a [routerLink]="['/home/tasks']" class="w3-bar-item w3-button">
+            <img src="../../../assets/svg/tasksLogo.svg" class="svg-icon" alt="">
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/home/groceries']" class="w3-bar-item w3-button">
+            <img src="../../../assets/svg/groceriesLogo.svg" class="svg-icon" alt="">
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/home/expenses']" class="w3-bar-item w3-button">
+            <img src="../../../assets/svg/expensesLogo.svg" class="svg-icon" alt="">
+          </a>
+        </li>
+        <li>
+          <app-group-creation></app-group-creation>
+        </li>
+      </div>
+    </ul>
+  </div>

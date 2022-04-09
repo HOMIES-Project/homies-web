@@ -1,0 +1,10 @@
+.iconoGrupo{
+    width: 50px;
+}
+
+.svg-icon {
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    filter: brightness(0) saturate(100%) invert(55%) sepia(100%) saturate(684%) hue-rotate(169deg) brightness(93%) contrast(94%);
+}

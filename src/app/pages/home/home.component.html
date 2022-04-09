@@ -1,0 +1,121 @@
+<div class="container text-center mt-5">
+  <div class="card-columns">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">TAREAS</h5>
+        <p class="card-text">Resumen de tus tareas</p>
+        <table class="table ">
+
+          <tbody>
+            <tr>
+              <td>Limpiar</td>
+            </tr>
+            <tr>
+              <td>Barrer</td>
+            </tr>
+            <tr>
+              <td>Fregar</td>
+            </tr>
+            <tr>
+              <td>Hacer la compra</td>
+            </tr>
+            <tr>
+              <td>
+                <button class="btn btn-outline-info mt-5">Añadir producto</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card p-3">
+      <blockquote class="blockquote mb-0 card-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+        <footer class="blockquote-footer">
+          <small class="text-muted">
+            Someone famous in <cite title="Source Title">Source Title</cite>
+          </small>
+        </footer>
+      </blockquote>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Compra</h5>
+        <p class="card-text">Productos</p>
+        <table class="table ">
+
+          <tbody>
+            <tr>
+              <td>Plátanos</td>
+            </tr>
+            <tr>
+              <td>Leche</td>
+            </tr>
+            <tr>
+              <td>Fruta</td>
+            </tr>
+            <tr>
+              <td>
+                <button class="btn btn-outline-info mt-5">Añadir tarea</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      </div>
+    </div>
+
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{this.groupName}}</h5>
+        <p class="card-text">Usuarios</p>
+        <table class="table ">
+
+          <tbody class="text-left">
+            <tr *ngFor="let user of this.groupUsers">
+              <td>{{this.user}}</td>
+            </tr>
+            <tr>
+              <td>Ainara</td>
+            </tr>
+            <tr>
+              <td>Jorge</td>
+            </tr>
+            <tr>
+              <td>Álex</td>
+            </tr>
+            <tr>
+              <td>Víctor</td>
+            </tr>
+            <tr>
+              <td>
+                <button class="btn btn-outline-info mt-5">Añadir usuario</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      </div>
+    </div>
+  </div>
+</div>

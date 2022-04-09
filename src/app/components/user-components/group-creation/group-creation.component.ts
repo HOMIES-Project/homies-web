@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
 import { FormBuilder, Validators } from '@angular/forms';
-import { GroupsService } from './../../core/services/groups.service';
+import { GroupsService } from '../../../core/services/groups.service';
 import { UsersService } from 'src/app/core/services/users.service';
 
 @Component({
