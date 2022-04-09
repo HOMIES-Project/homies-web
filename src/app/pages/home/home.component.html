@@ -28,7 +28,7 @@
             </tr>
             <tr>
               <td>
-                <button class="btn btn-outline-info mt-5">Añadir producto</button>
+                <button class="btn btn-outline-info mt-3">Añadir producto</button>
               </td>
             </tr>
           </tbody>
@@ -64,7 +64,7 @@
             </tr>
             <tr>
               <td>
-                <button class="btn btn-outline-info mt-5">Añadir tarea</button>
+                <button class="btn btn-outline-info mt-3">Añadir tarea</button>
               </td>
             </tr>
           </tbody>
@@ -86,31 +86,31 @@
 
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">{{this.groupName}}</h5>
-        <p class="card-text">Usuarios</p>
-        <table class="table ">
+
+        <h5 class="card-title p-2 rounded text-left group-info-background">{{this.groupName}}</h5>
+        <p class="card-title p-2 rounded text-left group-info-background" >{{this.groupRelationName}}</p>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+
+
+        <table class="table mt-4">
 
           <tbody class="text-left">
             <!-- <tr *ngFor="let user of this.groupUsers">
               <td>{{this.user}}</td>
             </tr> -->
-            <tr>
+            <tr >
               <td>Ainara</td>
             </tr>
-            <tr>
-              <td>Jorge</td>
+            <tr >
+              <td>Carlos</td>
             </tr>
-            <tr>
-              <td>Álex</td>
-            </tr>
-            <tr>
-              <td>Víctor</td>
-            </tr>
-            <tr>
-              <td>
-                <button class="btn btn-outline-info mt-5">Añadir usuario</button>
-              </td>
-            </tr>
+
+            <button class="btn btn-outline-info mt-3 text-center">Añadir usuario</button>
           </tbody>
         </table>
       </div>

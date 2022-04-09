@@ -16,7 +16,9 @@ export class HomeComponent implements OnInit {
 
   groupsExist!: boolean;
   groupName!: string | null;
+  groupRelationName!: string | null;
   groupUsers!: Array<any>;
+  groupUserID!: string | null;
 
   constructor(
     private groupsService: GroupsService,
@@ -40,9 +42,11 @@ export class HomeComponent implements OnInit {
           this.isLoading = false;
           this.groupsExist = true;
           this.groupName = response.groups[0].groupName;
-          this.groupUsers = response.groups[0].userData.id;
+          this.groupRelationName = response.groups[0].groupRelationName;
+          // this.groupUsers = response.groups[0].userData[0].id;
+          this.groupUserID = response.groups[0].userData[0].id;
         }
-        console.log(this.groupUsers);
+        console.log(this.groupUserID);
       },
       (error) => {
         console.log(error);
