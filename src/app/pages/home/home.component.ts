@@ -16,6 +16,8 @@ import { GroupUserActionModel } from 'src/app/core/models/groupCreation.model';
 export class HomeComponent implements OnInit {
   userID!: string;
   username!: string;
+  name!: string | undefined;
+  surname!: string | undefined;
   groupID!: string | null;
   isLoading!: boolean;
 
@@ -47,7 +49,14 @@ export class HomeComponent implements OnInit {
     this.usersService.userId.subscribe((response) => {
       this.userID = response;
     });
-    this.groupsService.getUserInfo(this.userID).subscribe(
+
+    this.usersService.user.subscribe((response) => {
+      this.name = response?.user.firstName;
+      this.surname = response?.user.lastName;
+      (this.photo = response?.photo);
+    });
+
+    this.groupsService.getUserInfo(this.id).subscribe(
       (response) => {
         this.username = response.user.firstName;
 
