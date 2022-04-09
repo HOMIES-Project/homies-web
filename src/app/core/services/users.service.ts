@@ -52,7 +52,7 @@ export class UsersService {
 
   /* LOGIN - POST */
 
-  performLogin(entry: LoginModel): Observable<LoginModel> {
+  performLogin(entry: LoginModel): Observable<any> {
     let url = `${environment.BASE_URL}/authenticate`;
     return this.http.post<any>(url, entry).pipe(
       map((APIreturn) => {

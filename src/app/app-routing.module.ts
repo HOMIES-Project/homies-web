@@ -40,6 +40,10 @@ const routes: Routes = [
     component: RecoverPasswordComponent
   },
   {
+    path: 'home',
+    component: HomeComponent
+  },
+  {
     path: 'home/:id',
     canActivate: [AuthGuard],
     children:[

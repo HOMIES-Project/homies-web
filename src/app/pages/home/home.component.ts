@@ -19,11 +19,12 @@ export class HomeComponent implements OnInit {
   name!: string | undefined;
   surname!: string | undefined;
   groupID!: string | null;
-  isLoading!: boolean;
 
   sub: any;
 
   groupsExist!: boolean;
+  isLoading!: boolean;
+
   groupName!: string | null;
   groupRelationName!: string | null;
   groupUsers!: Array<any>;
@@ -35,6 +36,9 @@ export class HomeComponent implements OnInit {
   photo!: string | undefined;
 
   paramID!: string | null;
+
+  isAdmin!: boolean;
+  adminID!: string;
 
   constructor(
     private groupsService: GroupsService,
@@ -53,20 +57,12 @@ export class HomeComponent implements OnInit {
     this.usersService.user.subscribe((response) => {
       this.name = response?.user.firstName;
       this.surname = response?.user.lastName;
-      (this.photo = response?.photo);
+      this.photo = response?.photo;
     });
 
-    this.groupsService.getUserInfo(this.id).subscribe(
+    this.groupsService.getUserInfo(this.userID).subscribe(
       (response) => {
         this.username = response.user.firstName;
-
-        if (response.groups.length == 0) {
-          this.isLoading = false;
-          this.groupsExist = false;
-        } else {
-          this.isLoading = false;
-          this.groupsExist = true;
-        }
       },
       (error) => {
         console.log(error);
@@ -83,21 +79,28 @@ export class HomeComponent implements OnInit {
   getGroupDetails() {
     this.sub = this.route.paramMap.subscribe((params: ParamMap) => {
       let id = params.get('id');
-      this.paramID = id;
-      this.groupsService.getGroupInfo(id!).subscribe((response) => {
-        console.log(response);
-        this.groupName = response.groupName;
-        this.groupRelationName = response.groupRelationName;
-        this.groupUsers = response.userData;
-        for (var i = 0; i < response.userData.length; i++) {
-          this.photo = response.userData[i].photo;
 
-          this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
-        }
-        this.getUsersNames();
-        console.log(this.groupUsers);
-        console.log(this.groupUsers.length);
-      });
+      if (id == null) {
+        this.isLoading = false;
+        this.groupsExist = false;
+      } else {
+        this.isLoading = false;
+        this.groupsExist = true;
+        this.paramID = id;
+        this.groupsService.getGroupInfo(id!).subscribe((response) => {
+          this.groupName = response.groupName;
+          this.groupRelationName = response.groupRelationName;
+          this.groupUsers = response.userData;
+          this.adminID = response.userAdmin.id;
+          this.checkIsAdmin();
+          for (var i = 0; i < response.userData.length; i++) {
+            this.photo = response.userData[i].photo;
+
+            this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
+          }
+          this.getUsersNames();
+        });
+      }
     });
   }
 
@@ -113,13 +116,19 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  checkIsAdmin() {
+    if (this.adminID == this.userID) {
+      this.isAdmin = true;
+    }
+  }
+
   deleteUserFromGroup(login: string) {
     let userToDelete = new GroupUserActionModel(
       this.userID,
       login,
       this.paramID!
     );
-    console.log(this.groupUsers)
+    console.log(this.groupUsers);
 
     Swal.fire({
       title: '¡Cuidado! Vas a eliminar un usuario',
@@ -134,8 +143,8 @@ export class HomeComponent implements OnInit {
       if (result.isConfirmed) {
         this.groupsService.performDeleteUserFromGroup(userToDelete).subscribe(
           (response) => {
-            console.log("usuario eliminado")
-            window.location.reload()
+            console.log('usuario eliminado');
+            window.location.reload();
           },
           (error) => {
             console.log(error);
