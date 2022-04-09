@@ -11,10 +11,12 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
   id!: string;
   username!: string;
-  groupID!: string |null
+  groupID!: string | null;
+  isLoading!: boolean;
 
+  groupsExist!: boolean;
   groupName!: string | null;
-  groupUsers!: Array<any>
+  groupUsers!: Array<any>;
 
   constructor(
     private groupsService: GroupsService,
@@ -22,19 +24,33 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true
     this.usersService.userId.subscribe((response) => {
       this.id = response;
     });
-    this.groupsService.getUserInfo(this.id).subscribe((response) => {
-      console.log(response);
-      this.username = response.user.firstName;
-      this.groupName = response.groups[0].groupName
-      this.groupUsers = response.groups[0].userData.id
-      console.log(this.groupUsers)
-    });
+    this.groupsService.getUserInfo(this.id).subscribe(
+      (response) => {
+        console.log(response);
+        this.username = response.user.firstName;
+        console.log(this.username)
+        if (response.groups.length == 0) {
+          this.isLoading = false;
+          this.groupsExist = false;
+        } else {
+          this.isLoading = false;
+          this.groupsExist = true;
+          this.groupName = response.groups[0].groupName;
+          this.groupUsers = response.groups[0].userData.id;
+        }
+        console.log(this.groupUsers);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
 
-    this.groupsService.groupID.subscribe(response => {
-      this.groupID = response
-    })
+    this.groupsService.groupID.subscribe((response) => {
+      this.groupID = response;
+    });
   }
 }

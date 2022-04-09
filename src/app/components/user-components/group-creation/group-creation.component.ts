@@ -54,6 +54,7 @@ export class GroupCreationComponent implements OnInit {
           this.groupsService.performGroupCreation(group).subscribe(
             (response) => {
               console.log(response);
+              window.location.reload()
             },
             (error) => {
               console.log(error);

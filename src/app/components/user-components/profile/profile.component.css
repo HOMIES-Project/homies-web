@@ -38,7 +38,7 @@
     align-items: center;
     border-radius: 50%;
     position: absolute;
-    content: url('../../../assets/svg/pencilEdit.svg');
+    content: url('../../../../assets/svg/pencilEdit.svg');
     width: 27px;
     height: 27px;
     padding-top: 5px;

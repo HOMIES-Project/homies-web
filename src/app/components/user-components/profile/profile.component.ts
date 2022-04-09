@@ -91,9 +91,9 @@ export class ProfileComponent implements OnInit {
       phone: this.phone,
     });
 
-    /** DISABLE NOT EDITABLE FIELDS **/
-    this.userForm.controls.login.disable();
-    this.userForm.controls.email.disable();
+    // /** DISABLE NOT EDITABLE FIELDS **/
+    // this.userForm.controls.login.disable();
+    // this.userForm.controls.email.disable();
 
     /** DECODE BASE64 PROFILE PICTURE**/
     this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
@@ -158,20 +158,27 @@ export class ProfileComponent implements OnInit {
       title: '¡Cuidado! Vas a eliminar tu usuario',
       text: 'Perderás todos tus datos y no podrás recuperarlos',
       icon: 'warning',
-      showCancelButton: false,
-      confirmButtonColor: '#61d4ff',
+      showCancelButton: true,
+      confirmButtonColor: '#34ade7',
       confirmButtonText: 'Confirmar',
+      cancelButtonText: `Cancelar`,
+      cancelButtonColor: '#df4759',
     }).then((result) => {
-      this.usersService.performDeleteUser(this.id).subscribe(
-        (response) => {
-          this.usersService.performLogout();
-          console.log(response);
-          this.router.navigate(['/landing']);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      if (result.isConfirmed) {
+        this.usersService.performDeleteUser(this.id).subscribe(
+          (response) => {
+            this.usersService.performLogout();
+            console.log(response);
+            this.router.navigate(['/landing']);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info')
+      }
+
     });
   }
 }
