@@ -74,6 +74,8 @@ export class HomeComponent implements OnInit {
     });
 
     this.getGroupDetails();
+
+    console.log(this.isAdmin)
   }
 
   getGroupDetails() {

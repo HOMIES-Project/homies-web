@@ -44,9 +44,7 @@ export class LoginComponent implements OnInit {
     //Llamada al back
     this.usersService.performLogin(userLogin).subscribe(
       (response) => {
-        console.log(response.id);
         this.usersService.getUserInfo(response.id).subscribe((response) => {
-          console.log(response);
           if (response.groups.length == 0) {
             this.router.navigate(['home']);
           } else {

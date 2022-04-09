@@ -94,8 +94,16 @@
           <div class="card-title p-2 rounded text-left group-info-background"
             style="float: right; width: 80%; max-height: 40px; align-content: center;">
             <p style="float: left; width: 80%;">{{this.usersNames[indexOfUser]}}</p>
-            <img src="../../../assets/svg/crown.svg" class="svg-icon"
+            <!-- <div>
+              <img src="../../../assets/svg/crown.svg" class="svg-icon"
               style="float: right; width: 20px !important; height: 20px !important;" alt="">
+            </div> -->
+            <div *ngIf="this.isAdmin">
+              <img src="../../../assets/svg/delete.svg" class="svg-icon"
+              style="float: right; width: 20px !important; height: 20px !important;" alt="" (click)="deleteUserFromGroup(this.usersNames[indexOfUser])">
+            </div>
+
+
           </div>
         </div>
       </div>

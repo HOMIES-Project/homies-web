@@ -1,7 +1,6 @@
 import { UsersService } from 'src/app/core/services/users.service';
 import { GroupsService } from '../../core/services/groups.service';
 import { Component, OnInit } from '@angular/core';
-import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
 
-  id!: number;
+  id!: string;
   groups!: Array<any> | null;
 
   constructor(
@@ -20,13 +19,16 @@ export class SidebarComponent implements OnInit {
     private router: Router
   ) {
     this.usersService.userId.subscribe((response) => {
+      console.log(this.id)
+      console.log(this.id)
       this.id = response;
     });
   }
 
   ngOnInit(): void {
-    this.groupsService.groupsList.subscribe((response) => {
-      this.groups = response;
+    this.groupsService.getUserInfo(this.id).subscribe((response) => {
+      this.groups = response.groups;
+      console.log(response)
     });
   }
 

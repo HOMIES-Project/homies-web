@@ -44,11 +44,6 @@ export class GroupsService {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        // for (var i=0; i<response.groups.length; i++ ) {
-        //   this.getUserInfo(response.groups[i].id).subscribe(response =>{
-        //     console.log(response)
-        //   })
-        // }
         this.groupsListBehaviourSubject.next(response.groups)
         this.groupIDBehaviourSubject.next(response.groups[0])
         return response;
