@@ -13,8 +13,8 @@ import { map } from 'rxjs/operators';
 export class GroupsService {
 
   //OBSERVABLE - GROUP
-  private groupsListBehaviourSubject: BehaviorSubject<Array<GroupCreationModel> | null>;
-  public groupsList: Observable<Array<GroupCreationModel> | null>;
+  private groupsListBehaviourSubject: BehaviorSubject<Array<any> | null>;
+  public groupsList: Observable<Array<any> | null>;
 
   //OBSERVABLE -  GROUP ID
   private groupIDBehaviourSubject: BehaviorSubject<string| null>;
@@ -44,7 +44,6 @@ export class GroupsService {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        console.log(response.groups)
         // for (var i=0; i<response.groups.length; i++ ) {
         //   this.getUserInfo(response.groups[i].id).subscribe(response =>{
         //     console.log(response)
@@ -61,7 +60,6 @@ export class GroupsService {
     let url = `${environment.BASE_URL}/groups/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        console.log(response)
         return response;
       })
     );

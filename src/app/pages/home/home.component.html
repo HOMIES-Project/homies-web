@@ -36,16 +36,7 @@
       </div>
     </div>
 
-    <div class="card p-3">
-      <blockquote class="blockquote mb-0 card-body">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-        <footer class="blockquote-footer">
-          <small class="text-muted">
-            Someone famous in <cite title="Source Title">Source Title</cite>
-          </small>
-        </footer>
-      </blockquote>
-    </div>
+
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Compra</h5>
@@ -75,55 +66,30 @@
 
 
 
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-      </div>
-    </div>
-
 
     <div class="card">
       <div class="card-body">
 
         <h5 class="card-title p-2 rounded text-left group-info-background">{{this.groupName}}</h5>
-        <p class="card-title p-2 rounded text-left group-info-background" >{{this.groupRelationName}}</p>
+        <p class="card-title p-2 rounded text-left group-info-background">{{this.groupRelationName}}</p>
 
       </div>
     </div>
 
     <div class="card">
       <div class="card-body">
-
-
-        <table class="table mt-4">
-
-          <tbody class="text-left">
-            <!-- <tr *ngFor="let user of this.groupUsers">
-              <td>{{this.user}}</td>
-            </tr> -->
-            <tr >
-              <td>Ainara</td>
-            </tr>
-            <tr >
-              <td>Carlos</td>
-            </tr>
-
-            <button class="btn btn-outline-info mt-3 text-center">Añadir usuario</button>
-          </tbody>
-        </table>
+        <div class="d-flex " *ngFor="let user of this.groupUsers">
+          <img  *ngIf="this.photo" [src]="profilePictureImageDecoded()" width="25" height="25" alt="">
+          <p>{{this.user.id}}</p>
+          <img src="../../../assets/images/homies-logo.png" width="25" height="25" alt="" class="align-self-baseline">
+        </div>
       </div>
+
+      <button class="btn btn-outline-info mt-3">Añadir usuario</button>
     </div>
 
 
-    <div class="card text-center">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-      </div>
-    </div>
+
   </div>
 </div>
 

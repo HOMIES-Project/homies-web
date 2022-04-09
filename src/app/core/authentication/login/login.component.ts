@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     .subscribe( response => {
       this.isLoading = false;
       this.errorMsg = null;
-      this.router.navigate(['/home'])
+      this.router.navigate(['home', '0']);
     }, error => {
       console.log(error)
       this.errorMsg = "Usuario o contraseña incorrectos"
@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
     },
     () => {
       this.isLoading = false;
-      this.router.navigate(['/home'])
+      this.router.navigate(['home', '0']);
     })
   }
 

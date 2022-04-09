@@ -9,7 +9,8 @@
               </ng-template>
               <ng-template ngbPanelContent>
                 <li *ngFor="let group of this.groups">
-                  <a href="#" class="w3-bar-item w3-button">{{group.groupName}}</a>
+                  <a (click)="navigateToHomeGroupID(group.id)"  class="w3-bar-item w3-button">{{group.groupName}}</a>
+
                 </li>
               </ng-template>
             </ngb-panel>
