@@ -1,0 +1,30 @@
+.navbar {
+  background-color: var(--secondaryColor);
+}
+
+.footer {
+  background-color: var(--secondaryColor);
+  /*position: ;*/
+}
+
+.copyright {
+  background-color: var(--secondaryDarkColor);
+}
+
+div .row {
+  text-align: center;
+  margin-left: 20px;
+}
+
+h4 {
+  padding-top: 10px;
+  font-weight: bold;
+}
+
+.svg-logo {
+  height: 33px;
+  width: 27px;
+  display: inline-block;
+  filter: invert(100%) sepia(100%) saturate(2%) hue-rotate(193deg)
+    brightness(107%) contrast(101%);
+}

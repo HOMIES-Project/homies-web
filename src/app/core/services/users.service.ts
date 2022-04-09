@@ -32,15 +32,18 @@ export class UsersService {
   private userBehaviourSubject: BehaviorSubject<UserData | null>;
   public user: Observable<UserData | null>;
 
+
   constructor(private http: HttpClient, private route: Router) {
     this.loginModelBehaviourSubject = new BehaviorSubject<LoginModel | null>(
       JSON.parse(<string>localStorage.getItem(LOGIN_KEY))
     );
     this.login = this.loginModelBehaviourSubject.asObservable();
+
     this.userIdBehaviourSubject = new BehaviorSubject<string | null>(
       localStorage.getItem('id')
     );
     this.userId = this.userIdBehaviourSubject.asObservable();
+
     this.userBehaviourSubject = new BehaviorSubject<UserData | null>(
       JSON.parse(<string>localStorage.getItem('userInfo'))
     );
@@ -123,14 +126,8 @@ export class UsersService {
             response.user.langKey,
             response.user.activated
           )
+        )
 
-        )
-        let groupData: GroupCreationModel = new GroupCreationModel(
-          response.groups[0].id,
-          response.groups[0].groupName,
-          response.groups[0].groupRelationName
-        )
-        console.log(groupData)
         this.userBehaviourSubject.next(userData);
         localStorage.setItem('userInfo', JSON.stringify(userData));
 

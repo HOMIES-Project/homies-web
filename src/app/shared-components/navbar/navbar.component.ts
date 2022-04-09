@@ -1,17 +1,15 @@
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { GroupsService } from './core/services/groups.service';
-import { UsersService } from './core/services/users.service';
-import { Component } from '@angular/core';
-import { LoginModel } from './core/models/login.model';
-
+import { LoginModel } from 'src/app/core/models/login.model';
+import { GroupsService } from 'src/app/core/services/groups.service';
+import { UsersService } from 'src/app/core/services/users.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css']
 })
-export class AppComponent {
-  title = 'homies';
+export class NavbarComponent implements OnInit {
 
   user!: LoginModel | null;
   id!: string;
@@ -43,7 +41,8 @@ export class AppComponent {
   logout():void {
     this.usersService.performLogout();
   }
-  // loadHomeWithGroup() {
-  //   this.router.navigate(['home', this.groupID]);
-  // }
+
+
 }
+
+

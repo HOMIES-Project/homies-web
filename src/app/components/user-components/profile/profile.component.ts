@@ -1,5 +1,5 @@
-import { UserData } from './../../core/models/user-data.model';
-import { RegisterModel } from './../../core/models/register.model';
+import { UserData } from '../../../core/models/user-data.model';
+import { RegisterModel } from '../../../core/models/register.model';
 import { Router } from '@angular/router';
 import {
   FormGroup,
@@ -11,7 +11,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { UsersService } from 'src/app/core/services/users.service';
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Observable, ReplaySubject } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';

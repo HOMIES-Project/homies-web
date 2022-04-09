@@ -17,7 +17,6 @@ export class AuthHttpInterceptor implements HttpInterceptor {
 
   constructor(private usersService: UsersService) {
     this.usersService.login.subscribe((user) => {
-      console.log(user)
       this.user = user?.id_token;
     });
   }
@@ -26,12 +25,12 @@ export class AuthHttpInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    if(this.user !== undefined) {
+    if (this.user !== undefined) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.user}`
-        }
-      })
+          Authorization: `Bearer ${this.user}`,
+        },
+      });
     }
 
     return next.handle(request);

@@ -17,6 +17,11 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+
+a {
+  cursor: pointer;
+}
+
 .card-login {
   background-color: var(--primaryColor);
   border-radius: 0.5rem;
@@ -65,3 +70,4 @@ i {
 .password-field {
   border-radius: 0ch !important;
 }
+

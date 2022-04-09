@@ -1,16 +1,11 @@
 <div class="container text-center mt-5">
-
   <div class="card-columns">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">TAREAS</h5>
         <p class="card-text">Resumen de tus tareas</p>
         <table class="table ">
-          <!-- <thead>
-            <tr>
-              <th scope="col">Tareas</th>
-            </tr>
-          </thead> -->
+
           <tbody>
             <tr>
               <td>Limpiar</td>
@@ -49,11 +44,7 @@
         <h5 class="card-title">Compra</h5>
         <p class="card-text">Productos</p>
         <table class="table ">
-          <!-- <thead>
-            <tr>
-              <th scope="col">Tareas</th>
-            </tr>
-          </thead> -->
+
           <tbody>
             <tr>
               <td>Plátanos</td>
@@ -75,17 +66,6 @@
     </div>
 
 
-<!--
-    <div class="card p-3">
-      <blockquote class="blockquote mb-0 card-body">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-        <footer class="blockquote-footer">
-          <small class="text-muted">
-            Someone famous in <cite title="Source Title">Source Title</cite>
-          </small>
-        </footer>
-      </blockquote>
-    </div> -->
 
 
     <div class="card">
@@ -99,17 +79,13 @@
 
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Mi grupo</h5>
+        <h5 class="card-title">{{this.groupName}}</h5>
         <p class="card-text">Usuarios</p>
         <table class="table ">
-          <!-- <thead>
-            <tr>
-              <th scope="col">Tareas</th>
-            </tr>
-          </thead> -->
+
           <tbody class="text-left">
-            <tr>
-              <td>Carlos</td>
+            <tr *ngFor="let user of this.groupUsers">
+              <td>{{this.user}}</td>
             </tr>
             <tr>
               <td>Ainara</td>
@@ -141,8 +117,5 @@
         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
       </div>
     </div>
-
-
-
   </div>
 </div>
