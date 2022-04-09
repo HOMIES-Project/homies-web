@@ -10,7 +10,6 @@ import { ProfileComponent } from './user-components/profile/profile.component';
 import { GroupCreationComponent } from './user-components/group-creation/group-creation.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-
 @NgModule({
   declarations: [
     TasksComponent,
@@ -19,8 +18,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ProfileComponent,
     GroupCreationComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgbModule, BrowserModule,
-    AppRoutingModule],
-    exports: [GroupCreationComponent]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgbModule,
+    BrowserModule,
+    AppRoutingModule,
+  ],
+  exports: [GroupCreationComponent],
 })
 export class ComponentsModule {}

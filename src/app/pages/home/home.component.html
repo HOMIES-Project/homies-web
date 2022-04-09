@@ -1,10 +1,17 @@
-<div class="container text-center mt-5">
+<div class="text-center mt-5 d-flex align-items-center justify-content-center " *ngIf="this.isLoading">
+  <div class="spinner-border" style="width: 3rem; height: 3rem; color: #34ade7" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div class="container text-center mt-5" *ngIf="this.groupsExist  && !this.isLoading">
   <div class="card-columns">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">TAREAS</h5>
         <p class="card-text">Resumen de tus tareas</p>
         <table class="table ">
+
 
           <tbody>
             <tr>
@@ -21,7 +28,7 @@
             </tr>
             <tr>
               <td>
-                <button class="btn btn-outline-info mt-5">Añadir producto</button>
+                <button class="btn btn-outline-info mt-3">Añadir producto</button>
               </td>
             </tr>
           </tbody>
@@ -57,7 +64,7 @@
             </tr>
             <tr>
               <td>
-                <button class="btn btn-outline-info mt-5">Añadir tarea</button>
+                <button class="btn btn-outline-info mt-3">Añadir tarea</button>
               </td>
             </tr>
           </tbody>
@@ -79,31 +86,31 @@
 
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">{{this.groupName}}</h5>
-        <p class="card-text">Usuarios</p>
-        <table class="table ">
+
+        <h5 class="card-title p-2 rounded text-left group-info-background">{{this.groupName}}</h5>
+        <p class="card-title p-2 rounded text-left group-info-background" >{{this.groupRelationName}}</p>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+
+
+        <table class="table mt-4">
 
           <tbody class="text-left">
-            <tr *ngFor="let user of this.groupUsers">
+            <!-- <tr *ngFor="let user of this.groupUsers">
               <td>{{this.user}}</td>
-            </tr>
-            <tr>
+            </tr> -->
+            <tr >
               <td>Ainara</td>
             </tr>
-            <tr>
-              <td>Jorge</td>
+            <tr >
+              <td>Carlos</td>
             </tr>
-            <tr>
-              <td>Álex</td>
-            </tr>
-            <tr>
-              <td>Víctor</td>
-            </tr>
-            <tr>
-              <td>
-                <button class="btn btn-outline-info mt-5">Añadir usuario</button>
-              </td>
-            </tr>
+
+            <button class="btn btn-outline-info mt-3 text-center">Añadir usuario</button>
           </tbody>
         </table>
       </div>
@@ -117,5 +124,13 @@
         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="container text-center mt-5" *ngIf="!this.groupsExist && !this.isLoading">
+  <img src="../../../assets/images/no-group.png" alt="">
+  <div>
+    <p class="h2">Aún no tienes ningún grupo</p>
+    <app-group-creation></app-group-creation>
   </div>
 </div>
