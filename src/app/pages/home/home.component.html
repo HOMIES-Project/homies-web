@@ -69,8 +69,10 @@
 
     <div class="card">
       <div class="card-body">
-
-        <h5 class="card-title p-2 rounded text-left group-info-background">{{this.groupName}}</h5>
+        <div class="card-title p-2 rounded text-left group-info-background" style="height: 40px; align-content: center;">
+          <img src="../../../assets/svg/groupHouseLogo.svg" class="svg-icon" style="float: left; width: 30px !important; height: 30px !important; margin-top: -3px;" alt="">
+          <h5 style="float: right; width: 80%; margin-right: 20px;">{{this.groupName}}</h5>
+        </div>
         <p class="card-title p-2 rounded text-left group-info-background">{{this.groupRelationName}}</p>
 
       </div>
@@ -79,9 +81,19 @@
     <div class="card">
       <div class="card-body">
         <div class="d-flex " *ngFor="let user of this.groupUsers">
-          <img  *ngIf="this.photo" [src]="profilePictureImageDecoded()" width="25" height="25" alt="">
-          <p>{{this.user.id}}</p>
-          <img src="../../../assets/images/homies-logo.png" width="25" height="25" alt="" class="align-self-baseline">
+          <div style="float: left; width: 20%;">
+            <div><img *ngIf="this.photo" [src]="profilePictureImageDecoded()" width="25" height="25" class="dot" alt=""></div>
+            <span class="dot" *ngIf="!this.photo">
+              <h2 class="initial center">
+                {{ this.name?.charAt(0) }}{{ this.surname?.charAt(0) }}
+              </h2>
+            </span>
+          </div>
+          <div class="card-title p-2 rounded text-left group-info-background" style="float: right; width: 80%; max-height: 40px; align-content: center;">
+            <p style="float: left; width: 80%;">{{this.username}}</p>
+            <img src="../../../assets/svg/crown.svg" class="svg-icon" style="float: right; width: 20px !important; height: 20px !important;" alt="">
+          </div>
+          
         </div>
       </div>
 

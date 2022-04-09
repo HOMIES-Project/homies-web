@@ -14,6 +14,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class HomeComponent implements OnInit {
   id!: string;
   username!: string;
+  name!: string | undefined;
+  surname!: string | undefined;
   groupID!: string | null;
   isLoading!: boolean;
 
@@ -41,6 +43,13 @@ export class HomeComponent implements OnInit {
     this.usersService.userId.subscribe((response) => {
       this.id = response;
     });
+
+    this.usersService.user.subscribe((response) => {
+      this.name = response?.user.firstName;
+      this.surname = response?.user.lastName;
+      (this.photo = response?.photo);
+    });
+
     this.groupsService.getUserInfo(this.id).subscribe(
       (response) => {
         this.username = response.user.firstName;
