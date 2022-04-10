@@ -37,7 +37,7 @@ export class GroupsService {
   /* GROUP CREATION - POST */
   performGroupCreation(entry: GroupCreationModel): Observable<any> {
     let url = `${environment.BASE_URL}/groups`;
-    console.log(entry);
+
     return this.http.post<GroupCreationModel>(url, entry);
   }
 
@@ -46,9 +46,9 @@ export class GroupsService {
     return this.http.get<any>(url).pipe(
       map((response) => {
         this.groupsListBehaviourSubject.next(response.groups);
+
         if (localStorage.getItem('groupID') == null) {
           this.groupIDBehaviourSubject.next(response.groups[0].id);
-          console.log('entro al if');
         }
         return response;
       })
@@ -70,13 +70,21 @@ export class GroupsService {
     );
   }
 
-  performAddUserToGroup(entry: GroupUserActionModel) {
+  performAddUserToGroup(entry: GroupUserActionModel): Observable<any> {
     let url = `${environment.BASE_URL}/groups/add-user`;
     return this.http.post<GroupUserActionModel>(url, entry);
   }
 
-  performDeleteUserFromGroup(entry: GroupUserActionModel) {
+  performDeleteUserFromGroup(entry: GroupUserActionModel): Observable<any> {
     let url = `${environment.BASE_URL}/groups/delete-user`;
     return this.http.post<GroupUserActionModel>(url, entry);
+  }
+
+  performLogoutFromGroups(): Observable<any> {
+    localStorage.removeItem('groupID');
+    localStorage.removeItem('groupsArray');
+    this.groupIDBehaviourSubject.next(null);
+    this.groupsListBehaviourSubject.next(null);
+    return this.groupID;
   }
 }

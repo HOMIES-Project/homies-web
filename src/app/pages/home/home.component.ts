@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
     });
 
     this.usersService.user.subscribe((response) => {
-      console.log(response);
+
       this.name = response?.user.firstName;
       this.surname = response?.user.lastName;
       this.photo = response?.photo;
@@ -72,25 +72,20 @@ export class HomeComponent implements OnInit {
         console.log(error);
       }
     );
-
     this.groupsService.groupID.subscribe((response) => {
-      console.log(response);
+
     });
     this.getGroupDetails();
-
-    console.log(this.groupID);
   }
 
   updateGroupID(id: string) {
     this.groupsService.updateGroupId(id).subscribe((response) => {
-      console.log(this.groupID);
-      console.log(response);
+
     });
   }
   getGroupDetails() {
     this.sub = this.route.paramMap.subscribe((params: ParamMap) => {
       let id = params.get('id');
-
       if (id == null) {
         this.isLoading = false;
         this.groupsExist = false;
@@ -106,7 +101,6 @@ export class HomeComponent implements OnInit {
           this.checkIsAdmin();
           for (var i = 0; i < response.userData.length; i++) {
             this.photo = response.userData[i].photo;
-
             this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
           }
           this.getUsersNames();
@@ -115,6 +109,32 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+
+  // getGroupDetails2() {
+
+  //     if (this.groupID == null) {
+  //       this.isLoading = false;
+  //       this.groupsExist = false;
+  //       console.log("Entro en el if de groupdetails2")
+  //     } else {
+  //       this.isLoading = false;
+  //       this.groupsExist = true;
+  //       this.groupsService.getGroupInfo(this.groupID!).subscribe((response) => {
+  //         this.groupName = response.groupName;
+  //         this.groupRelationName = response.groupRelationName;
+  //         this.groupUsers = response.userData;
+  //         this.adminID = response.userAdmin.id;
+  //         this.checkIsAdmin();
+  //         for (var i = 0; i < response.userData.length; i++) {
+  //           this.photo = response.userData[i].photo;
+  //           this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
+  //         }
+  //         this.getUsersNames();
+  //         this.getUsersPictures();
+  //       });
+  //     }
+
+  // }
 
   getUsersNames() {
     if (this.groupUsers.length > 0) {

@@ -1,3 +1,4 @@
+import { GroupsService } from 'src/app/core/services/groups.service';
 import { UsersService } from '../../services/users.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private usersService: UsersService,
+    private groupsService: GroupsService,
     private router: Router
   ) {
     this.loginForm = this.formBuilder.group({
@@ -70,9 +72,6 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  logout() {
-    this.usersService.performLogout();
-  }
 
   showPass() {
     this.showPassword = !this.showPassword;

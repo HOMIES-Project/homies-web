@@ -68,28 +68,15 @@ export class UsersService {
     );
   }
 
-  // performLogin2(entry: LoginModel): Observable<any> {
-  //   let url = `${environment.BASE_URL}/authenticate`;
-  //   let url2 = `${environment.BASE_URL}/user-data/`;
-  //   return this.http.post<any>(url, entry)
-  //   .pipe(
-  //     switchMap((APIreturn) =>
-  //     // localStorage.setItem('id', APIreturn.id);
-  //     // this.loginModelBehaviourSubject.next(APIreturn);
-  //       this.http.get<any>(url2 + APIreturn.id).pipe(
-  //         map((response) => {
-  //           return response;
-  //         })
-  //       )
-  //     )
-  //   );
-  // }
 
   performLogout() {
+    localStorage.removeItem('id');
     localStorage.removeItem(LOGIN_KEY);
+    localStorage.removeItem('userInfo');
     this.loginModelBehaviourSubject.next(null);
     this.userIdBehaviourSubject.next(null);
     this.userBehaviourSubject.next(null);
+
 
     this.route.navigate(['/login']);
   }
