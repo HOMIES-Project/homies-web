@@ -6,7 +6,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import Swal from 'sweetalert2';
-import { GroupUserActionModel } from 'src/app/core/models/groupCreation.model';
+import {
+  GroupUserActionModel,
+  GroupUserModel,
+} from 'src/app/core/models/groupCreation.model';
 
 @Component({
   selector: 'app-home',
@@ -25,9 +28,12 @@ export class HomeComponent implements OnInit {
   groupsExist!: boolean;
   isLoading!: boolean;
 
+  isLodingUsers: boolean = true;
+
   groupName!: string | null;
   groupRelationName!: string | null;
-  groupUsers!: Array<any>;
+  groupUsers: Array<any> = []
+  groupUsersModel: Array<GroupUserModel> = [];
   groupUserID!: string | null;
 
   usersNames: Array<string> = [];
@@ -52,13 +58,16 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+
+
+    console.log("entro en el oninit")
     this.isLoading = true;
     this.usersService.userId.subscribe((response) => {
       this.userID = response;
     });
 
     this.usersService.user.subscribe((response) => {
-
       this.name = response?.user.firstName;
       this.surname = response?.user.lastName;
       this.photo = response?.photo;
@@ -72,17 +81,21 @@ export class HomeComponent implements OnInit {
         console.log(error);
       }
     );
-    this.groupsService.groupID.subscribe((response) => {
+    this.groupsService.groupID.subscribe();
 
-    });
     this.getGroupDetails();
+
+
   }
+
+
+
+
 
   updateGroupID(id: string) {
-    this.groupsService.updateGroupId(id).subscribe((response) => {
-
-    });
+    this.groupsService.updateGroupId(id).subscribe();
   }
+
   getGroupDetails() {
     this.sub = this.route.paramMap.subscribe((params: ParamMap) => {
       let id = params.get('id');
@@ -94,79 +107,61 @@ export class HomeComponent implements OnInit {
         this.groupsExist = true;
         this.paramID = id;
         this.groupsService.getGroupInfo(id!).subscribe((response) => {
-          console.log(response)
+          console.log(response);
           this.groupName = response.groupName;
           this.groupRelationName = response.groupRelationName;
           this.groupUsers = response.userData;
           this.adminID = response.userAdmin.id;
           this.checkIsAdmin();
-          for (var i = 0; i < response.userData.length; i++) {
-            this.photo = response.userData[i].photo;
-            this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
-          }
-          this.getUsersNames();
-          this.getUsersPictures();
+          this.getUsersInfo();
         });
       }
     });
   }
 
-  // getGroupDetails2() {
-
-  //     if (this.groupID == null) {
-  //       this.isLoading = false;
-  //       this.groupsExist = false;
-  //       console.log("Entro en el if de groupdetails2")
-  //     } else {
-  //       this.isLoading = false;
-  //       this.groupsExist = true;
-  //       this.groupsService.getGroupInfo(this.groupID!).subscribe((response) => {
-  //         this.groupName = response.groupName;
-  //         this.groupRelationName = response.groupRelationName;
-  //         this.groupUsers = response.userData;
-  //         this.adminID = response.userAdmin.id;
-  //         this.checkIsAdmin();
-  //         for (var i = 0; i < response.userData.length; i++) {
-  //           this.photo = response.userData[i].photo;
-  //           this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
-  //         }
-  //         this.getUsersNames();
-  //         this.getUsersPictures();
-  //       });
-  //     }
-
-  // }
-
-  getUsersNames() {
+  getUsersInfo() {
     if (this.groupUsers.length > 0) {
       for (var i = 0; i < this.groupUsers.length; i++) {
-        this.groupsService
-          .getUserInfo(this.groupUsers[i].id)
-          .subscribe((response) => {
-            this.usersNames.push(response.user.login);
-            this.usersPictures.push(response.photo);
-          });
+        this.groupUsersModel = []
+        this.groupsService.getUserInfo(this.groupUsers[i].id).subscribe(
+          (response) => {
+            let user = new GroupUserModel(
+              response.id,
+              response.user.login,
+              response.photo,
+              response.user.firstName,
+              response.user.lastName,
+              false
+            );
+            if (response.photo != null) {
+              this.base64ProfileImage = `data:image/png;base64,${response.photo}`;
+            }
+            if (this.adminID == response.id) {
+              user.admin = true;
+            }
+            console.log(user)
+              this.groupUsersModel.push(user);
+              console.log(this.groupUsersModel)
+          },
+          (error) => {
+            console.log('error from getusersinfo');
+          },
+          () => {
+            if (i == this.groupUsers.length) this.isLodingUsers = false;
+
+          }
+        );
       }
     }
+    console.log(this.groupUsersModel);
   }
 
-  getUsersPictures() {
-    if (this.groupUsers.length > 0) {
-      for (var i = 0; i < this.groupUsers.length; i++) {
-        this.groupsService
-          .getUserInfo(this.groupUsers[i].id)
-          .subscribe((response) => {
-            this.usersPictures.push(response.user.photo);
-          });
-      }
-    }
-  }
 
   checkIsAdmin() {
     if (this.adminID == this.userID) {
-      this.isAdmin = true ;
+      this.isAdmin = true;
     } else {
-      this.isAdmin = false
+      this.isAdmin = false;
     }
   }
 

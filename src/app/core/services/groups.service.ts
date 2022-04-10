@@ -47,7 +47,7 @@ export class GroupsService {
       map((response) => {
         this.groupsListBehaviourSubject.next(response.groups);
 
-        if (localStorage.getItem('groupID') == null) {
+        if (localStorage.getItem('groupID') == null && response.groups >0) {
           this.groupIDBehaviourSubject.next(response.groups[0].id);
         }
         return response;
@@ -60,6 +60,23 @@ export class GroupsService {
     this.groupIDBehaviourSubject.next(id);
     return this.groupID;
   }
+
+  updateListOfGroups(groups:any): Observable<any> {
+    localStorage.setItem('groupsArray', groups);
+    this.groupsListBehaviourSubject.next(groups);
+    return this.groupID;
+  }
+
+  // getListOfGroups(id: string): Observable<any> {
+  //   let url = `${environment.BASE_URL}/user-data/${id}`;
+  //   return this.http.get<any>(url).pipe(
+  //     map((response) => {
+  //       console.log(response.groups)
+  //       this.groupsListBehaviourSubject.next(response.group)
+  //       return response
+  //     })
+  //   );
+  // }
 
   getGroupInfo(id: string): Observable<any> {
     let url = `${environment.BASE_URL}/groups/${id}`;

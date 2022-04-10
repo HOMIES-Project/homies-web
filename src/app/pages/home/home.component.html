@@ -60,58 +60,70 @@
       </div>
     </div>
 
-<div class="card wrapper-card">
-  <div class="card">
-    <div class="card-body">
-      <div class="card-title p-2 rounded text-left group-info-background"
-        style="height: 40px; align-content: center;">
-        <img src="../../../assets/svg/groupHouseLogo.svg" class="svg-icon"
-          style="float: left; width: 30px !important; height: 30px !important; margin-top: -3px;" alt="">
-        <h5 style="float: right; width: 80%; margin-right: 20px;">{{this.groupName}}</h5>
-      </div>
-      <p class="card-title p-2 rounded text-left group-info-background">{{this.groupRelationName}}</p>
-
-    </div>
-  </div>
-
-  <div class="card ">
-    <div class="card-body">
-      <div class="d-flex " *ngFor="let user of this.groupUsers; let indexOfUser=index;">
-        <div style="float: left; width: 20%;">
-          <div><img *ngIf="this.photo" [src]="profilePictureImageDecoded()" width="25" height="25" class="dot" alt="">
+    <div class="card wrapper-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title p-2 rounded text-left group-info-background"
+            style="height: 40px; align-content: center;">
+            <img src="../../../assets/svg/groupHouseLogo.svg" class="svg-icon"
+              style="float: left; width: 30px !important; height: 30px !important; margin-top: -3px;" alt="">
+            <h5 style="float: right; width: 80%; margin-right: 20px;">{{this.groupName}}</h5>
           </div>
-          <span class="dot" *ngIf="!this.photo">
-            <h2 class="initial center">
-              {{ this.name?.charAt(0) }}{{ this.surname?.charAt(0) }}
-            </h2>
-          </span>
-        </div>
-        <div class="card-title p-2 rounded text-left group-info-background"
-          style="float: right; width: 80%; max-height: 40px; align-content: center;">
-          <p style="float: left; width: 80%;">{{this.usersNames[indexOfUser]}}</p>
-          <!-- <div>
-            <img src="../../../assets/svg/crown.svg" class="svg-icon"
-            style="float: right; width: 20px !important; height: 20px !important;" alt="">
-          </div> -->
-          <div *ngIf="this.isAdmin">
-            <img src="../../../assets/svg/delete.svg" class="svg-icon"
-            style="float: right; width: 20px !important; height: 20px !important;" alt="" (click)="deleteUserFromGroup(this.usersNames[indexOfUser])">
-          </div>
+          <p class="card-title p-2 rounded text-left group-info-background">{{this.groupRelationName}}</p>
+
         </div>
       </div>
+
+      <div class="card ">
+        <div class="text-center m-4 d-flex align-items-center justify-content-center " *ngIf="this.isLodingUsers">
+          <div class="spinner-border" style="width: 3rem; height: 3rem; color: #34ade7" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!this.isLodingUsers">
+          <div class="d-flex " *ngFor="let user of this.groupUsersModel; let indexOfUser=index;">
+            <div style="float: left; width: 20%;">
+              <div><img *ngIf="this.groupUsersModel[indexOfUser].photo!=null" [src]="profilePictureImageDecoded()"
+                  width="25" height="25" class="dot" alt="">
+              </div>
+              <span class="dot" *ngIf="this.groupUsersModel[indexOfUser].photo==null">
+                <h2 class="initial center">
+                  {{ this.groupUsersModel[indexOfUser].firstName.charAt(0) }}{{  this.groupUsersModel[indexOfUser].lastName.charAt(0) }}
+                </h2>
+              </span>
+            </div>
+            <div class="card-title p-2 rounded text-left group-info-background"
+              style="float: right; width: 80%; max-height: 40px; align-content: center;">
+              <p style="float: left; width: 80%;">{{ this.groupUsersModel[indexOfUser].login}}</p>
+
+              <div *ngIf="this.isAdmin">
+                <img [src] = "this.user.admin ? '../../../assets/svg/crown.svg' : '../../../assets/svg/delete.svg'"
+                  class="svg-icon"
+                  style="float: right; width: 20px !important; height: 20px !important;" alt=""
+                  (click)="deleteUserFromGroup(this.groupUsersModel[indexOfUser].id)">
+              </div>
+              <div *ngIf="!this.isAdmin && this.user.admin">
+                <img  src = '../../../assets/svg/crown.svg'
+                  class="svg-icon"
+                  style="float: right; width: 20px !important; height: 20px !important;" alt=""
+                  (click)="deleteUserFromGroup(this.groupUsersModel[indexOfUser].id)">
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div *ngIf="this.isAdmin">
+          <app-user-add-group [idGroup]="this.paramID!" [idAdminGroup]="this.userID"></app-user-add-group>
+        </div>
+
+      </div>
+
+
     </div>
-
-
-
-    <div *ngIf="this.isAdmin">
-      <app-user-add-group [idGroup]="this.paramID!" [idAdminGroup]="this.userID"></app-user-add-group>
-    </div>
-
-</div>
-
-
-    </div>
-    <button class="btn-lg border-0 text-white p-3 mt-3 delete-group">{{this.isAdmin ? 'Eliminar grupo' : 'Abandonar grupo'}}</button>
+    <button
+      class="btn-lg border-0 text-white p-3 mt-3 delete-group">{{this.isAdmin ? 'Eliminar grupo' : 'Abandonar grupo'}}</button>
   </div>
 </div>
 

@@ -29,6 +29,7 @@ export class SidebarComponent implements OnInit {
       this.groups = response.groups;
       console.log(response.groups);
     });
+
   }
 
   ngOnInit(): void {
