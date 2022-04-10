@@ -9,6 +9,7 @@
   --secondaryDarkColor: #0074ab;
   --primaryTextColor: #000000;
   --secondaryTextColor: #000000;
+  --errorColor: #F82727;
   box-sizing: border-box;
   height: 100%;
 }
@@ -70,4 +71,3 @@ i {
 .password-field {
   border-radius: 0ch !important;
 }
-

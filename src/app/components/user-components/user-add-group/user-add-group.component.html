@@ -14,7 +14,7 @@
             <div class="input-group-text">
               <img src="../../../assets/svg/groupLogo.svg" class="svg-icon" alt="" />
             </div>
-            <input id="groupName" class="form-control" placeholder="Nombre" formControlName="login" name="dp"
+            <input id="groupName" class="form-control " placeholder="Nombre" formControlName="login" name="dp"
               [ngClass]="{
                 'is-invalid':
                   (this.groupForm.controls.login.touched &&
@@ -33,13 +33,13 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-info" (click)="modal.close('Save click')" [ngClass]="{
+      <button type="button" class="btn dashboard-button-modal text-white" (click)="modal.close('Save click')" [ngClass]="{
           disabled: !this.groupForm.valid
         }" [disabled]="!this.groupForm.valid">
-        Crear
+        Añadir
       </button>
     </div>
   </ng-template>
-  <button class="btn btn-outline-info mt-3"(click)="open(content)" >Añadir usuario</button>
+  <button class="btn-sm border-0 p-2 m-2 dashboard-button text-white"(click)="open(content)" >Añadir usuario</button>
 
 

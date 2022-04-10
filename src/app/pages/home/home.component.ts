@@ -94,6 +94,7 @@ export class HomeComponent implements OnInit {
         this.groupsExist = true;
         this.paramID = id;
         this.groupsService.getGroupInfo(id!).subscribe((response) => {
+          console.log(response)
           this.groupName = response.groupName;
           this.groupRelationName = response.groupRelationName;
           this.groupUsers = response.userData;
@@ -163,7 +164,9 @@ export class HomeComponent implements OnInit {
 
   checkIsAdmin() {
     if (this.adminID == this.userID) {
-      this.isAdmin = true;
+      this.isAdmin = true ;
+    } else {
+      this.isAdmin = false
     }
   }
 
