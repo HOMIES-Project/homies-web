@@ -44,13 +44,13 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'home/:id',
+    path: 'home',
     canActivate: [AuthGuard],
     children:[
-      {path:'', component: HomeComponent},
-      {path:'tasks', component: TasksComponent},
-      {path:'expenses', component: ExpensesComponent},
-      {path:'groceries', component: GroceriesComponent}
+      {path:':id', component: HomeComponent},
+      {path:'tasks/:id', component: TasksComponent},
+      {path:'expenses/:id', component: ExpensesComponent},
+      {path:'groceries/:id', component: GroceriesComponent}
     ]
   },
   {

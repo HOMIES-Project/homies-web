@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   isLoading: boolean = false;
   showPassword: boolean = false;
 
+  isLoadingWhenLoged: boolean = false;
+
   idParam!: string;
 
   constructor(
@@ -44,14 +46,19 @@ export class LoginComponent implements OnInit {
     //Llamada al back
     this.usersService.performLogin(userLogin).subscribe(
       (response) => {
+        this.isLoadingWhenLoged = true;
         this.usersService.getUserInfo(response.id).subscribe((response) => {
           if (response.groups.length == 0) {
             this.router.navigate(['home']);
+            this.isLoadingWhenLoged = false;
           } else {
             let id = response.groups[0].id
             this.router.navigate(['home', id]);
+
+            this.isLoadingWhenLoged = false;
           }
         });
+        console.log("logueado")
         this.isLoading = false;
         this.errorMsg = null;
       },

@@ -1,30 +1,31 @@
-
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { HttpClient } from '@angular/common/http';
-import { GroupCreationModel, GroupUserActionModel } from '../models/groupCreation.model';
+import {
+  GroupCreationModel,
+  GroupUserActionModel,
+} from '../models/groupCreation.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GroupsService {
-
   //OBSERVABLE - GROUP
   private groupsListBehaviourSubject: BehaviorSubject<Array<any> | null>;
   public groupsList: Observable<Array<any> | null>;
 
   //OBSERVABLE -  GROUP ID
-  private groupIDBehaviourSubject: BehaviorSubject<string| null>;
+  private groupIDBehaviourSubject: BehaviorSubject<string | null>;
   public groupID: Observable<string | null>;
 
-
   constructor(private http: HttpClient) {
-    this.groupsListBehaviourSubject = new BehaviorSubject<Array<GroupCreationModel> | null>(
-      JSON.parse(<string>localStorage.getItem('groupsArray'))
-    );
+    this.groupsListBehaviourSubject =
+      new BehaviorSubject<Array<GroupCreationModel> | null>(
+        JSON.parse(<string>localStorage.getItem('groupsArray'))
+      );
     this.groupsList = this.groupsListBehaviourSubject.asObservable();
 
     this.groupIDBehaviourSubject = new BehaviorSubject<string | null>(
@@ -44,11 +45,20 @@ export class GroupsService {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        this.groupsListBehaviourSubject.next(response.groups)
-        this.groupIDBehaviourSubject.next(response.groups[0])
+        this.groupsListBehaviourSubject.next(response.groups);
+        if (localStorage.getItem('groupID') == null) {
+          this.groupIDBehaviourSubject.next(response.groups[0].id);
+          console.log('entro al if');
+        }
         return response;
       })
     );
+  }
+
+  updateGroupId(id: string): Observable<any> {
+    localStorage.setItem('groupID', id);
+    this.groupIDBehaviourSubject.next(id);
+    return this.groupID;
   }
 
   getGroupInfo(id: string): Observable<any> {
@@ -62,12 +72,11 @@ export class GroupsService {
 
   performAddUserToGroup(entry: GroupUserActionModel) {
     let url = `${environment.BASE_URL}/groups/add-user`;
-    return this.http.post<GroupUserActionModel>(url, entry)
+    return this.http.post<GroupUserActionModel>(url, entry);
   }
 
   performDeleteUserFromGroup(entry: GroupUserActionModel) {
     let url = `${environment.BASE_URL}/groups/delete-user`;
-    return this.http.post<GroupUserActionModel>(url, entry)
+    return this.http.post<GroupUserActionModel>(url, entry);
   }
-
 }

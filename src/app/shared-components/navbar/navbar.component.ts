@@ -29,9 +29,9 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.groupsService.getUserInfo(this.id).subscribe((response) => {
-      this.username = response.user.firstName;
-    });
+    // this.groupsService.getUserInfo(this.id).subscribe((response) => {
+    //   this.username = response.user.firstName;
+    // });
   }
   isLogged() {
     return this.user != null;

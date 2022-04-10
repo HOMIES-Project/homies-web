@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginModel } from '../models/login.model';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import {
   RecoveryCheckModel,
   RecoveryModel,
@@ -20,7 +20,6 @@ const LOGIN_KEY = 'login';
   providedIn: 'root',
 })
 export class UsersService {
-
   //OBSERVABLE - TOKEN
   private loginModelBehaviourSubject: BehaviorSubject<LoginModel | null>;
   public login: Observable<any | null>;
@@ -33,8 +32,11 @@ export class UsersService {
   private userBehaviourSubject: BehaviorSubject<UserData | null>;
   public user: Observable<UserData | null>;
 
-
-  constructor(private http: HttpClient, private route: Router, private groupsService: GroupsService) {
+  constructor(
+    private http: HttpClient,
+    private route: Router,
+    private groupsService: GroupsService
+  ) {
     this.loginModelBehaviourSubject = new BehaviorSubject<LoginModel | null>(
       JSON.parse(<string>localStorage.getItem(LOGIN_KEY))
     );
@@ -66,14 +68,28 @@ export class UsersService {
     );
   }
 
+  // performLogin2(entry: LoginModel): Observable<any> {
+  //   let url = `${environment.BASE_URL}/authenticate`;
+  //   let url2 = `${environment.BASE_URL}/user-data/`;
+  //   return this.http.post<any>(url, entry)
+  //   .pipe(
+  //     switchMap((APIreturn) =>
+  //     // localStorage.setItem('id', APIreturn.id);
+  //     // this.loginModelBehaviourSubject.next(APIreturn);
+  //       this.http.get<any>(url2 + APIreturn.id).pipe(
+  //         map((response) => {
+  //           return response;
+  //         })
+  //       )
+  //     )
+  //   );
+  // }
+
   performLogout() {
     localStorage.removeItem(LOGIN_KEY);
     this.loginModelBehaviourSubject.next(null);
     this.userIdBehaviourSubject.next(null);
     this.userBehaviourSubject.next(null);
-    this.groupsService.groupsList.subscribe(response =>{
-      response = null
-    })
 
     this.route.navigate(['/login']);
   }
@@ -131,7 +147,7 @@ export class UsersService {
             response.user.langKey,
             response.user.activated
           )
-        )
+        );
 
         this.userBehaviourSubject.next(userData);
         localStorage.setItem('userInfo', JSON.stringify(userData));

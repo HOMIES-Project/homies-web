@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   groupUserID!: string | null;
 
   usersNames: Array<string> = [];
+  usersPictures: Array<string> = [];
 
   base64ProfileImage!: string;
   photo!: string | undefined;
@@ -39,6 +40,8 @@ export class HomeComponent implements OnInit {
 
   isAdmin!: boolean;
   adminID!: string;
+
+  defaultGroup!: string;
 
   constructor(
     private groupsService: GroupsService,
@@ -55,6 +58,7 @@ export class HomeComponent implements OnInit {
     });
 
     this.usersService.user.subscribe((response) => {
+      console.log(response);
       this.name = response?.user.firstName;
       this.surname = response?.user.lastName;
       this.photo = response?.photo;
@@ -70,14 +74,19 @@ export class HomeComponent implements OnInit {
     );
 
     this.groupsService.groupID.subscribe((response) => {
-      this.groupID = response;
+      console.log(response);
     });
-
     this.getGroupDetails();
 
-    console.log(this.isAdmin)
+    console.log(this.groupID);
   }
 
+  updateGroupID(id: string) {
+    this.groupsService.updateGroupId(id).subscribe((response) => {
+      console.log(this.groupID);
+      console.log(response);
+    });
+  }
   getGroupDetails() {
     this.sub = this.route.paramMap.subscribe((params: ParamMap) => {
       let id = params.get('id');
@@ -101,6 +110,7 @@ export class HomeComponent implements OnInit {
             this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
           }
           this.getUsersNames();
+          this.getUsersPictures();
         });
       }
     });
@@ -113,6 +123,19 @@ export class HomeComponent implements OnInit {
           .getUserInfo(this.groupUsers[i].id)
           .subscribe((response) => {
             this.usersNames.push(response.user.login);
+            this.usersPictures.push(response.photo);
+          });
+      }
+    }
+  }
+
+  getUsersPictures() {
+    if (this.groupUsers.length > 0) {
+      for (var i = 0; i < this.groupUsers.length; i++) {
+        this.groupsService
+          .getUserInfo(this.groupUsers[i].id)
+          .subscribe((response) => {
+            this.usersPictures.push(response.user.photo);
           });
       }
     }
