@@ -7,7 +7,7 @@
             <div><img *ngIf="this.photo" [src]="profilePictureImageDecoded()" alt="" width="100px" height="100px" class="dot  " (change)="getProfilePicture($event)"></div>
             <span class="dot" *ngIf="!this.photo">
               <h2 class="initial center">
-                {{ this.name?.charAt(0) }}{{ this.surname?.charAt(0) }}
+                {{ this.firstName?.charAt(0) }}{{ this.lastName?.charAt(0) }}
               </h2>
             </span>
             <div class="buttonEdit">
@@ -28,7 +28,7 @@
                       <div class="input-group-text">
                         <img src="../../../../assets/svg/username.svg" class="svg-icon" alt="" />
                       </div>
-                      <input id="username" type="text"  name="username" formControlName="login"
+                      <input id="username" type="text"  name="login" formControlName="login"
                         class="fields form-control normal-border" value="{{ this.login }}" placeholder="Usuario" />
                     </div>
                   </div>
@@ -40,8 +40,8 @@
                       <div class="input-group-text">
                         <i class="fa fa-vcard"></i>
                       </div>
-                      <input id="name" type="text" name="name" formControlName="name"
-                        class="fields form-control normal-border" value="{{ this.name }}" placeholder="Nombre" />
+                      <input id="name" type="text" name="name" formControlName="firstName"
+                        class="fields form-control normal-border" value="{{ this.firstName }}" placeholder="Nombre" />
                     </div>
                   </div>
 
@@ -52,8 +52,8 @@
                       <div class="input-group-text">
                         <i class="fa fa-vcard"></i>
                       </div>
-                      <input id="surname" type="text" name="surname" formControlName="surname"
-                        class="fields form-control normal-border" value="{{ this.surname }}" placeholder="Apellido" />
+                      <input id="surname" type="text" name="surname" formControlName="lastName"
+                        class="fields form-control normal-border" value="{{ this.lastName }}" placeholder="Apellido" />
                     </div>
                   </div>
 
@@ -88,8 +88,8 @@
                       <div class="input-group-text">
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <input id="birth" type="text" onfocus="(this.type='date')" name="birth" formControlName="birth"
-                        class="fields form-control normal-border" value="{{ this.birth }}"
+                      <input id="birth" type="text" onfocus="(this.type='date')" name="birth" formControlName="birthDate"
+                        class="fields form-control normal-border" value="{{ this.birthDate }}"
                         placeholder="Fecha de nacimiento" />
                     </div>
                   </div>

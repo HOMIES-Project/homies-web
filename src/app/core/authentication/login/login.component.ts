@@ -54,13 +54,13 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['home']);
             this.isLoadingWhenLoged = false;
           } else {
-            let id = response.groups[0].id
+            let id = response.groups[0].id;
             this.router.navigate(['home', id]);
 
             this.isLoadingWhenLoged = false;
           }
         });
-        console.log("logueado")
+        console.log('logueado');
         this.isLoading = false;
         this.errorMsg = null;
       },
@@ -68,10 +68,9 @@ export class LoginComponent implements OnInit {
         console.log(error);
         this.errorMsg = 'Usuario o contraseña incorrectos';
         this.isLoading = false;
-      },
+      }
     );
   }
-
 
   showPass() {
     this.showPassword = !this.showPassword;

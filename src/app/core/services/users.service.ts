@@ -144,10 +144,19 @@ export class UsersService {
     );
   }
 
+    /* EDIT USER - POST */
+    performEditUser(entry: any, id: string): Observable<any> {
+      let url = `${environment.BASE_URL}/account/reset-password/user-data/${id}`;
+      return this.http.put<any>(url, entry );
+    }
+
+
   /* DELETE USER - DELETE*/
 
   performDeleteUser(id: string): Observable<any> {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.delete(url);
   }
+
+
 }
