@@ -49,6 +49,8 @@ export class HomeComponent implements OnInit {
 
   defaultGroup!: string;
 
+  imgBase64!:string;
+
   constructor(
     private groupsService: GroupsService,
     private usersService: UsersService,
@@ -58,19 +60,19 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.imgBase64 = 'data:image/png;base64,'
 
 
-
-    console.log("entro en el oninit")
     this.isLoading = true;
-    this.usersService.userId.subscribe((response) => {
-      this.userID = response;
+    this.usersService.userId.subscribe((userID) => {
+      this.userID = userID;
     });
 
-    this.usersService.user.subscribe((response) => {
-      this.name = response?.user.firstName;
-      this.surname = response?.user.lastName;
-      this.photo = response?.photo;
+    //todo - check this subscribepo
+    this.usersService.user.subscribe((userInfo) => {
+      this.name = userInfo?.user.firstName;
+      this.surname = userInfo?.user.lastName;
+      this.photo = userInfo?.photo;
     });
 
     this.groupsService.getUserInfo(this.userID).subscribe(
@@ -85,11 +87,7 @@ export class HomeComponent implements OnInit {
 
     this.getGroupDetails();
 
-
   }
-
-
-
 
 
   updateGroupID(id: string) {
@@ -106,12 +104,11 @@ export class HomeComponent implements OnInit {
         this.isLoading = false;
         this.groupsExist = true;
         this.paramID = id;
-        this.groupsService.getGroupInfo(id!).subscribe((response) => {
-          console.log(response);
-          this.groupName = response.groupName;
-          this.groupRelationName = response.groupRelationName;
-          this.groupUsers = response.userData;
-          this.adminID = response.userAdmin.id;
+        this.groupsService.getGroupInfo(id!).subscribe((groupInfo) => {
+          this.groupName = groupInfo.groupName;
+          this.groupRelationName = groupInfo.groupRelationName;
+          this.groupUsers = groupInfo.userData;
+          this.adminID = groupInfo.userAdmin.id;
           this.checkIsAdmin();
           this.getUsersInfo();
         });
@@ -124,24 +121,23 @@ export class HomeComponent implements OnInit {
       for (var i = 0; i < this.groupUsers.length; i++) {
         this.groupUsersModel = []
         this.groupsService.getUserInfo(this.groupUsers[i].id).subscribe(
-          (response) => {
+          (groupUserInfo) => {
             let user = new GroupUserModel(
-              response.id,
-              response.user.login,
-              response.photo,
-              response.user.firstName,
-              response.user.lastName,
+              groupUserInfo.id,
+              groupUserInfo.user.login,
+              groupUserInfo.photo,
+              groupUserInfo.user.firstName,
+              groupUserInfo.user.lastName,
               false
             );
-            if (response.photo != null) {
-              this.base64ProfileImage = `data:image/png;base64,${response.photo}`;
+            //TODO check this if
+            if (groupUserInfo.photo != null) {
+              this.base64ProfileImage = `data:image/png;base64,${groupUserInfo.photo}`;
             }
-            if (this.adminID == response.id) {
+            if (this.adminID == groupUserInfo.id) {
               user.admin = true;
             }
-            console.log(user)
               this.groupUsersModel.push(user);
-              console.log(this.groupUsersModel)
           },
           (error) => {
             console.log('error from getusersinfo');
@@ -153,9 +149,12 @@ export class HomeComponent implements OnInit {
         );
       }
     }
-    console.log(this.groupUsersModel);
   }
-
+  profilePictureImageDecoded(picture: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(
+      picture
+    );
+  }
 
   checkIsAdmin() {
     if (this.adminID == this.userID) {
@@ -171,8 +170,8 @@ export class HomeComponent implements OnInit {
       login,
       this.paramID!
     );
-    console.log(this.groupUsers);
-
+      console.log(userToDelete.login)
+      console.log(this.userID)
     Swal.fire({
       title: '¡Cuidado! Vas a eliminar un usuario',
       text: '¿Estás seguro?',
@@ -199,9 +198,5 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  profilePictureImageDecoded() {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
-      this.base64ProfileImage
-    );
-  }
+
 }

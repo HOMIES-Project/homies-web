@@ -83,7 +83,8 @@
         <div class="card-body" *ngIf="!this.isLodingUsers">
           <div class="d-flex " *ngFor="let user of this.groupUsersModel; let indexOfUser=index;">
             <div style="float: left; width: 20%;">
-              <div><img *ngIf="this.groupUsersModel[indexOfUser].photo!=null" [src]="profilePictureImageDecoded()"
+              <div><img *ngIf="this.groupUsersModel[indexOfUser].photo!=null"
+                  [src]="profilePictureImageDecoded(this.imgBase64 + this.groupUsersModel[indexOfUser].photo)"
                   width="25" height="25" class="dot" alt="">
               </div>
               <span class="dot" *ngIf="this.groupUsersModel[indexOfUser].photo==null">
@@ -97,16 +98,14 @@
               <p style="float: left; width: 80%;">{{ this.groupUsersModel[indexOfUser].login}}</p>
 
               <div *ngIf="this.isAdmin">
-                <img [src] = "this.user.admin ? '../../../assets/svg/crown.svg' : '../../../assets/svg/delete.svg'"
-                  class="svg-icon"
-                  style="float: right; width: 20px !important; height: 20px !important;" alt=""
-                  (click)="deleteUserFromGroup(this.groupUsersModel[indexOfUser].id)">
+                <img [src]="this.user.admin ? '../../../assets/svg/crown.svg' : '../../../assets/svg/delete.svg'"
+                  class="svg-icon" style="float: right; width: 20px !important; height: 20px !important;" alt=""
+                  (click)="deleteUserFromGroup(this.groupUsersModel[indexOfUser].login)">
               </div>
               <div *ngIf="!this.isAdmin && this.user.admin">
-                <img  src = '../../../assets/svg/crown.svg'
-                  class="svg-icon"
+                <img src='../../../assets/svg/crown.svg' class="svg-icon"
                   style="float: right; width: 20px !important; height: 20px !important;" alt=""
-                  (click)="deleteUserFromGroup(this.groupUsersModel[indexOfUser].id)">
+                  (click)="deleteUserFromGroup(this.groupUsersModel[indexOfUser].login)">
               </div>
             </div>
           </div>

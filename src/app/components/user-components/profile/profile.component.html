@@ -4,7 +4,7 @@
       <div class="card card-login text-black shadow-lg rounded">
         <div class="card-body text-center">
           <div class="mb-md-1 mt-md-4 pb-2">
-            <div><img *ngIf="this.photo" [src]="profilePictureImageDecoded()" alt="" width="100px" height="100px" class="dot"></div>
+            <div><img *ngIf="this.photo" [src]="profilePictureImageDecoded()" alt="" width="100px" height="100px" class="dot  " (change)="getProfilePicture($event)"></div>
             <span class="dot" *ngIf="!this.photo">
               <h2 class="initial center">
                 {{ this.name?.charAt(0) }}{{ this.surname?.charAt(0) }}
@@ -12,7 +12,7 @@
             </span>
             <div class="buttonEdit">
               <div class="file-select">
-                <input type="file" name="imageProfile" accept="image/png, image/jpeg" (change)="getFile($event)" />
+                <input type="file" name="imageProfile" accept="image/png, image/jpeg" (change)="getProfilePicture($event)" />
               </div>
 
 
