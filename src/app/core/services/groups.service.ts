@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -45,10 +44,14 @@ export class GroupsService {
     return this.http.get<any>(url).pipe(
       map((response) => {
         this.groupsListBehaviourSubject.next(response.groups)
-        this.groupIDBehaviourSubject.next(response.groups[0])
         return response;
       })
     );
+  }
+
+  updateGroupId(id:string): Observable<any> {
+    this.groupIDBehaviourSubject.next(id)
+    return this.groupID
   }
 
   getGroupInfo(id: string): Observable<any> {
