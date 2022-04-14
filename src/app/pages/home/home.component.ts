@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   groupUserID!: string | null;
 
   usersNames: Array<string> = [];
+  usersPictures: Array<string> = [];
 
   base64ProfileImage!: string;
   photo!: string | undefined;
@@ -39,6 +40,8 @@ export class HomeComponent implements OnInit {
 
   isAdmin!: boolean;
   adminID!: string;
+
+  defaultGroup!: string;
 
   constructor(
     private groupsService: GroupsService,
@@ -55,6 +58,7 @@ export class HomeComponent implements OnInit {
     });
 
     this.usersService.user.subscribe((response) => {
+
       this.name = response?.user.firstName;
       this.surname = response?.user.lastName;
       this.photo = response?.photo;
@@ -68,20 +72,20 @@ export class HomeComponent implements OnInit {
         console.log(error);
       }
     );
-
     this.groupsService.groupID.subscribe((response) => {
-      this.groupID = response;
+
     });
-
     this.getGroupDetails();
-
-    console.log(this.isAdmin)
   }
 
+  updateGroupID(id: string) {
+    this.groupsService.updateGroupId(id).subscribe((response) => {
+
+    });
+  }
   getGroupDetails() {
     this.sub = this.route.paramMap.subscribe((params: ParamMap) => {
       let id = params.get('id');
-
       if (id == null) {
         this.isLoading = false;
         this.groupsExist = false;
@@ -90,6 +94,7 @@ export class HomeComponent implements OnInit {
         this.groupsExist = true;
         this.paramID = id;
         this.groupsService.getGroupInfo(id!).subscribe((response) => {
+          console.log(response)
           this.groupName = response.groupName;
           this.groupRelationName = response.groupRelationName;
           this.groupUsers = response.userData;
@@ -97,14 +102,40 @@ export class HomeComponent implements OnInit {
           this.checkIsAdmin();
           for (var i = 0; i < response.userData.length; i++) {
             this.photo = response.userData[i].photo;
-
             this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
           }
           this.getUsersNames();
+          this.getUsersPictures();
         });
       }
     });
   }
+
+  // getGroupDetails2() {
+
+  //     if (this.groupID == null) {
+  //       this.isLoading = false;
+  //       this.groupsExist = false;
+  //       console.log("Entro en el if de groupdetails2")
+  //     } else {
+  //       this.isLoading = false;
+  //       this.groupsExist = true;
+  //       this.groupsService.getGroupInfo(this.groupID!).subscribe((response) => {
+  //         this.groupName = response.groupName;
+  //         this.groupRelationName = response.groupRelationName;
+  //         this.groupUsers = response.userData;
+  //         this.adminID = response.userAdmin.id;
+  //         this.checkIsAdmin();
+  //         for (var i = 0; i < response.userData.length; i++) {
+  //           this.photo = response.userData[i].photo;
+  //           this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
+  //         }
+  //         this.getUsersNames();
+  //         this.getUsersPictures();
+  //       });
+  //     }
+
+  // }
 
   getUsersNames() {
     if (this.groupUsers.length > 0) {
@@ -113,6 +144,19 @@ export class HomeComponent implements OnInit {
           .getUserInfo(this.groupUsers[i].id)
           .subscribe((response) => {
             this.usersNames.push(response.user.login);
+            this.usersPictures.push(response.photo);
+          });
+      }
+    }
+  }
+
+  getUsersPictures() {
+    if (this.groupUsers.length > 0) {
+      for (var i = 0; i < this.groupUsers.length; i++) {
+        this.groupsService
+          .getUserInfo(this.groupUsers[i].id)
+          .subscribe((response) => {
+            this.usersPictures.push(response.user.photo);
           });
       }
     }
@@ -120,7 +164,9 @@ export class HomeComponent implements OnInit {
 
   checkIsAdmin() {
     if (this.adminID == this.userID) {
-      this.isAdmin = true;
+      this.isAdmin = true ;
+    } else {
+      this.isAdmin = false
     }
   }
 
