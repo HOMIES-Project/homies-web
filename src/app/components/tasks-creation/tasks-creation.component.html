@@ -1,0 +1,58 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Crear tarea nueva</h4>
+        <button type="button" class="close" aria-label="Close">
+            <span aria-hidden="true"> × </span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form >
+            <div class="form-group">
+                <label for="userName"> Usuario que la realiza </label>
+                <div class="input-group">
+                    <div class="input-group-text">
+                        <img src="../../../assets/svg/username.svg" class="svg-icon" alt="" />
+                    </div>
+                    <input id="userName" class="form-control" placeholder="Nombre" formControlName="userName"
+                        name="dp" />
+
+                    <!-- Validation -->
+
+
+
+                </div>
+                <div class="form-group">
+                    <label for="taskRelation"> Descripción de la tarea * </label>
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <img src="../../../assets/svg/pencilEdit.svg" class="svg-icon" alt="" />
+                        </div>
+                        <textarea id="dateOfBirth" class="form-control" formControlName="taskRelation"
+                            placeholder="Descripción" name="dp"></textarea>
+
+
+                        <!--Validation
+            <div class="invalid-feedback" *ngIf="this.groupForm.controls.groupRelation.errors?.required">
+              ¡Tienes que rellenar este campo!
+            </div>
+            <div class="invalid-feedback" *ngIf="this.groupForm.controls.groupRelation.errors?.minlength">
+              El mínimo son 3 caracteres
+            </div>
+            <div class="invalid-feedback" *ngIf="this.groupForm.controls.groupRelation.errors?.maxlength">
+              El máximo son 100 caracteres
+            </div>-->
+        </div>
+
+                    </div>
+                </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-info">
+            Crear        </button>
+    </div>
+</ng-template>
+
+<a class="w3-bar-item w3-button">
+    <i class="fa fa-plus"></i>
+</a>

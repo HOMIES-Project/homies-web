@@ -14,7 +14,9 @@ export class SidebarComponent implements OnInit {
   sub: any;
   paramID!: string | null;
 
+
   noGroups!: boolean;
+
 
   constructor(
     private groupsService: GroupsService,
@@ -35,23 +37,27 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.paramID)
 
+
     //TODO: HANDLE SIDEBAR IF NO GROUPS.
     // if(this.groups?.length == 0) {
     //   this.noGroups = true;
     //   console.log("cero grupos")
     // }
+
   }
 
   navigateToHomeGroupID(id: string) {
     this.groupsService.updateGroupId(id).subscribe((response) => {
       this.paramID = response;
     });
+
     this.router.navigate(['home', id]);
   }
 
   navigateToTasks() {
     this.groupsService.groupID.subscribe((response) => {
       this.paramID = response;
+
     });
     this.router.navigate(['/home', 'tasks', this.paramID], {
       relativeTo: this.route,
@@ -76,4 +82,6 @@ export class SidebarComponent implements OnInit {
       queryParamsHandling: 'preserve',
     });
   }
+
 }
+

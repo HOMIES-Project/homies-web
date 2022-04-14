@@ -45,15 +45,18 @@ export class GroupsService {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
+
         this.groupsListBehaviourSubject.next(response.groups);
 
         if (localStorage.getItem('groupID') == null && response.groups >0) {
           this.groupIDBehaviourSubject.next(response.groups[0].id);
         }
+
         return response;
       })
     );
   }
+
 
   updateGroupId(id: string): Observable<any> {
     localStorage.setItem('groupID', id);
@@ -78,6 +81,7 @@ export class GroupsService {
   //   );
   // }
 
+
   getGroupInfo(id: string): Observable<any> {
     let url = `${environment.BASE_URL}/groups/${id}`;
     return this.http.get<any>(url).pipe(
@@ -96,6 +100,7 @@ export class GroupsService {
     let url = `${environment.BASE_URL}/groups/delete-user`;
     return this.http.post<GroupUserActionModel>(url, entry);
   }
+
 
   performLogoutFromGroups(): Observable<any> {
     localStorage.removeItem('groupID');
