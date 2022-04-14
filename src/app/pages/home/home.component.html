@@ -98,20 +98,20 @@
               <p style="float: left; width: 80%;">{{ this.groupUsersModel[indexOfUser].login}}</p>
 
               <div *ngIf="this.isAdmin">
-                <img [src]="this.user.admin ? '../../../assets/svg/crown.svg' : '../../../assets/svg/delete.svg'"
-                  class="svg-icon" style="float: right; width: 20px !important; height: 20px !important;" alt=""
+                <img *ngIf="this.user.admin" [src]=" '../../../assets/svg/crown.svg'" class="svg-icon"
+                  style="float: right; width: 20px !important; height: 20px !important;" alt="">
+                <img *ngIf="!this.user.admin" [src]=" '../../../assets/svg/delete.svg'" class="svg-icon"
+                  style="float: right; width: 20px !important; height: 20px !important;" alt=""
                   (click)="deleteUserFromGroup(this.groupUsersModel[indexOfUser].login)">
+
               </div>
               <div *ngIf="!this.isAdmin && this.user.admin">
                 <img src='../../../assets/svg/crown.svg' class="svg-icon"
-                  style="float: right; width: 20px !important; height: 20px !important;" alt=""
-                  (click)="deleteUserFromGroup(this.groupUsersModel[indexOfUser].login)">
+                  style="float: right; width: 20px !important; height: 20px !important;" alt="">
               </div>
             </div>
           </div>
         </div>
-
-
 
         <div *ngIf="this.isAdmin">
           <app-user-add-group [idGroup]="this.paramID!" [idAdminGroup]="this.userID"></app-user-add-group>

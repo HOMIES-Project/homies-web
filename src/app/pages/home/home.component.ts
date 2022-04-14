@@ -62,7 +62,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.imgBase64 = 'data:image/png;base64,'
 
-
     this.isLoading = true;
     this.usersService.userId.subscribe((userID) => {
       this.userID = userID;
@@ -84,11 +83,8 @@ export class HomeComponent implements OnInit {
       }
     );
     this.groupsService.groupID.subscribe();
-
     this.getGroupDetails();
-
   }
-
 
   updateGroupID(id: string) {
     this.groupsService.updateGroupId(id).subscribe();
@@ -105,6 +101,7 @@ export class HomeComponent implements OnInit {
         this.groupsExist = true;
         this.paramID = id;
         this.groupsService.getGroupInfo(id!).subscribe((groupInfo) => {
+          console.log(groupInfo)
           this.groupName = groupInfo.groupName;
           this.groupRelationName = groupInfo.groupRelationName;
           this.groupUsers = groupInfo.userData;
@@ -144,7 +141,6 @@ export class HomeComponent implements OnInit {
           },
           () => {
             if (i == this.groupUsers.length) this.isLodingUsers = false;
-
           }
         );
       }
@@ -185,11 +181,9 @@ export class HomeComponent implements OnInit {
       if (result.isConfirmed) {
         this.groupsService.performDeleteUserFromGroup(userToDelete).subscribe(
           (response) => {
-            console.log('usuario eliminado');
             window.location.reload();
           },
           (error) => {
-            console.log(error);
           }
         );
       } else if (result.isDenied) {
