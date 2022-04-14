@@ -23,6 +23,7 @@ export class AppComponent {
     private router: Router
   ) {
     usersService.login.subscribe((user) => {
+      console.log(user)
       this.user = user;
     });
     usersService.userId.subscribe((id) => {
@@ -38,6 +39,7 @@ export class AppComponent {
     //   this.username = response.user.firstName;
     // });
   }
+
   isLogged() {
     return this.user != null;
   }

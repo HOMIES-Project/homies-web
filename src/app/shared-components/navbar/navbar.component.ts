@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
   user!: LoginModel | null;
   id!: string;
   username!: string |undefined
-  groupID!: string;
+  groupID!: string | null
 
   constructor(private usersService: UsersService, private groupsService: GroupsService, private router: Router) {
     usersService.login.subscribe(user =>{
@@ -26,13 +26,20 @@ export class NavbarComponent implements OnInit {
     usersService.user.subscribe(response =>{
       this.username = response?.user.login
     })
+    groupsService.groupID.subscribe(response => {
+      this.groupID = response
+    })
   }
 
   ngOnInit(): void {
-    // this.groupsService.getUserInfo(this.id).subscribe((response) => {
-    //   this.username = response.user.firstName;
-    // });
+
   }
+
+  navigateToHomeGroupID() {
+    this.router.navigate(['home', this.groupID]);
+  }
+
+
   isLogged() {
     return this.user != null;
   }

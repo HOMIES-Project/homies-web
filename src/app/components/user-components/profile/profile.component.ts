@@ -42,6 +42,9 @@ export class ProfileComponent implements OnInit {
   base64Image: any;
   base64ProfileImage!: string;
 
+  imagePath!:any;
+  url!: any;
+
   constructor(
     private formBuilder: FormBuilder,
     private usersService: UsersService,
@@ -110,10 +113,30 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  getFile(event: any): any {
+//   onFileChanged(event: any) {
+//     const files = event.target.files;
+//     if (files.length === 0)
+//         return;
+//         console.log(files)
+
+//     const mimeType = files[0].type;
+//     if (mimeType.match(/image\/*/) == null) {
+//         return;
+//     }
+
+//     const reader = new FileReader();
+//     this.imagePath = files;
+//     reader.readAsDataURL(files[0]);
+//     reader.onload = (_event) => {
+//         this.url = reader.result;
+//     }
+// }
+
+  getProfilePicture(event: any): any {
     this.convertFile(event.target.files[0]).subscribe((base64) => {
       this.photo = base64;
-      console.log(this.photo )
+      this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
+      console.log(this.photo)
     });
   }
 

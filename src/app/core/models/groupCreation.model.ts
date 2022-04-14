@@ -23,3 +23,22 @@ export class GroupUserActionModel {
   }
 
 }
+
+export class GroupUserModel {
+  public id: string;
+  public login: string;
+  public photo: string;
+  public firstName: string;
+  public lastName: string;
+  public admin: boolean;
+
+  constructor(id: string, login: string, photo: string,  firstName: string, lastName: string, admin: boolean) {
+    this.id = id
+    this.login = login
+    this.photo = photo
+    this.firstName = firstName
+    this.lastName = lastName
+    this.admin = admin
+  }
+
+}
