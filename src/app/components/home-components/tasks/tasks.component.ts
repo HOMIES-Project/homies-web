@@ -6,10 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tasks.component.css']
 })
 export class TasksComponent implements OnInit {
+  open: boolean = true;
 
   constructor() { }
 
   ngOnInit(): void {
   }
+
+  openNewTarea(){
+   this.open = !this.open;
+   console.log(this.open)
+  }
+
 
 }
