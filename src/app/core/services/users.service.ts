@@ -1,3 +1,4 @@
+import { GroupsService } from 'src/app/core/services/groups.service';
 import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
 import { UserData } from './../models/user-data.model';
 import { RegisterModel } from '../models/register.model';
@@ -33,7 +34,7 @@ export class UsersService {
   public user: Observable<UserData | null>;
 
 
-  constructor(private http: HttpClient, private route: Router) {
+  constructor(private http: HttpClient, private route: Router, private groupsService: GroupsService) {
     this.loginModelBehaviourSubject = new BehaviorSubject<LoginModel | null>(
       JSON.parse(<string>localStorage.getItem(LOGIN_KEY))
     );
@@ -52,7 +53,7 @@ export class UsersService {
 
   /* LOGIN - POST */
 
-  performLogin(entry: LoginModel): Observable<LoginModel> {
+  performLogin(entry: LoginModel): Observable<any> {
     let url = `${environment.BASE_URL}/authenticate`;
     return this.http.post<any>(url, entry).pipe(
       map((APIreturn) => {
@@ -70,6 +71,10 @@ export class UsersService {
     this.loginModelBehaviourSubject.next(null);
     this.userIdBehaviourSubject.next(null);
     this.userBehaviourSubject.next(null);
+    this.groupsService.groupsList.subscribe(response =>{
+      response = null
+    })
+
     this.route.navigate(['/login']);
   }
 

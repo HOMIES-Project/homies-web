@@ -1,10 +1,9 @@
-import { UsersService } from 'src/app/core/services/users.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { HttpClient } from '@angular/common/http';
-import { GroupCreationModel } from '../models/groupCreation.model';
+import { GroupCreationModel, GroupUserActionModel } from '../models/groupCreation.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -13,8 +12,8 @@ import { map } from 'rxjs/operators';
 export class GroupsService {
 
   //OBSERVABLE - GROUP
-  private groupsListBehaviourSubject: BehaviorSubject<Array<GroupCreationModel> | null>;
-  public groupsList: Observable<Array<GroupCreationModel> | null>;
+  private groupsListBehaviourSubject: BehaviorSubject<Array<any> | null>;
+  public groupsList: Observable<Array<any> | null>;
 
   //OBSERVABLE -  GROUP ID
   private groupIDBehaviourSubject: BehaviorSubject<string| null>;
@@ -44,27 +43,34 @@ export class GroupsService {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        console.log(response.groups)
-        // for (var i=0; i<response.groups.length; i++ ) {
-        //   this.getUserInfo(response.groups[i].id).subscribe(response =>{
-        //     console.log(response)
-        //   })
-        // }
         this.groupsListBehaviourSubject.next(response.groups)
-        this.groupIDBehaviourSubject.next(response.groups[0])
         return response;
       })
     );
+  }
+
+  updateGroupId(id:string): Observable<any> {
+    this.groupIDBehaviourSubject.next(id)
+    return this.groupID
   }
 
   getGroupInfo(id: string): Observable<any> {
     let url = `${environment.BASE_URL}/groups/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        console.log(response)
         return response;
       })
     );
+  }
+
+  performAddUserToGroup(entry: GroupUserActionModel) {
+    let url = `${environment.BASE_URL}/groups/add-user`;
+    return this.http.post<GroupUserActionModel>(url, entry)
+  }
+
+  performDeleteUserFromGroup(entry: GroupUserActionModel) {
+    let url = `${environment.BASE_URL}/groups/delete-user`;
+    return this.http.post<GroupUserActionModel>(url, entry)
   }
 
 }

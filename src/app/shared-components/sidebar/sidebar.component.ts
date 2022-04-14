@@ -1,7 +1,7 @@
 import { UsersService } from 'src/app/core/services/users.service';
 import { GroupsService } from '../../core/services/groups.service';
 import { Component, OnInit } from '@angular/core';
-import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,22 +9,64 @@ import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
-
-  id!: number;
-  groups!: Array<GroupCreationModel> | null;
+  id!: string;
+  groups!: Array<any> | null;
+  sub: any;
+  paramID!: string | null;
 
   constructor(
     private groupsService: GroupsService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.usersService.userId.subscribe((response) => {
       this.id = response;
     });
+    this.groupsService.getUserInfo(this.id).subscribe((response) => {
+      this.groups = response.groups;
+      console.log(response.groups);
+    });
   }
 
   ngOnInit(): void {
-    this.groupsService.groupsList.subscribe((response) => {
-      this.groups = response;
+    console.log(this.paramID)
+  }
+
+  navigateToHomeGroupID(id: string) {
+    this.groupsService.updateGroupId(id).subscribe((response) => {
+      this.paramID = response;
+    });
+    console.log(this.paramID);
+    this.router.navigate(['home', id]);
+  }
+
+  navigateToTasks() {
+    this.groupsService.groupID.subscribe((response) => {
+      this.paramID = response;
+      console.log(response)
+    });
+    this.router.navigate(['/home', 'tasks', this.paramID], {
+      relativeTo: this.route,
+      queryParamsHandling: 'preserve',
+    });
+  }
+  navigateToGroceries() {
+    this.groupsService.groupID.subscribe((response) => {
+      this.paramID = response;
+    });
+    this.router.navigate(['/home', 'groceries', this.paramID], {
+      relativeTo: this.route,
+      queryParamsHandling: 'preserve',
+    });
+  }
+  navigateToExpenses() {
+    this.groupsService.groupID.subscribe((response) => {
+      this.paramID = response;
+    });
+    this.router.navigate(['/home', 'expenses', this.paramID], {
+      relativeTo: this.route,
+      queryParamsHandling: 'preserve',
     });
   }
 }

@@ -4,6 +4,7 @@ import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
 import { FormBuilder, Validators } from '@angular/forms';
 import { GroupsService } from '../../../core/services/groups.service';
 import { UsersService } from 'src/app/core/services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-group-creation',
@@ -20,7 +21,8 @@ export class GroupCreationComponent implements OnInit {
     private modalService: NgbModal,
     private groupsService: GroupsService,
     private usersService: UsersService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.usersService.userId.subscribe((response) => {
@@ -53,8 +55,9 @@ export class GroupCreationComponent implements OnInit {
 
           this.groupsService.performGroupCreation(group).subscribe(
             (response) => {
-              console.log(response);
-              window.location.reload()
+
+                this.router.navigate(['home', response.id]);
+
             },
             (error) => {
               console.log(error);

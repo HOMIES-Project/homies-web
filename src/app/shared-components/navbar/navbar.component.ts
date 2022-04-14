@@ -26,7 +26,6 @@ export class NavbarComponent implements OnInit {
     usersService.user.subscribe(response =>{
       this.username = response?.user.login
     })
-
   }
 
   ngOnInit(): void {

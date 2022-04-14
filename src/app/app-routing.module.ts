@@ -12,51 +12,60 @@ import { ActivationComponent } from './core/authentication/activation/activation
 import { RegisterComponent } from './core/authentication/register/register.component';
 import { RecoverPasswordComponent } from './core/authentication/recover-password/recover-password.component';
 
+
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'landing',
-    pathMatch: 'full',
+    path: "",
+    redirectTo: "landing",
+    pathMatch: "full"
   },
   {
-    path: 'login',
-    component: LoginComponent,
+    path:'login',
+    component:LoginComponent
   },
   {
-    path: 'activation',
-    component: ActivationComponent,
+    path:'activation',
+    component: ActivationComponent
   },
   {
-    path: 'register',
-    component: RegisterComponent,
+    path:'register',
+    component:RegisterComponent
   },
   {
     path: 'landing',
-    component: LandingComponent,
+    component: LandingComponent
   },
   {
     path: 'recovery',
-    component: RecoverPasswordComponent,
+    component: RecoverPasswordComponent
+  },
+  {
+    path: 'tasks',
+    component: TasksComponent
+  },
+  {
+    path: 'home',
+    component: HomeComponent
   },
   {
     path: 'home',
     canActivate: [AuthGuard],
-    children: [
-      { path: '', component: HomeComponent },
-      { path: 'tasks', component: TasksComponent },
-      { path: 'expenses', component: ExpensesComponent },
-      { path: 'groceries', component: GroceriesComponent },
-    ],
+    children:[
+      {path:':id', component: HomeComponent},
+      {path:'tasks/:id', component: TasksComponent},
+      {path:'expenses/:id', component: ExpensesComponent},
+      {path:'groceries/:id', component: GroceriesComponent}
+    ]
   },
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard]
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
