@@ -1,4 +1,4 @@
-import { UserData } from '../../../core/models/user-data.model';
+import { UserData, UserEditModel } from '../../../core/models/user-data.model';
 import { RegisterModel } from '../../../core/models/register.model';
 import { Router } from '@angular/router';
 import {
@@ -32,13 +32,13 @@ export class ProfileComponent implements OnInit {
   birth!: string | undefined;
   premium: boolean = false;
   userChanged!: RegisterModel;
-  userDataChanged!: UserData;
+  userDataChanged!: UserEditModel;
   showPassword: boolean = false;
   userProfileFrom: FormGroup;
   profilePicture!: File;
   profilePicturePath!: any;
   birthDate!: Date;
-  photoContentType = "image/png"
+  photoContentType = 'image/png';
   langKey!: string;
 
   base64Output!: string;
@@ -94,7 +94,7 @@ export class ProfileComponent implements OnInit {
       name: this.name,
       surname: this.surname,
       email: this.email,
-      phone: this.phone
+      phone: this.phone,
     });
 
     /** DECODE BASE64 PROFILE PICTURE**/
@@ -133,24 +133,25 @@ export class ProfileComponent implements OnInit {
 
   /** SUBMIT CHANGES IN USER PROFILE **/
 
-
   submitChangeProfileForm() {
     this.userDataChanged = new UserEditModel(
       this.userProfileFrom.controls.login.value,
       this.userProfileFrom.controls.firstName.value,
       this.userProfileFrom.controls.lastName.value,
       this.userProfileFrom.controls.email.value,
-      (this.langKey = navigator.language),
+      this.langKey = navigator.language,
       this.userProfileFrom.controls.phone.value,
-      this.photo!,
+      this.userProfileFrom.controls.photo.value,
       this.photoContentType,
       this.userProfileFrom.controls.birthDate.value
     );
-      this.birthDate = this.userProfileFrom.controls.birthDate.value
-    this.usersService.performEditUser(this.userDataChanged, this.id).subscribe(response => {
-      console.log(response)
-    })
-    console.log(typeof this.birthDate)
+    this.birthDate = this.userProfileFrom.controls.birthDate.value;
+    this.usersService
+      .performEditUser(this.userDataChanged, this.id)
+      .subscribe((response) => {
+        console.log(response);
+      });
+    console.log(typeof this.birthDate);
     console.log(this.userDataChanged);
   }
 
