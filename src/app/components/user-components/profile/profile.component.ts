@@ -1,4 +1,4 @@
-import { UserData } from '../../../core/models/user-data.model';
+import { UserData, UserEditModel } from '../../../core/models/user-data.model';
 import { RegisterModel } from '../../../core/models/register.model';
 import { Router } from '@angular/router';
 import {
@@ -24,15 +24,17 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class ProfileComponent implements OnInit {
   id!: string;
   login!: string | undefined;
-  name!: string | undefined;
-  surname!: string | undefined;
+  firstName!: string | undefined;
+  lastName!: string | undefined;
   email!: string | undefined;
   phone!: string | undefined;
   photo!: string | undefined;
-  birth!: string | undefined;
+  birthDate!: Date | undefined;
   premium: boolean = false;
-  userChanged!: RegisterModel;
-  userDataChanged!: UserData;
+  langKey!: string;
+  photoContentType: string = 'image/png';
+
+  userDataChanged!: UserEditModel;
   showPassword: boolean = false;
   userForm: FormGroup;
   profilePicture!: File;
@@ -42,7 +44,7 @@ export class ProfileComponent implements OnInit {
   base64Image: any;
   base64ProfileImage!: string;
 
-  imagePath!:any;
+  imagePath!: any;
   url!: any;
 
   constructor(
@@ -53,13 +55,12 @@ export class ProfileComponent implements OnInit {
   ) {
     this.userForm = this.formBuilder.group({
       login: new FormControl(),
-      name: new FormControl(),
-      surname: new FormControl(),
+      firstName: new FormControl(),
+      lastName: new FormControl(),
       email: new FormControl(),
       phone: new FormControl(),
-      birth: new FormControl(),
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      passConfirm: ['', Validators.required],
+      birthDate: new FormControl(),
+      photo: new FormControl(),
     });
   }
 
@@ -78,25 +79,19 @@ export class ProfileComponent implements OnInit {
     this.usersService.user.subscribe((response) => {
       this.login = response?.user.login;
       this.email = response?.user.email;
-      this.name = response?.user.firstName;
-      this.surname = response?.user.lastName;
-
+      this.firstName = response?.user.firstName;
+      this.lastName = response?.user.lastName;
       (this.phone = response?.phone),
-        (this.birth = response?.birthDate),
         (this.photo = response?.photo);
     });
     /** ADD USER VALUES TO FORM DEFAULT VALUES  **/
     this.userForm.patchValue({
       login: this.login,
-      name: this.name,
-      surname: this.surname,
+      firstName: this.firstName,
+      lastName: this.lastName,
       email: this.email,
       phone: this.phone,
     });
-
-    // /** DISABLE NOT EDITABLE FIELDS **/
-    // this.userForm.controls.login.disable();
-    // this.userForm.controls.email.disable();
 
     /** DECODE BASE64 PROFILE PICTURE**/
     this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
@@ -106,6 +101,27 @@ export class ProfileComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
+  /** SUBMIT CHANGES IN USER PROFILE **/
+  submitChangeProfileForm() {
+    this.userDataChanged = new UserEditModel(
+      this.userForm.controls.login.value,
+      this.userForm.controls.firstName.value,
+      this.userForm.controls.lastName.value,
+      this.userForm.controls.email.value,
+      (this.langKey = navigator.language),
+      this.userForm.controls.phone.value,
+      this.photo!,
+      this.photoContentType,
+      this.userForm.controls.birthDate.value
+    );
+      this.birthDate = this.userForm.controls.birthDate.value
+    this.usersService.performEditUser(this.userDataChanged, this.id).subscribe(response => {
+      console.log(response)
+    })
+    console.log(typeof this.birthDate)
+    console.log(this.userDataChanged);
+  }
+
   /** PROFILE PICTURE **/
   profilePictureImageDecoded() {
     return this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -113,30 +129,11 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-//   onFileChanged(event: any) {
-//     const files = event.target.files;
-//     if (files.length === 0)
-//         return;
-//         console.log(files)
-
-//     const mimeType = files[0].type;
-//     if (mimeType.match(/image\/*/) == null) {
-//         return;
-//     }
-
-//     const reader = new FileReader();
-//     this.imagePath = files;
-//     reader.readAsDataURL(files[0]);
-//     reader.onload = (_event) => {
-//         this.url = reader.result;
-//     }
-// }
-
   getProfilePicture(event: any): any {
     this.convertFile(event.target.files[0]).subscribe((base64) => {
       this.photo = base64;
       this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
-      console.log(this.photo)
+      console.log(this.photo);
     });
   }
 
@@ -150,28 +147,6 @@ export class ProfileComponent implements OnInit {
       }
     };
     return result;
-  }
-
-  /** SUBMIT CHANGES IN USER PROFILE **/
-  submitChangeProfileForm() {
-    this.userDataChanged = new UserData(
-      this.id,
-      '',
-      this.userForm.controls.phone.value,
-      this.premium,
-      '',
-      new RegisterModel(
-        this.id,
-        this.userForm.controls.login.value,
-        this.userForm.controls.email.value,
-        this.userForm.controls.password.value,
-        this.userForm.controls.name.value,
-        this.userForm.controls.surname.value,
-        '',
-        true
-      )
-    );
-    console.log(this.userDataChanged);
   }
 
   /** DELETE USER **/
@@ -199,9 +174,13 @@ export class ProfileComponent implements OnInit {
           }
         );
       } else if (result.isDenied) {
-        Swal.fire('Changes are not saved', '', 'info')
+        Swal.fire('Changes are not saved', '', 'info');
       }
-
     });
   }
 }
+
+
+
+
+
