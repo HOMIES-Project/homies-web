@@ -147,6 +147,9 @@ export class ProfileComponent implements OnInit {
         true
       )
     );
+    this.usersService.performEditUser(this.userDataChanged, this.id).subscribe(response => {
+console.log(response)
+    })
     console.log(this.userDataChanged);
   }
 

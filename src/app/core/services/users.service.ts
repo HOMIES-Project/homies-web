@@ -68,7 +68,6 @@ export class UsersService {
     );
   }
 
-
   performLogout() {
     localStorage.removeItem('id');
     localStorage.removeItem(LOGIN_KEY);
@@ -76,7 +75,6 @@ export class UsersService {
     this.loginModelBehaviourSubject.next(null);
     this.userIdBehaviourSubject.next(null);
     this.userBehaviourSubject.next(null);
-
 
     this.route.navigate(['/login']);
   }
@@ -142,6 +140,12 @@ export class UsersService {
         return response;
       })
     );
+  }
+
+  /* EDIT USER - POST */
+  performEditUser(entry: any, id: string): Observable<any> {
+    let url = `${environment.BASE_URL}/user-data/${id}`;
+    return this.http.put<any>(url, entry);
   }
 
   /* DELETE USER - DELETE*/
