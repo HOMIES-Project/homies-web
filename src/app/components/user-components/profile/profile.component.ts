@@ -24,22 +24,21 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class ProfileComponent implements OnInit {
   id!: string;
   login!: string | undefined;
-  name!: string | undefined;
-  surname!: string | undefined;
+  firstName!: string | undefined;
+  lastName!: string | undefined;
   email!: string | undefined;
   phone!: string | undefined;
   photo!: string | undefined;
-  birth!: string | undefined;
+  birthDate!: Date | undefined;
   premium: boolean = false;
-  userChanged!: RegisterModel;
+  langKey!: string;
+  photoContentType: string = 'image/png';
+
   userDataChanged!: UserEditModel;
   showPassword: boolean = false;
-  userProfileFrom: FormGroup;
+  userForm: FormGroup;
   profilePicture!: File;
   profilePicturePath!: any;
-  birthDate!: Date;
-  photoContentType = 'image/png';
-  langKey!: string;
 
   base64Output!: string;
   base64Image: any;
@@ -54,16 +53,14 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private sanitizer: DomSanitizer
   ) {
-    this.userProfileFrom = this.formBuilder.group({
+    this.userForm = this.formBuilder.group({
       login: new FormControl(),
-      name: new FormControl(),
-      surname: new FormControl(),
+      firstName: new FormControl(),
+      lastName: new FormControl(),
       email: new FormControl(),
       phone: new FormControl(),
+      birthDate: new FormControl(),
       photo: new FormControl(),
-      birth: new FormControl(),
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      passConfirm: ['', Validators.required],
     });
   }
 
@@ -82,17 +79,16 @@ export class ProfileComponent implements OnInit {
     this.usersService.user.subscribe((response) => {
       this.login = response?.user.login;
       this.email = response?.user.email;
-      this.name = response?.user.firstName;
-      this.surname = response?.user.lastName;
+      this.firstName = response?.user.firstName;
+      this.lastName = response?.user.lastName;
       (this.phone = response?.phone),
-        (this.birth = response?.birthDate),
         (this.photo = response?.photo);
     });
     /** ADD USER VALUES TO FORM DEFAULT VALUES  **/
-    this.userProfileFrom.patchValue({
+    this.userForm.patchValue({
       login: this.login,
-      name: this.name,
-      surname: this.surname,
+      firstName: this.firstName,
+      lastName: this.lastName,
       email: this.email,
       phone: this.phone,
     });
@@ -103,6 +99,27 @@ export class ProfileComponent implements OnInit {
 
   showPass() {
     this.showPassword = !this.showPassword;
+  }
+
+  /** SUBMIT CHANGES IN USER PROFILE **/
+  submitChangeProfileForm() {
+    this.userDataChanged = new UserEditModel(
+      this.userForm.controls.login.value,
+      this.userForm.controls.firstName.value,
+      this.userForm.controls.lastName.value,
+      this.userForm.controls.email.value,
+      (this.langKey = navigator.language),
+      this.userForm.controls.phone.value,
+      this.photo!,
+      this.photoContentType,
+      this.userForm.controls.birthDate.value
+    );
+      this.birthDate = this.userForm.controls.birthDate.value
+    this.usersService.performEditUser(this.userDataChanged, this.id).subscribe(response => {
+      console.log(response)
+    })
+    console.log(typeof this.birthDate)
+    console.log(this.userDataChanged);
   }
 
   /** PROFILE PICTURE **/
@@ -116,6 +133,7 @@ export class ProfileComponent implements OnInit {
     this.convertFile(event.target.files[0]).subscribe((base64) => {
       this.photo = base64;
       this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
+      console.log(this.photo);
     });
   }
 
@@ -129,30 +147,6 @@ export class ProfileComponent implements OnInit {
       }
     };
     return result;
-  }
-
-  /** SUBMIT CHANGES IN USER PROFILE **/
-
-  submitChangeProfileForm() {
-    this.userDataChanged = new UserEditModel(
-      this.userProfileFrom.controls.login.value,
-      this.userProfileFrom.controls.firstName.value,
-      this.userProfileFrom.controls.lastName.value,
-      this.userProfileFrom.controls.email.value,
-      this.langKey = navigator.language,
-      this.userProfileFrom.controls.phone.value,
-      this.userProfileFrom.controls.photo.value,
-      this.photoContentType,
-      this.userProfileFrom.controls.birthDate.value
-    );
-    this.birthDate = this.userProfileFrom.controls.birthDate.value;
-    this.usersService
-      .performEditUser(this.userDataChanged, this.id)
-      .subscribe((response) => {
-        console.log(response);
-      });
-    console.log(typeof this.birthDate);
-    console.log(this.userDataChanged);
   }
 
   /** DELETE USER **/
@@ -185,3 +179,8 @@ export class ProfileComponent implements OnInit {
     });
   }
 }
+
+
+
+
+

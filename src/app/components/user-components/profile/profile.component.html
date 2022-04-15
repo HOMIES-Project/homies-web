@@ -4,23 +4,21 @@
       <div class="card card-login text-black shadow-lg rounded">
         <div class="card-body text-center">
           <div class="mb-md-1 mt-md-4 pb-2">
-            <form [formGroup]="userProfileFrom" (submit)="submitChangeProfileForm()">
-              <div>
-                <img *ngIf="this.photo" [src]="profilePictureImageDecoded()" alt="" width="100px" height="100px"
-                  class="dot  " (change)="getProfilePicture($event)">
+            <div><img *ngIf="this.photo" [src]="profilePictureImageDecoded()" alt="" width="100px" height="100px" class="dot  " (change)="getProfilePicture($event)"></div>
+            <span class="dot" *ngIf="!this.photo">
+              <h2 class="initial center">
+                {{ this.firstName?.charAt(0) }}{{ this.lastName?.charAt(0) }}
+              </h2>
+            </span>
+            <div class="buttonEdit">
+              <div class="file-select">
+                <input type="file" name="imageProfile" accept="image/png, image/jpeg" (change)="getProfilePicture($event)" />
               </div>
-              <span class="dot" *ngIf="!this.photo">
-                <h2 class="initial center">
-                  {{ this.name?.charAt(0) }}{{ this.surname?.charAt(0) }}
-                </h2>
-              </span>
-              <div class="buttonEdit">
-                <div class="file-select">
-                  <input type="file" name="imageProfile" formControlName="photo" accept="image/png, image/jpeg"
-                    (change)="getProfilePicture($event)"  />
-                </div>
-              </div>
-              <div class="mb-5 mt-1 pb-2">
+
+
+            </div>
+            <div class="mb-5 mt-1 pb-2">
+              <form [formGroup]="userForm" (submit)="submitChangeProfileForm()">
                 <div class="d-flex flex-column col-10 m-auto justify-content-center">
                   <h5 align="left">Datos personales</h5>
                   <!--USER-->
@@ -30,7 +28,7 @@
                       <div class="input-group-text">
                         <img src="../../../../assets/svg/username.svg" class="svg-icon" alt="" />
                       </div>
-                      <input id="username" type="text" name="username" formControlName="login"
+                      <input id="username" type="text"  name="login" formControlName="login"
                         class="fields form-control normal-border" value="{{ this.login }}" placeholder="Usuario" />
                     </div>
                   </div>
@@ -42,8 +40,8 @@
                       <div class="input-group-text">
                         <i class="fa fa-vcard"></i>
                       </div>
-                      <input id="name" type="text" name="name" formControlName="name"
-                        class="fields form-control normal-border" value="{{ this.name }}" placeholder="Nombre" />
+                      <input id="name" type="text" name="name" formControlName="firstName"
+                        class="fields form-control normal-border" value="{{ this.firstName }}" placeholder="Nombre" />
                     </div>
                   </div>
 
@@ -54,8 +52,8 @@
                       <div class="input-group-text">
                         <i class="fa fa-vcard"></i>
                       </div>
-                      <input id="surname" type="text" name="surname" formControlName="surname"
-                        class="fields form-control normal-border" value="{{ this.surname }}" placeholder="Apellido" />
+                      <input id="surname" type="text" name="surname" formControlName="lastName"
+                        class="fields form-control normal-border" value="{{ this.lastName }}" placeholder="Apellido" />
                     </div>
                   </div>
 
@@ -90,8 +88,8 @@
                       <div class="input-group-text">
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <input id="birth" type="text" onfocus="(this.type='date')" name="birth" formControlName="birth"
-                        class="fields form-control normal-border" value="{{ this.birth }}"
+                      <input id="birth" type="text" onfocus="(this.type='date')" name="birth" formControlName="birthDate"
+                        class="fields form-control normal-border" value="{{ this.birthDate }}"
                         placeholder="Fecha de nacimiento" />
                     </div>
                   </div>
@@ -100,8 +98,7 @@
                     <div class="card">
                       <div class="card-header" id="headingOne">
                         <h5 class="mb-0" align="left">
-                          <button class="btn btn-link passwordAccordion" data-toggle="collapse"
-                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          <button class="btn btn-link passwordAccordion" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             Cambiar la contraseña
                           </button>
                         </h5>
@@ -109,84 +106,83 @@
 
                       <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
-                          <!--PASSWORD-->
-                          <div class="form-outline mb-4">
-                            <div class="input-group">
-                              <!-- ICONO CANDADO -->
-                              <div class="input-group-text">
-                                <img src="../../../assets/svg/password.svg" class="svg-icon" alt="" />
-                              </div>
-                              <input id="pass" type="password" name="pass" formControlName="password"
-                                placeholder="Contraseña actual" [type]="showPassword ? 'text' : 'password'"
-                                class="fields form-control password-field is-invalid" [ngClass]="{}" />
-                              <!-- ICONO NO SEE -->
-                              <div class="input-group-text no-see">
-                                <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
-                                  *ngIf="!this.showPassword" alt="" />
-                                <img src="../../../assets/svg/eye.svg" class="svg-icon eye" (click)="showPass()"
-                                  *ngIf="this.showPassword" alt="" />
-                              </div>
-                              <!--Validation-->
-                              <div class="invalid-feedback" *ngIf="">
-                                ¡Tienes que rellenar este campo!
-                              </div>
-                            </div>
-                          </div>
+                            <!--PASSWORD-->
+                  <div class="form-outline mb-4">
+                    <div class="input-group">
+                      <!-- ICONO CANDADO -->
+                      <div class="input-group-text">
+                        <img src="../../../assets/svg/password.svg" class="svg-icon" alt="" />
+                      </div>
+                      <input id="pass" type="password" name="pass" formControlName="password" placeholder="Contraseña actual"
+                        [type]="showPassword ? 'text' : 'password'"
+                        class="fields form-control password-field is-invalid" [ngClass]="{}" />
+                      <!-- ICONO NO SEE -->
+                      <div class="input-group-text no-see">
+                        <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
+                          *ngIf="!this.showPassword" alt="" />
+                        <img src="../../../assets/svg/eye.svg" class="svg-icon eye" (click)="showPass()"
+                          *ngIf="this.showPassword" alt="" />
+                      </div>
+                      <!--Validation-->
+                      <div class="invalid-feedback" *ngIf="">
+                        ¡Tienes que rellenar este campo!
+                      </div>
+                    </div>
+                  </div>
 
-                          <!--NEW PASSWORD-->
-                          <div class="form-outline mb-4">
-                            <div class="input-group">
-                              <!-- ICONO CANDADO -->
-                              <div class="input-group-text">
-                                <img src="../../../assets/svg/password.svg" class="svg-icon" alt="" />
-                              </div>
-                              <input id="pass" type="password" name="pass" formControlName="password"
-                                placeholder="Nueva contraseña" [type]="showPassword ? 'text' : 'password'"
-                                class="fields form-control password-field is-invalid" [ngClass]="{}" />
-                              <!-- ICONO NO SEE -->
-                              <div class="input-group-text no-see">
-                                <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
-                                  *ngIf="!this.showPassword" alt="" />
-                                <img src="../../../assets/svg/eye.svg" class="svg-icon eye" (click)="showPass()"
-                                  *ngIf="this.showPassword" alt="" />
-                              </div>
-                              <!--Validation-->
-                              <div class="invalid-feedback" *ngIf="">
-                                ¡Tienes que rellenar este campo!
-                              </div>
-                              <div class="invalid-feedback" *ngIf="">
-                                La contraseña debe tener al menos 8 caracteres
-                              </div>
-                            </div>
-                          </div>
+                  <!--NEW PASSWORD-->
+                  <div class="form-outline mb-4">
+                    <div class="input-group">
+                      <!-- ICONO CANDADO -->
+                      <div class="input-group-text">
+                        <img src="../../../assets/svg/password.svg" class="svg-icon" alt="" />
+                      </div>
+                      <input id="pass" type="password" name="pass" formControlName="password"
+                        placeholder="Nueva contraseña" [type]="showPassword ? 'text' : 'password'"
+                        class="fields form-control password-field is-invalid" [ngClass]="{}" />
+                      <!-- ICONO NO SEE -->
+                      <div class="input-group-text no-see">
+                        <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
+                          *ngIf="!this.showPassword" alt="" />
+                        <img src="../../../assets/svg/eye.svg" class="svg-icon eye" (click)="showPass()"
+                          *ngIf="this.showPassword" alt="" />
+                      </div>
+                      <!--Validation-->
+                      <div class="invalid-feedback" *ngIf="">
+                        ¡Tienes que rellenar este campo!
+                      </div>
+                      <div class="invalid-feedback" *ngIf="">
+                        La contraseña debe tener al menos 8 caracteres
+                      </div>
+                    </div>
+                  </div>
 
-                          <!--PASSWORD CONFIRMATION-->
-                          <div class="form-outline mb-4 box-content">
-                            <div class="input-group">
-                              <!-- ICONO CANDADO -->
-                              <div class="input-group-text">
-                                <img src="../../../assets/svg/password.svg" class="svg-icon" alt="" />
-                              </div>
-                              <input id="passConfirm" type="password" name="passConfirm" formControlName="passConfirm"
-                                class="fields form-control password-field is-invalid"
-                                placeholder="Repetir contraseña nueva" [type]="showPassword ? 'text' : 'password'"
-                                [ngClass]="{}" />
-                              <!-- ICONO NO SEE -->
-                              <div class="input-group-text no-see">
-                                <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
-                                  *ngIf="!this.showPassword" alt="" />
-                                <img src="../../../assets/svg/eye.svg" class="svg-icon eye" (click)="showPass()"
-                                  *ngIf="this.showPassword" alt="" />
-                              </div>
-                              <!--Validation-->
-                              <div class="invalid-feedback" *ngIf="">
-                                ¡Tienes que rellenar este campo!
-                              </div>
-                              <div class="invalid-feedback" *ngIf="">
-                                Las contraseñas no coinciden
-                              </div>
-                            </div>
-                          </div>
+                  <!--PASSWORD CONFIRMATION-->
+                  <div class="form-outline mb-4 box-content">
+                    <div class="input-group">
+                      <!-- ICONO CANDADO -->
+                      <div class="input-group-text">
+                        <img src="../../../assets/svg/password.svg" class="svg-icon" alt="" />
+                      </div>
+                      <input id="passConfirm" type="password" name="passConfirm" formControlName="passConfirm"
+                        class="fields form-control password-field is-invalid" placeholder="Repetir contraseña nueva"
+                        [type]="showPassword ? 'text' : 'password'" [ngClass]="{}" />
+                      <!-- ICONO NO SEE -->
+                      <div class="input-group-text no-see">
+                        <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
+                          *ngIf="!this.showPassword" alt="" />
+                        <img src="../../../assets/svg/eye.svg" class="svg-icon eye" (click)="showPass()"
+                          *ngIf="this.showPassword" alt="" />
+                      </div>
+                      <!--Validation-->
+                      <div class="invalid-feedback" *ngIf="">
+                        ¡Tienes que rellenar este campo!
+                      </div>
+                      <div class="invalid-feedback" *ngIf="">
+                        Las contraseñas no coinciden
+                      </div>
+                    </div>
+                  </div>
                         </div>
                       </div>
                     </div>
@@ -199,16 +195,15 @@
                     Guardar cambios
                   </button>
                 </div>
-
-            <button type="button" class="btn btn-danger btn-lg px-5 text-uppercase mt-4 text-white"
-              (click)="deleteUser()">
-              Eliminar cuenta
-            </button>
+              </form>
+              <button type="button" class="btn btn-danger btn-lg px-5 text-uppercase mt-4 text-white"
+                (click)="deleteUser()">
+                Eliminar cuenta
+              </button>
+            </div>
           </div>
-        </form>
         </div>
       </div>
     </div>
   </div>
-</div>
 </div>
