@@ -37,6 +37,9 @@ export class ProfileComponent implements OnInit {
   userProfileFrom: FormGroup;
   profilePicture!: File;
   profilePicturePath!: any;
+  birthDate!: Date;
+  photoContentType = "image/png"
+  langKey!: string;
 
   base64Output!: string;
   base64Image: any;
@@ -129,27 +132,25 @@ export class ProfileComponent implements OnInit {
   }
 
   /** SUBMIT CHANGES IN USER PROFILE **/
+
+
   submitChangeProfileForm() {
-    this.userDataChanged = new UserData(
-      this.id,
-      this.userProfileFrom.controls.photo.value,
+    this.userDataChanged = new UserEditModel(
+      this.userProfileFrom.controls.login.value,
+      this.userProfileFrom.controls.firstName.value,
+      this.userProfileFrom.controls.lastName.value,
+      this.userProfileFrom.controls.email.value,
+      (this.langKey = navigator.language),
       this.userProfileFrom.controls.phone.value,
-      this.premium,
-      '',
-      new RegisterModel(
-        this.id,
-        this.userProfileFrom.controls.login.value,
-        this.userProfileFrom.controls.email.value,
-        this.userProfileFrom.controls.password.value,
-        this.userProfileFrom.controls.name.value,
-        this.userProfileFrom.controls.surname.value,
-        '',
-        true
-      )
+      this.photo!,
+      this.photoContentType,
+      this.userProfileFrom.controls.birthDate.value
     );
+      this.birthDate = this.userProfileFrom.controls.birthDate.value
     this.usersService.performEditUser(this.userDataChanged, this.id).subscribe(response => {
-console.log(response)
+      console.log(response)
     })
+    console.log(typeof this.birthDate)
     console.log(this.userDataChanged);
   }
 
