@@ -82,17 +82,19 @@ export class HomeComponent implements OnInit {
         console.log(error);
       }
     );
-    this.groupsService.groupID.subscribe();
+    // this.groupsService.groupID.subscribe(response => {
+    //   console.log(response)
+    // });
     this.getGroupDetails();
   }
 
-  updateGroupID(id: string) {
-    this.groupsService.updateGroupId(id).subscribe();
-  }
+  // updateGroupID(id: string) {
+  //   this.groupsService.updateGroupId(id).subscribe();
+  // }
 
   getGroupDetails() {
-    this.sub = this.route.paramMap.subscribe((params: ParamMap) => {
-      let id = params.get('id');
+    this.groupsService.groupID.subscribe((response) => {
+      let id = response
       if (id == null) {
         this.isLoading = false;
         this.groupsExist = false;

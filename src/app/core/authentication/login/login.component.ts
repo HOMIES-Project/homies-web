@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   isLoadingWhenLoged: boolean = false;
 
   idParam!: string;
+  groupID!:string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -54,13 +55,12 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['home']);
             this.isLoadingWhenLoged = false;
           } else {
-            let id = response.groups[0].id
-            this.router.navigate(['home', id]);
-
+            this.groupID = response.groups[0].id
+            this.router.navigate(['home']);
+            this.groupsService.updateGroupId(this.groupID).subscribe()
             this.isLoadingWhenLoged = false;
           }
         });
-        console.log("logueado")
         this.isLoading = false;
         this.errorMsg = null;
       },
@@ -70,6 +70,8 @@ export class LoginComponent implements OnInit {
         this.isLoading = false;
       },
     );
+
+
   }
 
 

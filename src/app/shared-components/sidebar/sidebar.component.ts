@@ -2,6 +2,7 @@ import { UsersService } from 'src/app/core/services/users.service';
 import { GroupsService } from '../../core/services/groups.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { windowWhen } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
@@ -43,10 +44,12 @@ export class SidebarComponent implements OnInit {
   }
 
   navigateToHomeGroupID(id: string) {
+    console.log(id)
     this.groupsService.updateGroupId(id).subscribe((response) => {
       this.paramID = response;
     });
-    this.router.navigate(['home', id]);
+    this.router.navigate(['home']);
+
   }
 
   navigateToTasks() {
@@ -57,6 +60,7 @@ export class SidebarComponent implements OnInit {
       relativeTo: this.route,
       queryParamsHandling: 'preserve',
     });
+
   }
   navigateToGroceries() {
     this.groupsService.groupID.subscribe((response) => {

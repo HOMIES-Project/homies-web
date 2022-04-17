@@ -24,8 +24,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class ProfileComponent implements OnInit {
   id!: string;
   login!: string | undefined;
-  name!: string | undefined;
-  surname!: string | undefined;
+  firstName!: string | undefined;
+  lastName!: string | undefined;
   email!: string | undefined;
   phone!: string | undefined;
   photo!: string | undefined;
@@ -40,6 +40,8 @@ export class ProfileComponent implements OnInit {
   birthDate!: Date;
   photoContentType = 'image/png';
   langKey!: string;
+
+  successfullyEdited: boolean = false;
 
   base64Output!: string;
   base64Image: any;
@@ -56,12 +58,12 @@ export class ProfileComponent implements OnInit {
   ) {
     this.userProfileFrom = this.formBuilder.group({
       login: new FormControl(),
-      name: new FormControl(),
-      surname: new FormControl(),
+      firstName: new FormControl(),
+      lastName: new FormControl(),
       email: new FormControl(),
       phone: new FormControl(),
       photo: new FormControl(),
-      birth: new FormControl(),
+      birthDate: new FormControl(),
       password: ['', [Validators.required, Validators.minLength(8)]],
       passConfirm: ['', Validators.required],
     });
@@ -82,8 +84,8 @@ export class ProfileComponent implements OnInit {
     this.usersService.user.subscribe((response) => {
       this.login = response?.user.login;
       this.email = response?.user.email;
-      this.name = response?.user.firstName;
-      this.surname = response?.user.lastName;
+      this.firstName = response?.user.firstName;
+      this.lastName = response?.user.lastName;
       (this.phone = response?.phone),
         (this.birth = response?.birthDate),
         (this.photo = response?.photo);
@@ -91,8 +93,8 @@ export class ProfileComponent implements OnInit {
     /** ADD USER VALUES TO FORM DEFAULT VALUES  **/
     this.userProfileFrom.patchValue({
       login: this.login,
-      name: this.name,
-      surname: this.surname,
+      firstName: this.firstName,
+      lastName: this.lastName,
       email: this.email,
       phone: this.phone,
     });
@@ -150,8 +152,12 @@ export class ProfileComponent implements OnInit {
       .performEditUser(this.userDataChanged, this.id)
       .subscribe((response) => {
         console.log(response);
+        this.successfullyEdited = true
+      }, error=> {
+        console.log(error)
       });
     console.log(typeof this.birthDate);
+    console.log(this.photo);
     console.log(this.userDataChanged);
   }
 

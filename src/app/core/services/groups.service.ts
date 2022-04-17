@@ -37,8 +37,9 @@ export class GroupsService {
   /* GROUP CREATION - POST */
   performGroupCreation(entry: GroupCreationModel): Observable<any> {
     let url = `${environment.BASE_URL}/groups`;
-
-    return this.http.post<GroupCreationModel>(url, entry);
+    return this.http.post<GroupCreationModel>(url, entry).pipe(map(apireturn => {
+      this.groupIDBehaviourSubject.next(apireturn.id)
+    }))
   }
 
   getUserInfo(id: string): Observable<any> {
@@ -71,16 +72,7 @@ export class GroupsService {
     return this.groupID;
   }
 
-  // getListOfGroups(id: string): Observable<any> {
-  //   let url = `${environment.BASE_URL}/user-data/${id}`;
-  //   return this.http.get<any>(url).pipe(
-  //     map((response) => {
-  //       console.log(response.groups)
-  //       this.groupsListBehaviourSubject.next(response.group)
-  //       return response
-  //     })
-  //   );
-  // }
+
 
   getGroupInfo(id: string): Observable<any> {
     let url = `${environment.BASE_URL}/groups/${id}`;

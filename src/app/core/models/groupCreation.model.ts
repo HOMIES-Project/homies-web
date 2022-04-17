@@ -1,9 +1,11 @@
 export class GroupCreationModel {
+  public id: string;
   public user: number;
   public groupName: string;
   public groupRelation: string;
 
-  constructor(user: number, groupName: string, groupRelation: string) {
+  constructor(id: string, user: number, groupName: string, groupRelation: string) {
+    this.id = id
     this.user = user
     this.groupName = groupName
     this.groupRelation = groupRelation
