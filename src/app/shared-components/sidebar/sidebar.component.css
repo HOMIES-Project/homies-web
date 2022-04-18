@@ -1,12 +1,26 @@
+@media (max-width: 576px) {
+  .main-menu {
+      display: none;
+  }
+}
+
 .iconoGrupo{
     width: 50px;
 }
 
+.icon-toggle {
+  filter: brightness(0) saturate(100%) invert(55%) sepia(100%) saturate(684%) hue-rotate(169deg) brightness(93%) contrast(94%) !important;
+}
+
 .svg-icon {
-    height: 30px;
-    width: 30px;
+    height: 25px;
+    width: 25px;
     display: inline-block;
     filter: brightness(0) saturate(100%) invert(55%) sepia(100%) saturate(684%) hue-rotate(169deg) brightness(93%) contrast(94%);
+}
+
+a:hover .svg-icon {
+  filter: brightness(0) saturate(100%) invert(95%) sepia(95%) saturate(0%) hue-rotate(71deg) brightness(107%) contrast(105%);
 }
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 
