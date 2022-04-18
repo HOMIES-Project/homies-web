@@ -29,18 +29,18 @@ export class TasksCreationComponent implements OnInit {
     this.usersService.userId.subscribe((response) => {
       this.id = response;
     });
-/*
-    taskForm = this.formBuilder.group({
-      userName: [
+  }
+
+    newTaskForm = this.formBuilder.group({
+      taskUser: [
         '',
         [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
       ],
-      groupRelation: [
+      taskDescription: [
         '',
         [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
       ],
     });
-*/
 
 
 
@@ -85,6 +85,6 @@ export class TasksCreationComponent implements OnInit {
       } else {
         return `with: ${reason}`;
       }*/
-  }
+  
 
 }
