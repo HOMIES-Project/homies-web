@@ -11,6 +11,8 @@ import { GroupCreationComponent } from './user-components/group-creation/group-c
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserAddGroupComponent } from './user-components/user-add-group/user-add-group.component';
 import { TasksCreationComponent } from './tasks-creation/tasks-creation.component';
+import { TasksModifyComponent } from './tasks-modify/tasks-modify.component';
+import { TasksDeleteComponent } from './tasks-delete/tasks-delete.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { TasksCreationComponent } from './tasks-creation/tasks-creation.componen
     GroupCreationComponent,
     UserAddGroupComponent,
     TasksCreationComponent,
+    TasksModifyComponent,
+    TasksDeleteComponent,
   ],
   imports: [
     CommonModule,

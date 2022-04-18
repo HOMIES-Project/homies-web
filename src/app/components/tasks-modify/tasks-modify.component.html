@@ -1,18 +1,17 @@
-<button class="btn btn-outline-info mt-3 formButton text-white" (click)="open(newTask)">Añadir
-    tarea</button>
-<ng-template #newTask let-modal>
+<img src="../../../assets/svg/bluePencil.svg" style="margin-right: 5%;" (click)="open(ModifyTask)" />
+<ng-template #ModifyTask let-modal>
     <div class="justify-content-center align-items-center">
         <div class=" text-black shadow-lg rounded">
             <div class="modal-header">
-                <h4 class="modal-title" id="modal-basic-title">Crear tarea nueva</h4>
+                <h4 class="modal-title" id="modal-basic-title">Modificar tarea</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.close('Cerrado desde la ventana')"> 
                     <span aria-hidden="true">&times;</span>
                   </button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="this.newTaskForm" (ngSubmit)="addTask();">
+                <form [formGroup]="this.newTaskForm">
                     <div class="form-group">
-                        <label for="userName"> Usuario que la realiza </label>
+                        <label for="userName"> Usuario que la realiza * </label>
                         <div class="input-group">
                             <div class="input-group-text">
                                 <img src="../../../assets/svg/username.svg" class="svg-icon" alt="" />
@@ -74,7 +73,7 @@
                 <button type="button" class="btn btn-outline-info" [ngClass]="{
                             disabled: !this.newTaskForm.valid
                           }" [disabled]="!this.newTaskForm.valid">
-                    Crear </button>
+                    Modificar </button>
             </div>
         </div>
     </div>
