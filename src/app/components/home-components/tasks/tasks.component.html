@@ -1,4 +1,4 @@
-<div class="container py-5" *ngIf="this.open; else newTask">
+<div class="container py-5" >
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col-12 col-md-8 col-lg-6 p-0">
             <div class="card card-login text-black shadow-lg rounded">
@@ -58,9 +58,7 @@
                                     <td></td>
                                     <td></td>
                                     <td class="d-flex justify-content-end">
-                                        <button class="btn btn-outline-info mt-3 formButton text-white"
-                                            (click)="openNewTarea()">Añadir
-                                            tarea</button>
+                                        <app-tasks-creation></app-tasks-creation>                                        
                                     </td>
                                 </tr>
                             </tbody>
@@ -70,9 +68,4 @@
             </div>
         </div>
     </div>
-</div>
-<div>
-    <ng-template #newTask let-modal>
-        <app-tasks-creation></app-tasks-creation>
-    </ng-template>
 </div>

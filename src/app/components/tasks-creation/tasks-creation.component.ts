@@ -44,10 +44,10 @@ export class TasksCreationComponent implements OnInit {
 
 
 
-    /*open(content: any) {
+    open(content: any) {
       this.modalService
         .open(content, { ariaLabelledBy: 'modal-basic-title' })
-        .result.then(
+        /*.result.then(
           (result) => {
             let group: TasksCreationModel = new TasksCreationModel(
               this.id,
@@ -72,9 +72,9 @@ export class TasksCreationComponent implements OnInit {
             console.log(reason);
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
           }
-        );
+        );*/
     }
-  
+  /*
     private getDismissReason(reason: any): string {
       if (reason === ModalDismissReasons.ESC) {
         console.log('ùlso x');
