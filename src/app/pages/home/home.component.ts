@@ -32,7 +32,8 @@ export class HomeComponent implements OnInit {
 
   groupName!: string | null;
   groupRelationName!: string | null;
-  groupUsers: Array<any> = []
+  groupUsers: Array<any> = [];
+  groupUsersModelArray: Array<GroupUserModel> = [];
   groupUsersModel: Array<GroupUserModel> = [];
   groupUserID!: string | null;
 
@@ -49,7 +50,7 @@ export class HomeComponent implements OnInit {
 
   defaultGroup!: string;
 
-  imgBase64!:string;
+  imgBase64!: string;
 
   constructor(
     private groupsService: GroupsService,
@@ -60,7 +61,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.imgBase64 = 'data:image/png;base64,'
+    this.imgBase64 = 'data:image/png;base64,';
 
     this.isLoading = true;
     this.usersService.userId.subscribe((userID) => {
@@ -94,7 +95,7 @@ export class HomeComponent implements OnInit {
 
   getGroupDetails() {
     this.groupsService.groupID.subscribe((response) => {
-      let id = response
+      let id = response;
       if (id == null) {
         this.isLoading = false;
         this.groupsExist = false;
@@ -103,7 +104,7 @@ export class HomeComponent implements OnInit {
         this.groupsExist = true;
         this.paramID = id;
         this.groupsService.getGroupInfo(id!).subscribe((groupInfo) => {
-          console.log(groupInfo)
+          console.log(groupInfo);
           this.groupName = groupInfo.groupName;
           this.groupRelationName = groupInfo.groupRelationName;
           this.groupUsers = groupInfo.userData;
@@ -118,7 +119,7 @@ export class HomeComponent implements OnInit {
   getUsersInfo() {
     if (this.groupUsers.length > 0) {
       for (var i = 0; i < this.groupUsers.length; i++) {
-        this.groupUsersModel = []
+        this.groupUsersModelArray = [];
         this.groupsService.getUserInfo(this.groupUsers[i].id).subscribe(
           (groupUserInfo) => {
             let user = new GroupUserModel(
@@ -129,14 +130,17 @@ export class HomeComponent implements OnInit {
               groupUserInfo.user.lastName,
               false
             );
-            //TODO check this if
+
             if (groupUserInfo.photo != null) {
               this.base64ProfileImage = `data:image/png;base64,${groupUserInfo.photo}`;
             }
             if (this.adminID == groupUserInfo.id) {
               user.admin = true;
+              this.groupUsersModelArray.unshift(user);
             }
-              this.groupUsersModel.push(user);
+
+            this.groupUsersModelArray.push(user);
+            this.groupUsersModel = [...new Set(this.groupUsersModelArray)];
           },
           (error) => {
             console.log('error from getusersinfo');
@@ -149,9 +153,7 @@ export class HomeComponent implements OnInit {
     }
   }
   profilePictureImageDecoded(picture: string) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
-      picture
-    );
+    return this.sanitizer.bypassSecurityTrustResourceUrl(picture);
   }
 
   checkIsAdmin() {
@@ -168,8 +170,8 @@ export class HomeComponent implements OnInit {
       login,
       this.paramID!
     );
-      console.log(userToDelete.login)
-      console.log(this.userID)
+    console.log(userToDelete.login);
+    console.log(this.userID);
     Swal.fire({
       title: '¡Cuidado! Vas a eliminar un usuario',
       text: '¿Estás seguro?',
@@ -185,14 +187,11 @@ export class HomeComponent implements OnInit {
           (response) => {
             window.location.reload();
           },
-          (error) => {
-          }
+          (error) => {}
         );
       } else if (result.isDenied) {
         Swal.fire('Changes are not saved', '', 'info');
       }
     });
   }
-
-
 }
