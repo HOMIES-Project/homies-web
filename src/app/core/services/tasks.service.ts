@@ -1,3 +1,4 @@
+import { TaskCreationModel } from './../models/tasksCreation.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -16,13 +17,10 @@ export class TasksService {
 
 
 //POST AÑADIR OFERTAS pasando el token al header
-postTask(taskUser:string, taskDescription: string, taskId: number): Observable<any>{
-  const headers = {
-    'Authorization': `Bearer`,
-    'Content-Type': 'application/json',
-}
+postTask(entry: TaskCreationModel): Observable<any>{
+  let url = `${environment.BASE_URL}/tasks`;
   console.log("Añadida");
-  return this.http.post(URL, {taskUser, taskDescription, taskId}, {headers});
+  return this.http.post<TaskCreationModel>(url, entry);  
+}  
 }
 
-}

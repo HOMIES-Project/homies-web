@@ -1,3 +1,4 @@
+import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
 import { TasksModifyComponent } from './../tasks-modify/tasks-modify.component';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -6,6 +7,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaskCreationModel } from 'src/app/core/models/tasksCreation.model';
 import { UsersService } from 'src/app/core/services/users.service';
 import { TasksService } from 'src/app/core/services/tasks.service';
+import { GroupsService } from 'src/app/core/services/groups.service';
 
 @Component({
   selector: 'app-tasks-creation',
@@ -14,13 +16,15 @@ import { TasksService } from 'src/app/core/services/tasks.service';
 })
 export class TasksCreationComponent implements OnInit {
   username!: string;
-  id: number = 1;
+  groupId!: string | null;
+  userId!: string;
   sent: boolean = false;
   closeResult = '';
   
 
   constructor(
     private modalService: NgbModal,
+    private groupsService: GroupsService,
     private usersService: UsersService,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -28,8 +32,11 @@ export class TasksCreationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.groupsService.groupID.subscribe((response) => {
+      this.groupId = response;
+    });
     this.usersService.userId.subscribe((response) => {
-      this.id = response;
+      this.userId = response;
     });
   }
 
@@ -45,41 +52,41 @@ export class TasksCreationComponent implements OnInit {
   });
 
   open(content: any) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
-  }
-  addTask(): void{
-    
-    if(!this.newTaskForm.valid){
-      return;
-    }
-    let task: TaskCreationModel = new TaskCreationModel(
-      this.newTaskForm.value.taskUser,
-      this.newTaskForm.value.taskDescription,
-      this.newTaskForm.value.taskId,
-
-    )
-
-    
-    this.tasksService
-    .postTask(task.taskUser, task.taskDescription, task.taskId)
-    .subscribe(
-      (response) => {
-        console.log(JSON.stringify(response))
-        this.router.navigate(['/admin']);
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      (result)=>{
+        let task: TaskCreationModel = new TaskCreationModel(
+          this.userId,
+          this.groupId!,
+          this.newTaskForm.controls.taskUser.value,
+          this.newTaskForm.controls.taskDescription.value
+          
+        );
+        console.log(task)
+        this.sent = true;
+        this.tasksService.postTask(task).subscribe((response) => {
+          this.router.navigate(['home/tasks', response.id])
+        },
+        (error) => {
+          console.log(error);
+        }
+        );
+        this.closeResult = `Closed width: ${result}`;
       },
-      (error) => {
-      
-      }, () =>{
-
-      
+      (reason) => {
+        console.log(reason);
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)} `
       }
-    );
-
-    //refrescar la página
-    //this.router.navigate(['/admin']);
-  
-
+    )    
   }
-
-
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      console.log('ùlso x');
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      console.log('ùlso y');
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 }

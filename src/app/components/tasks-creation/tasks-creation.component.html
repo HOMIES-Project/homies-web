@@ -10,7 +10,7 @@
                   </button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="this.newTaskForm" (ngSubmit)="addTask();">
+                <form [formGroup]="this.newTaskForm">
                     <div class="form-group">
                         <label for="userName"> Usuario que la realiza </label>
                         <div class="input-group">
@@ -71,7 +71,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-info" [ngClass]="{
+                <button type="button" class="btn btn-outline-info" (click)="modal.close('Save click')" [ngClass]="{
                             disabled: !this.newTaskForm.valid
                           }" [disabled]="!this.newTaskForm.valid">
                     Crear </button>
