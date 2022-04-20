@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class GroupCreationComponent implements OnInit {
   username!: string;
-  id: number = 1;
+  userId!: number;
   sent: boolean = false;
   closeResult = '';
 
@@ -26,7 +26,7 @@ export class GroupCreationComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.usersService.userId.subscribe((response) => {
-      this.id = response;
+      this.userId = response;
     });
   }
 
@@ -47,7 +47,8 @@ export class GroupCreationComponent implements OnInit {
       .result.then(
         (result) => {
           let group: GroupCreationModel = new GroupCreationModel(
-            this.id,
+            '',
+            this.userId,
             this.groupForm.controls.groupName.value,
             this.groupForm.controls.groupRelation.value
           );
@@ -55,9 +56,9 @@ export class GroupCreationComponent implements OnInit {
 
           this.groupsService.performGroupCreation(group).subscribe(
             (response) => {
-
-                this.router.navigate(['home', response.id]);
-
+              console.log(response)
+             this.updateGroupID(response.id)
+              this.router.navigate(['home']);
             },
             (error) => {
               console.log(error);
@@ -82,5 +83,9 @@ export class GroupCreationComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  updateGroupID(id:string) {
+    this.groupsService.updateGroupId(id!).subscribe()
   }
 }

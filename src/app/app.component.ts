@@ -35,9 +35,7 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    // this.groupsService.getUserInfo(this.id).subscribe((response) => {
-    //   this.username = response.user.firstName;
-    // });
+
   }
 
   isLogged() {

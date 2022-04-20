@@ -7,49 +7,55 @@ import { UsersService } from 'src/app/core/services/users.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-
   user!: LoginModel | null;
   id!: string;
-  username!: string |undefined
-  groupID!: string | null
+  username!: string | undefined;
+  groupID!: string | null;
+  groupName!: string | null;
 
-  constructor(private usersService: UsersService, private groupsService: GroupsService, private router: Router) {
-    usersService.login.subscribe(user =>{
+  constructor(
+    private usersService: UsersService,
+    private groupsService: GroupsService,
+    private router: Router
+  ) {
+    usersService.login.subscribe((user) => {
       this.user = user;
-    })
-    usersService.userId.subscribe(id => {
-      this.id = id
-    })
-    usersService.user.subscribe(response =>{
-      this.username = response?.user.login
-    })
-    groupsService.groupID.subscribe(response => {
-      this.groupID = response
-    })
+    });
+    usersService.userId.subscribe((id) => {
+      this.id = id;
+    });
+    usersService.user.subscribe((response) => {
+      this.username = response?.user.login;
+    });
+    this.groupsService.groupID.subscribe((response) => {
+      this.groupID = response;
+      console.log(this.groupID);
+      if (this.groupID != null) {
+        this.groupsService
+          .getGroupInfo(this.groupID!)
+          .subscribe((groupInfo) => {
+            console.log(groupInfo);
+            this.groupName = groupInfo.groupName;
+          });
+      }
+    });
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   navigateToHomeGroupID() {
-    this.router.navigate(['home', this.groupID]);
+    this.router.navigate(['home']);
   }
-
 
   isLogged() {
     return this.user != null;
   }
 
-  logout():void {
+  logout(): void {
     this.usersService.performLogout();
     this.groupsService.performLogoutFromGroups();
   }
-
-
 }
-
-

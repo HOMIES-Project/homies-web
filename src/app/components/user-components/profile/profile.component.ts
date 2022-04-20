@@ -29,16 +29,19 @@ export class ProfileComponent implements OnInit {
   email!: string | undefined;
   phone!: string | undefined;
   photo!: string | undefined;
-  birthDate!: Date | undefined;
+  birth!: string | undefined;
   premium: boolean = false;
-  langKey!: string;
-  photoContentType: string = 'image/png';
-
+  userChanged!: RegisterModel;
   userDataChanged!: UserEditModel;
   showPassword: boolean = false;
-  userForm: FormGroup;
+  userProfileFrom: FormGroup;
   profilePicture!: File;
   profilePicturePath!: any;
+  birthDate!: Date;
+  photoContentType = 'image/png';
+  langKey!: string;
+
+  successfullyEdited: boolean = false;
 
   base64Output!: string;
   base64Image: any;
@@ -53,14 +56,16 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private sanitizer: DomSanitizer
   ) {
-    this.userForm = this.formBuilder.group({
+    this.userProfileFrom = this.formBuilder.group({
       login: new FormControl(),
       firstName: new FormControl(),
       lastName: new FormControl(),
       email: new FormControl(),
       phone: new FormControl(),
-      birthDate: new FormControl(),
       photo: new FormControl(),
+      birthDate: new FormControl(),
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      passConfirm: ['', Validators.required],
     });
   }
 
@@ -82,10 +87,11 @@ export class ProfileComponent implements OnInit {
       this.firstName = response?.user.firstName;
       this.lastName = response?.user.lastName;
       (this.phone = response?.phone),
+        (this.birth = response?.birthDate),
         (this.photo = response?.photo);
     });
     /** ADD USER VALUES TO FORM DEFAULT VALUES  **/
-    this.userForm.patchValue({
+    this.userProfileFrom.patchValue({
       login: this.login,
       firstName: this.firstName,
       lastName: this.lastName,
@@ -101,27 +107,6 @@ export class ProfileComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  /** SUBMIT CHANGES IN USER PROFILE **/
-  submitChangeProfileForm() {
-    this.userDataChanged = new UserEditModel(
-      this.userForm.controls.login.value,
-      this.userForm.controls.firstName.value,
-      this.userForm.controls.lastName.value,
-      this.userForm.controls.email.value,
-      (this.langKey = navigator.language),
-      this.userForm.controls.phone.value,
-      this.photo!,
-      this.photoContentType,
-      this.userForm.controls.birthDate.value
-    );
-      this.birthDate = this.userForm.controls.birthDate.value
-    this.usersService.performEditUser(this.userDataChanged, this.id).subscribe(response => {
-      console.log(response)
-    })
-    console.log(typeof this.birthDate)
-    console.log(this.userDataChanged);
-  }
-
   /** PROFILE PICTURE **/
   profilePictureImageDecoded() {
     return this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -133,7 +118,6 @@ export class ProfileComponent implements OnInit {
     this.convertFile(event.target.files[0]).subscribe((base64) => {
       this.photo = base64;
       this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
-      console.log(this.photo);
     });
   }
 
@@ -147,6 +131,34 @@ export class ProfileComponent implements OnInit {
       }
     };
     return result;
+  }
+
+  /** SUBMIT CHANGES IN USER PROFILE **/
+
+  submitChangeProfileForm() {
+    this.userDataChanged = new UserEditModel(
+      this.userProfileFrom.controls.login.value,
+      this.userProfileFrom.controls.firstName.value,
+      this.userProfileFrom.controls.lastName.value,
+      this.userProfileFrom.controls.email.value,
+      this.langKey = navigator.language,
+      this.userProfileFrom.controls.phone.value,
+      this.userProfileFrom.controls.photo.value,
+      this.photoContentType,
+      this.userProfileFrom.controls.birthDate.value
+    );
+    this.birthDate = this.userProfileFrom.controls.birthDate.value;
+    this.usersService
+      .performEditUser(this.userDataChanged, this.id)
+      .subscribe((response) => {
+        console.log(response);
+        this.successfullyEdited = true
+      }, error=> {
+        console.log(error)
+      });
+    console.log(typeof this.birthDate);
+    console.log(this.photo);
+    console.log(this.userDataChanged);
   }
 
   /** DELETE USER **/
@@ -179,8 +191,3 @@ export class ProfileComponent implements OnInit {
     });
   }
 }
-
-
-
-
-
