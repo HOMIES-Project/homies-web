@@ -86,9 +86,9 @@ export class ProfileComponent implements OnInit {
       this.email = response?.user.email;
       this.firstName = response?.user.firstName;
       this.lastName = response?.user.lastName;
-      (this.phone = response?.phone),
-        (this.birth = response?.birthDate),
-        (this.photo = response?.photo);
+      this.phone = response?.phone,
+      this.birth = response?.birthDate,
+      this.photo = response?.photo;
     });
     /** ADD USER VALUES TO FORM DEFAULT VALUES  **/
     this.userProfileFrom.patchValue({
@@ -97,6 +97,7 @@ export class ProfileComponent implements OnInit {
       lastName: this.lastName,
       email: this.email,
       phone: this.phone,
+      photo: this.photo
     });
 
     /** DECODE BASE64 PROFILE PICTURE**/

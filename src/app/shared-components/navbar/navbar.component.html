@@ -19,8 +19,8 @@
     </ul>
   </div>
   <div class="mx-auto order-0">
-    <a class="navbar-brand mx-auto" *ngIf="!isLogged()">Tu aplicación para compartir piso</a>
-    <a class="navbar-brand mx-auto" *ngIf="isLogged()">{{this.groupName}}</a>
+    <a class="navbar-brand mx-auto" [routerLink]="['/landing']" *ngIf="!isLogged()">Tu aplicación para compartir piso</a>
+    <a class="navbar-brand mx-auto" *ngIf="isLogged()" (click)=" navigateToHomeGroupID()">{{this.groupName}}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
       <span class="navbar-toggler-icon"></span>
     </button>

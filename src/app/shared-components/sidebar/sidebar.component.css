@@ -1,13 +1,36 @@
+@media (max-width: 576px) {
+  .main-menu {
+      display: none;
+  }
+}
+
 .iconoGrupo{
     width: 50px;
 }
 
+.icon-toggle {
+  filter: brightness(0) saturate(100%) invert(55%) sepia(100%) saturate(684%) hue-rotate(169deg) brightness(93%) contrast(94%) !important;
+}
+
 .svg-icon {
-    height: 30px;
-    width: 30px;
+    height: 25px;
+    width: 25px;
     display: inline-block;
     filter: brightness(0) saturate(100%) invert(55%) sepia(100%) saturate(684%) hue-rotate(169deg) brightness(93%) contrast(94%);
 }
+
+a:hover .svg-icon, a:hover app-group-creation{
+  filter: brightness(0) saturate(100%) invert(95%) sepia(95%) saturate(0%) hue-rotate(71deg) brightness(107%) contrast(105%);
+}
+
+a:hover app-group-creation:hover{
+  filter: none;
+}
+
+.height-list{
+  height: 40px;
+}
+
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 
 @import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
@@ -34,18 +57,32 @@ width:250px;
 overflow:visible;
 }
 
-.main-menu {
+.group-class:hover{
+  color: #fff;
+  background-color: none;
+}
+
+.main-menu{
 
 background: white;
 position: absolute;
 bottom:0;
-height:92%;
+max-height: 100vh;
+height: calc(100% - 68.875px);
 width:60px;
 overflow:hidden;
 -webkit-transition:width .05s linear;
-transition:width .05s linear;
+transition:width .07s linear;
 -webkit-transform:translateZ(0) scale(1,1);
 z-index:1000;
+}
+
+.main-menu .acorh {
+  visibility: hidden;
+}
+
+.main-menu:hover .acorh {
+  visibility:visible;
 }
 
 .main-menu li {
@@ -74,7 +111,6 @@ transition:all .1s linear;
 position:relative;
 display:table-cell;
 width:60px;
-height:36px;
 text-align:center;
 vertical-align:middle;
 font-size:18px;
@@ -86,6 +122,8 @@ display:table-cell;
 vertical-align:middle;
 width:190px;
   font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
 }
 
 .main-menu>ul.logout {

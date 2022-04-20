@@ -1,9 +1,7 @@
 
-
-<div class="area"></div>
-<nav class="main-menu shadow-lg">
+<nav class="position-fixed main-menu shadow-lg">
   <ul>
-    <li style="margin: 0px !important">
+    <li style="margin: 0px; margin-top: 15px;" >
       <div style="margin-bottom: 20% !important">
         <a
           data-toggle="collapse"
@@ -11,27 +9,27 @@
           role="button"
           aria-expanded="false"
           aria-controls="collapseExample"
+          class="collapse-acor"
         >
           <i class="fa fa-2x"
             ><img
               src="../../../assets/svg/barsIconBlue.svg"
-              class="svg-icon fa fa-laptop fa-2x"
+              class="svg-icon icon-toggle fa fa-laptop fa-2x"
               alt=""
               style="width: 25px; margin-left: 30% !important"
           /></i>
-          <span class="nav-text" > GRUPO </span>
+          <span class="nav-text" style="color: var(--secondaryColor); text-transform: uppercase;"> {{this.groupName}} </span>
         </a>
         <div
-          class="collapse card card-login text-black shadow-lg rounded"
-          style="margin: 25px !important"
+          class="collapse card card-login text-black shadow-lg rounded acorh"
+          style="margin: 25px !important;"
           id="collapseExample"
         >
-          <li *ngFor="let group of this.groups">
+          <li *ngFor="let group of this.groups" class="group-class">
             <a
               (click)="navigateToHomeGroupID(group.id)"
-              class="w3-bar-item w3-button"
-              >{{ group.groupName }}</a
-            >
+              >{{ group.groupName }}
+            </a>
           </li>
         </div>
       </div>
@@ -40,11 +38,11 @@
       class="has-subnav"
       style="margin: 0px !important; margin-bottom: 35px !important"
     >
-      <a (click)="navigateToGroceries()">
+      <a (click)="navigateToGroceries()" class="height-list">
         <i class="fa fa-2x"
           ><img
             src="../../../assets/svg/compraIconBlue.svg"
-            class="svg-icon fa fa-2x"
+            class="svg-icon"
             alt=""
         /></i>
         <span class="nav-text"> Lista de la compra </span>
@@ -54,11 +52,11 @@
       class="has-subnav"
       style="margin: 0px !important; margin-bottom: 35px !important"
     >
-      <a (click)="navigateToTasks()">
+      <a (click)="navigateToTasks()" class="height-list">
         <i class="fa fa-2x"
           ><img
             src="../../../assets/svg/tasksIconBlue.svg"
-            class="svg-icon fa fa-2x"
+            class="svg-icon"
             alt=""
         /></i>
         <span class="nav-text"> Lista de tareas </span>
@@ -68,11 +66,11 @@
       class="has-subnav"
       style="margin: 0px !important; margin-bottom: 35px !important"
     >
-      <a (click)="navigateToExpenses()">
+      <a (click)="navigateToExpenses()" class="height-list">
         <i class="fa fa-2x"
           ><img
             src="../../../assets/svg/expenseIconBlue.svg"
-            class="svg-icon fa fa-2x"
+            class="svg-icon"
             alt=""
         /></i>
         <span class="nav-text"> Lista de saldos </span>
@@ -82,7 +80,7 @@
 
   <ul class="logout">
     <li style="margin: 0px !important">
-      <a >
+      <a class="mine">
         <i class="fa fa-2x" style="width: 25px; margin-left: 30% !important">
           <app-group-creation></app-group-creation>
         </i>
@@ -91,4 +89,3 @@
     </li>
   </ul>
 </nav>
-
