@@ -14,6 +14,8 @@ export class SidebarComponent implements OnInit {
   groups!: Array<any> | null;
   sub: any;
   paramID!: string | null;
+  groupName!: string | null;
+  groupID!: string | null;
 
   noGroups!: boolean;
 
@@ -30,7 +32,18 @@ export class SidebarComponent implements OnInit {
       this.groups = response.groups;
       console.log(response.groups);
     });
-
+    this.groupsService.groupID.subscribe((response) => {
+      this.groupID = response;
+      console.log(this.groupID);
+      if (this.groupID != null) {
+        this.groupsService
+          .getGroupInfo(this.groupID!)
+          .subscribe((groupInfo) => {
+            console.log(groupInfo);
+            this.groupName = groupInfo.groupName;
+          });
+      }
+    });
   }
 
   ngOnInit(): void {

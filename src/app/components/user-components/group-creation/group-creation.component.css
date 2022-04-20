@@ -21,3 +21,11 @@ input:focus, textarea:focus {
 label {
     font-size: 16px;
 }
+
+.svg-add:hover, .add-button:hover .svg-add {
+    filter: brightness(0) saturate(100%) invert(99%) sepia(1%) saturate(0%) hue-rotate(191deg) brightness(102%) contrast(105%);
+}
+
+.add-button:hover{
+    background-color: var(--secondaryColor) !important;
+}
