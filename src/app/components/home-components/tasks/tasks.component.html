@@ -1,10 +1,9 @@
-<div class="container py-5">
+<div class="container py-5" >
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col-12 col-md-8 col-lg-6 p-0">
             <div class="card card-login text-black shadow-lg rounded">
                 <div class="card-body text-center">
                     <div class="mb-5 mt-1 pb-2">
-
                         <p class="card-text">Resumen de tus tareas</p>
                         <table class="table ">
                             <thead>
@@ -14,60 +13,56 @@
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
-
-
                             <tbody>
                                 <tr>
                                     <td>Juan</td>
                                     <td>Cocinar</td>
                                     <td class="d-flex justify-content-end">
-                                        <img src="../../../assets/svg/bluePencil.svg" style="margin-right: 5%;" />
-                                        <img src="../../../assets/svg/blueTrash.svg" alt="" />
+                                        <div style="margin-right: 5%;"><app-task-modify></app-task-modify></div>
+                                        <div><app-task-delete></app-task-delete></div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Juan</td>
                                     <td>Limpiar</td>
                                     <td class="d-flex justify-content-end">
-                                        <img src="../../../assets/svg/bluePencil.svg" style="margin-right: 5%;" />
-                                        <img src="../../../assets/svg/blueTrash.svg" alt="" />
+                                        <div style="margin-right: 5%;"><app-task-modify></app-task-modify></div>
+                                        <div><app-task-delete></app-task-delete></div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Esther</td>
                                     <td>Barrer</td>
                                     <td class="d-flex justify-content-end">
-                                        <img src="../../../assets/svg/bluePencil.svg" style="margin-right: 5%;" />
-                                        <img src="../../../assets/svg/blueTrash.svg" alt="" />
+                                        <div style="margin-right: 5%;"><app-task-modify></app-task-modify></div>
+                                        <div><app-task-delete></app-task-delete></div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Juan</td>
                                     <td>Fregar</td>
                                     <td class="d-flex justify-content-end">
-                                        <img src="../../../assets/svg/bluePencil.svg" style="margin-right: 5%;" />
-                                        <img src="../../../assets/svg/blueTrash.svg" alt="" />
+                                        <div style="margin-right: 5%;"><app-task-modify></app-task-modify></div>
+                                        <div><app-task-delete></app-task-delete></div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Ainara</td>
                                     <td>Hacer la compra</td>
                                     <td class="d-flex justify-content-end">
-                                        <img src="../../../assets/svg/bluePencil.svg" style="margin-right: 5%;" />
-                                        <img src="../../../assets/svg/blueTrash.svg" alt="" />
+                                        <div style="margin-right: 5%;"><app-task-modify></app-task-modify></div>
+                                        <div><app-task-delete></app-task-delete></div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td></td>
                                     <td class="d-flex justify-content-end">
-                                        <button class="btn btn-outline-info mt-3 formButton  text-white ">Añadir
-                                            tarea</button>
+                                        <app-tasks-creation></app-tasks-creation>                                        
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
