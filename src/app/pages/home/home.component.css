@@ -52,3 +52,14 @@
   background-color: var(--errorColor);
   width: 300px;
 }
+
+
+.outline {
+  border-color: var(--secondaryColor);
+  color: var(--secondaryColor);
+}
+
+.outline:hover {
+  color: var(--primaryColor);
+  background-color: var(--secondaryColor);
+}

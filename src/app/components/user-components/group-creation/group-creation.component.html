@@ -64,7 +64,7 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-info" (click)="modal.close('Save click')" [ngClass]="{
+      <button type="button" class="btn outline" (click)="modal.close('Save click')" [ngClass]="{
           disabled: !this.groupForm.valid
         }" [disabled]="!this.groupForm.valid">
         Crear
