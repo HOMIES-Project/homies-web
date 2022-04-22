@@ -30,16 +30,13 @@ export class SidebarComponent implements OnInit {
     });
     this.groupsService.getUserInfo(this.id).subscribe((response) => {
       this.groups = response.groups;
-      console.log(response.groups);
     });
     this.groupsService.groupID.subscribe((response) => {
       this.groupID = response;
-      console.log(this.groupID);
       if (this.groupID != null) {
         this.groupsService
           .getGroupInfo(this.groupID!)
           .subscribe((groupInfo) => {
-            console.log(groupInfo);
             this.groupName = groupInfo.groupName;
           });
       }
@@ -47,7 +44,6 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.paramID)
 
     //TODO: HANDLE SIDEBAR IF NO GROUPS.
     // if(this.groups?.length == 0) {

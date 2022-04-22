@@ -1,6 +1,8 @@
+import { TaskCreationModel } from './../../../core/models/tasksCreation.model';
 import { Component, OnInit } from '@angular/core';
 import { GroupsService } from 'src/app/core/services/groups.service';
-import { TasksService } from 'src/app/core/services/tasks.service';
+import { TasksService } from 'src/app/core/services/Lists/tasks.service';
+
 import { UsersService } from 'src/app/core/services/users.service';
 import Swal from 'sweetalert2';
 
@@ -16,6 +18,12 @@ export class TasksComponent implements OnInit {
   isEditting: boolean = true;
   isCreating: boolean = true;
 
+
+  tasksList: Array<any> = []
+  noTasks: boolean = true
+  allTasksList!: Array<any>
+
+
   constructor(
     private tasksService: TasksService,
     private groupsService: GroupsService,
@@ -26,27 +34,40 @@ export class TasksComponent implements OnInit {
     this.groupsService.groupID.subscribe((groupID) => {
       this.groupID = groupID;
     });
-  }
-  /* ESTO ESTÁ A MEDIO HACER Y LO COMENTO PARA QUE NO DE ERRORES Y MIERDAS
 
-   getTasks(){
-    this.tasksService.getTasks(this.groupID!).subscribe((groupInfo) => {
-      this.groupName = groupInfo.groupName;
-      this.groupRelationName = groupInfo.groupRelationName;
-      this.groupUsers = groupInfo.userData;
-      this.adminID = groupInfo.userAdmin.id;
-      this.checkIsAdmin();
-      this.getUsersInfo();
+    this.tasksService.getTasksList().subscribe(response =>{
+      this.allTasksList = response
+      this.getMyTask()
+      console.log(this.allTasksList.length)
+      if (this.tasksList.length == 0) {
+        this.noTasks = true
+      } else {
+
+        this.noTasks = false
+      }
+
     })
   }
-  */
+
+  getMyTask(){
+    for (var i = 0; i < this.allTasksList.length; i++) {
+      if (this.groupID == this.allTasksList[i].taskList.id) {
+        this.tasksList.push(this.allTasksList[i])
+      }
+    }
+  }
+
 
   openNewTarea() {
     this.open = !this.open;
     console.log(this.open);
   }
 
-  deleteTask() {
+  completeTask() {
+
+  }
+
+  deleteTask(taskID:number) {
     console.log('eliminada');
     Swal.fire({
       title: '¡Cuidado! Vas a eliminar una tarea',
@@ -59,12 +80,12 @@ export class TasksComponent implements OnInit {
       cancelButtonColor: '#df4759',
     }).then((result) => {
       if (result.isConfirmed) {
-        // this.groupsService.performDeleteUserFromGroup(userToDelete).subscribe(
-        //   (response) => {
-        //     window.location.reload();
-        //   },
-        //   (error) => {}
-        // );
+        this.tasksService.performDeleteTask(taskID).subscribe(
+          (response) => {
+            window.location.reload();
+          },
+          (error) => {}
+        );
       } else if (result.isDenied) {
         Swal.fire('Changes are not saved', '', 'info');
       }

@@ -5,8 +5,9 @@ import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaskCreationModel } from 'src/app/core/models/tasksCreation.model';
 import { UsersService } from 'src/app/core/services/users.service';
-import { TasksService } from 'src/app/core/services/tasks.service';
+
 import { GroupsService } from 'src/app/core/services/groups.service';
+import { TasksService } from 'src/app/core/services/Lists/tasks.service';
 
 @Component({
   selector: 'app-task-modal',
@@ -19,10 +20,11 @@ export class TaskModalComponent implements OnInit {
   @Input() isCreating!: boolean
 
   username!: string;
-  groupId!: string | null;
+  groupID!: string | null;
   userId!: string;
   sent: boolean = false;
   closeResult = '';
+
 
 
   constructor(
@@ -36,11 +38,13 @@ export class TaskModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.groupsService.groupID.subscribe((response) => {
-      this.groupId = response;
+      this.groupID = response;
     });
     this.usersService.userId.subscribe((response) => {
       this.userId = response;
     });
+
+
   }
 
   newTaskForm = this.formBuilder.group({
@@ -59,14 +63,14 @@ export class TaskModalComponent implements OnInit {
       (result)=>{
         let task: TaskCreationModel = new TaskCreationModel(
           this.userId,
-          this.groupId!,
+          this.groupID!,
           this.newTaskForm.controls.taskUser.value,
           this.newTaskForm.controls.taskDescription.value
 
         );
         console.log(task)
         this.sent = true;
-        this.tasksService.postTask(task).subscribe((response) => {
+        this.tasksService.performTaskCreation(task).subscribe((response) => {
           this.router.navigate(['home/tasks', response.id])
         },
         (error) => {
@@ -81,20 +85,21 @@ export class TaskModalComponent implements OnInit {
       }
     )
   }
+  //TODO edit task
 
   openEditTask(editTask: any) {
     this.modalService.open(editTask, { ariaLabelledBy: 'modal-basic-title' }).result.then(
       (result)=>{
         let task: TaskCreationModel = new TaskCreationModel(
           this.userId,
-          this.groupId!,
+          this.groupID!,
           this.newTaskForm.controls.taskUser.value,
           this.newTaskForm.controls.taskDescription.value
 
         );
         console.log(task)
         this.sent = true;
-        this.tasksService.postTask(task).subscribe((response) => {
+        this.tasksService.performTaskCreation(task).subscribe((response) => {
           this.router.navigate(['home/tasks', response.id])
         },
         (error) => {
