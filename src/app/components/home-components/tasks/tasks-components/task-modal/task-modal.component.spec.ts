@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TasksModifyComponent } from './tasks-modify.component';
+import { TaskModalComponent } from './task-modal.component';
 
-describe('TasksModifyComponent', () => {
-  let component: TasksModifyComponent;
-  let fixture: ComponentFixture<TasksModifyComponent>;
+describe('TaskModalComponent', () => {
+  let component: TaskModalComponent;
+  let fixture: ComponentFixture<TaskModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TasksModifyComponent ]
+      declarations: [ TaskModalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TasksModifyComponent);
+    fixture = TestBed.createComponent(TaskModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
