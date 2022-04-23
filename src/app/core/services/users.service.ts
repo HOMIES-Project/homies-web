@@ -29,8 +29,8 @@ export class UsersService {
   public userId: Observable<any | null>;
 
   //OBSERVABLE - USER
-  private userBehaviourSubject: BehaviorSubject<UserData | null>;
-  public user: Observable<UserData | null>;
+  private userBehaviourSubject: BehaviorSubject<any | null>;
+  public user: Observable<any | null>;
 
   constructor(
     private http: HttpClient,
@@ -112,30 +112,14 @@ export class UsersService {
 
   /* GET USER INFO - GET*/
 
-  getUserInfo(id: number): Observable<any> {
+  getUserInfo(id: string): Observable<any> {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        let userData: UserData = new UserData(
-          response.id,
-          response.photo,
-          response.phone,
-          response.premium,
-          response.birthDate,
-          new RegisterModel(
-            response.user.id,
-            response.user.login,
-            response.user.email,
-            response.user.password,
-            response.user.firstName,
-            response.user.lastName,
-            response.user.langKey,
-            response.user.activated
-          )
-        );
+        console.log(response)
 
-        this.userBehaviourSubject.next(userData);
-        localStorage.setItem('userInfo', JSON.stringify(userData));
+        this.userBehaviourSubject.next(response);
+        localStorage.setItem('userInfo', JSON.stringify(response));
 
         return response;
       })
