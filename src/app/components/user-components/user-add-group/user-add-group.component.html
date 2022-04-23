@@ -23,7 +23,7 @@
             ¡Tienes que rellenar este campo!
           </div>
           <div class="invalid-feedback" *ngIf="!this.userExists">
-            El usuario no existe
+            {{this.errorMessage}}
           </div>
 
         </div>
