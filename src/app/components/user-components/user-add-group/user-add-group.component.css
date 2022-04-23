@@ -1,14 +1,4 @@
-.dashboard-button {
-  background-color: var(--secondaryColor);
-  width: 150px;
-  font-size: 1rem;
-}
 
-.dashboard-button-modal {
-  background-color: var(--secondaryColor);
-  width: 100px;
-  font-size: 1rem;
-}
 
 input {
   background-color: rgba(97, 212, 255, 0.2);

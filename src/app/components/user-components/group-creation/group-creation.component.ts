@@ -16,6 +16,8 @@ export class GroupCreationComponent implements OnInit {
   userId!: number;
   sent: boolean = false;
   closeResult = '';
+  isLoading!: boolean;
+  groupNameExists: boolean = false;
 
   constructor(
     private modalService: NgbModal,
@@ -46,24 +48,6 @@ export class GroupCreationComponent implements OnInit {
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (result) => {
-          let group: GroupCreationModel = new GroupCreationModel(
-            '',
-            this.userId,
-            this.groupForm.controls.groupName.value,
-            this.groupForm.controls.groupRelation.value
-          );
-          this.sent = true;
-
-          this.groupsService.performGroupCreation(group).subscribe(
-            (response) => {
-              console.log(response)
-             this.updateGroupID(response.id)
-              this.router.navigate(['home']);
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
           this.closeResult = `Closed with: ${result}`;
         },
         (reason) => {
@@ -87,5 +71,31 @@ export class GroupCreationComponent implements OnInit {
 
   updateGroupID(id:string) {
     this.groupsService.updateGroupId(id!).subscribe()
+  }
+
+  createGroup() {
+    let group: GroupCreationModel = new GroupCreationModel(
+      '',
+      this.userId,
+      this.groupForm.controls.groupName.value,
+      this.groupForm.controls.groupRelation.value
+    );
+    this.sent = true;
+    if (!this.groupForm.valid) return;
+    this.isLoading = true;
+
+    this.groupsService.performGroupCreation(group).subscribe(
+      (response) => {
+        this.groupNameExists = false
+        this.router.navigate(['home']);
+        this.isLoading = false;
+        this.modalService.dismissAll()
+      },
+      (error) => {
+        console.log(error);
+        this.isLoading = false;
+        this.groupNameExists = true
+      }
+    );
   }
 }
