@@ -18,6 +18,9 @@ export class UserAddGroupComponent implements OnInit {
   id: number = 1;
   sent: boolean = false;
   closeResult = '';
+
+
+  userExists!: boolean;
   constructor(private formBuilder: FormBuilder,  private modalService: NgbModal, private groupsService: GroupsService) { }
 
   ngOnInit(): void {
@@ -33,23 +36,10 @@ export class UserAddGroupComponent implements OnInit {
 
   open(content: any) {
     this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .open(content, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (result) => {
-          let group: GroupUserActionModel = new GroupUserActionModel(
-            this.idAdminGroup,
-            this.groupForm.controls.login.value,
-            this.idGroup
-          );
-          this.sent = true;
 
-          this.groupsService.performAddUserToGroup(group).subscribe(
-            (response) => {
-              window.location.reload()
-            },
-            (error) => {
-            }
-          );
           this.closeResult = `Closed with: ${result}`;
         },
         (reason) => {
@@ -69,6 +59,25 @@ export class UserAddGroupComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  addUserToGroup() {
+    let group: GroupUserActionModel = new GroupUserActionModel(
+      this.idAdminGroup,
+      this.groupForm.controls.login.value,
+      this.idGroup
+    );
+    this.sent = true;
+
+    this.groupsService.performAddUserToGroup(group).subscribe(
+      (response) => {
+        window.location.reload()
+      },
+      (error) => {
+        console.log(error)
+        this.userExists =  false;
+      }
+    );
   }
 
 }
