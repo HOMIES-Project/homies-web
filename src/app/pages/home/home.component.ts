@@ -73,6 +73,7 @@ export class HomeComponent implements OnInit {
       this.name = userInfo?.user.firstName;
       this.surname = userInfo?.user.lastName;
       this.photo = userInfo?.photo;
+      console.log(userInfo)
     });
 
     this.groupsService.getUserInfo(this.userID).subscribe(
@@ -95,6 +96,7 @@ export class HomeComponent implements OnInit {
 
   getGroupDetails() {
     this.groupsService.groupID.subscribe((response) => {
+      console.log(response)
       let id = response;
       if (id == null) {
         this.isLoading = false;

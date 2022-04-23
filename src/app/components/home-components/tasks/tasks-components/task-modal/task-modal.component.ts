@@ -1,26 +1,31 @@
 import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
-import { TasksModifyComponent } from './../tasks-modify/tasks-modify.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaskCreationModel } from 'src/app/core/models/tasksCreation.model';
 import { UsersService } from 'src/app/core/services/users.service';
-import { TasksService } from 'src/app/core/services/tasks.service';
+
 import { GroupsService } from 'src/app/core/services/groups.service';
+import { TasksService } from 'src/app/core/services/Lists/tasks.service';
 
 @Component({
-  selector: 'app-tasks-creation',
-  templateUrl: './tasks-creation.component.html',
-  styleUrls: ['./tasks-creation.component.css'],
+  selector: 'app-task-modal',
+  templateUrl: './task-modal.component.html',
+  styleUrls: ['./task-modal.component.css']
 })
-export class TasksCreationComponent implements OnInit {
+export class TaskModalComponent implements OnInit {
+
+  @Input() isEditting!: boolean
+  @Input() isCreating!: boolean
+
   username!: string;
-  groupId!: string | null;
+  groupID!: string | null;
   userId!: string;
   sent: boolean = false;
   closeResult = '';
-  
+
+
 
   constructor(
     private modalService: NgbModal,
@@ -33,11 +38,13 @@ export class TasksCreationComponent implements OnInit {
 
   ngOnInit(): void {
     this.groupsService.groupID.subscribe((response) => {
-      this.groupId = response;
+      this.groupID = response;
     });
     this.usersService.userId.subscribe((response) => {
       this.userId = response;
     });
+
+
   }
 
   newTaskForm = this.formBuilder.group({
@@ -51,19 +58,19 @@ export class TasksCreationComponent implements OnInit {
     ],
   });
 
-  open(content: any) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+  openAddTask(addTask: any) {
+    this.modalService.open(addTask, { ariaLabelledBy: 'modal-basic-title' }).result.then(
       (result)=>{
         let task: TaskCreationModel = new TaskCreationModel(
           this.userId,
-          this.groupId!,
+          this.groupID!,
           this.newTaskForm.controls.taskUser.value,
           this.newTaskForm.controls.taskDescription.value
-          
+
         );
         console.log(task)
         this.sent = true;
-        this.tasksService.postTask(task).subscribe((response) => {
+        this.tasksService.performTaskCreation(task).subscribe((response) => {
           this.router.navigate(['home/tasks', response.id])
         },
         (error) => {
@@ -76,8 +83,38 @@ export class TasksCreationComponent implements OnInit {
         console.log(reason);
         this.closeResult = `Dismissed ${this.getDismissReason(reason)} `
       }
-    )    
+    )
   }
+  //TODO edit task
+
+  openEditTask(editTask: any) {
+    this.modalService.open(editTask, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      (result)=>{
+        let task: TaskCreationModel = new TaskCreationModel(
+          this.userId,
+          this.groupID!,
+          this.newTaskForm.controls.taskUser.value,
+          this.newTaskForm.controls.taskDescription.value
+
+        );
+        console.log(task)
+        this.sent = true;
+        this.tasksService.performTaskCreation(task).subscribe((response) => {
+          this.router.navigate(['home/tasks', response.id])
+        },
+        (error) => {
+          console.log(error);
+        }
+        );
+        this.closeResult = `Closed width: ${result}`;
+      },
+      (reason) => {
+        console.log(reason);
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)} `
+      }
+    )
+  }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       console.log('ùlso x');
@@ -90,3 +127,4 @@ export class TasksCreationComponent implements OnInit {
     }
   }
 }
+

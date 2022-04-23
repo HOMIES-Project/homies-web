@@ -1,71 +1,47 @@
-<div class="container py-5" >
-    <div class="row d-flex justify-content-center align-items-center">
-        <div class="col-12 col-md-8 col-lg-6 p-0">
-            <div class="card card-login text-black shadow-lg rounded">
-                <div class="card-body text-center">
-                    <div class="mb-5 mt-1 pb-2">
-                        <p class="card-text">Resumen de tus tareas</p>
-                        <table class="table ">
-                            <thead>
-                                <tr>
-                                    <th scope="col">USUARIO</th>
-                                    <th scope="col">TAREA</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Juan</td>
-                                    <td>Cocinar</td>
-                                    <td class="d-flex justify-content-end">
-                                        <div style="margin-right: 5%;"><app-task-modify></app-task-modify></div>
-                                        <div><app-task-delete></app-task-delete></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Juan</td>
-                                    <td>Limpiar</td>
-                                    <td class="d-flex justify-content-end">
-                                        <div style="margin-right: 5%;"><app-task-modify></app-task-modify></div>
-                                        <div><app-task-delete></app-task-delete></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Esther</td>
-                                    <td>Barrer</td>
-                                    <td class="d-flex justify-content-end">
-                                        <div style="margin-right: 5%;"><app-task-modify></app-task-modify></div>
-                                        <div><app-task-delete></app-task-delete></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Juan</td>
-                                    <td>Fregar</td>
-                                    <td class="d-flex justify-content-end">
-                                        <div style="margin-right: 5%;"><app-task-modify></app-task-modify></div>
-                                        <div><app-task-delete></app-task-delete></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Ainara</td>
-                                    <td>Hacer la compra</td>
-                                    <td class="d-flex justify-content-end">
-                                        <div style="margin-right: 5%;"><app-task-modify></app-task-modify></div>
-                                        <div><app-task-delete></app-task-delete></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="d-flex justify-content-end">
-                                        <app-tasks-creation></app-tasks-creation>                                        
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+<div class="container py-5">
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col-12 col-md-8 col-lg-6 p-0">
+      <div class="card card-login text-black shadow-lg rounded">
+        <div class="card-body text-center">
+          <div class="mb-5 mt-1 pb-2" *ngIf="!this.noTasks">
+            <p class="card-text">Tareitas</p>
+            <table class="table ">
+
+              <tbody>
+                <tr *ngFor="let task of this.tasksList; let indexOfTask=index;" class="">
+                  <td>
+                    <input class="" type="checkbox" value="" >
+                  </td>
+                  <td class="text-left">
+                    <span class="d-block ">{{task.taskName}}</span>
+                    <span style="font-size: 0.8rem">Esther</span>
+                  </td>
+                  <td class="d-flex justify-content-end">
+                    <div style="margin-right: 5%;">
+                      <app-task-modal [isEditting]="this.isEditting"></app-task-modal>
                     </div>
-                </div>
-            </div>
+                    <img src="../../../assets/svg/blueTrash.svg" style="margin-right: 5%;"
+                      (click)="deleteTask(indexOfTask)" />
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td class="d-flex justify-content-end">
+                    <app-task-modal [isCreating]="this.isCreating"></app-task-modal>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mb-5 mt-1 pb-2" *ngIf="this.noTasks">
+          <p>Aún no tienes tareas
+            <br>
+            Añade una tarea
+          </p>
+          <app-task-modal [isCreating]="this.isCreating"></app-task-modal>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

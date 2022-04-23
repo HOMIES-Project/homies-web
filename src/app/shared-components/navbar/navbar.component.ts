@@ -32,12 +32,10 @@ export class NavbarComponent implements OnInit {
     });
     this.groupsService.groupID.subscribe((response) => {
       this.groupID = response;
-      console.log(this.groupID);
       if (this.groupID != null) {
         this.groupsService
           .getGroupInfo(this.groupID!)
           .subscribe((groupInfo) => {
-            console.log(groupInfo);
             this.groupName = groupInfo.groupName;
           });
       }

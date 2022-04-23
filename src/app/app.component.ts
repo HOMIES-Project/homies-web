@@ -23,7 +23,6 @@ export class AppComponent {
     private router: Router
   ) {
     usersService.login.subscribe((user) => {
-      console.log(user)
       this.user = user;
     });
     usersService.userId.subscribe((id) => {

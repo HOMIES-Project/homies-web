@@ -10,9 +10,8 @@ import { ProfileComponent } from './user-components/profile/profile.component';
 import { GroupCreationComponent } from './user-components/group-creation/group-creation.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserAddGroupComponent } from './user-components/user-add-group/user-add-group.component';
-import { TasksCreationComponent } from './tasks-creation/tasks-creation.component';
-import { TasksModifyComponent } from './tasks-modify/tasks-modify.component';
-import { TasksDeleteComponent } from './tasks-delete/tasks-delete.component';
+
+import { TaskModalComponent } from './home-components/tasks/tasks-components/task-modal/task-modal.component';
 
 @NgModule({
   declarations: [
@@ -22,9 +21,7 @@ import { TasksDeleteComponent } from './tasks-delete/tasks-delete.component';
     ProfileComponent,
     GroupCreationComponent,
     UserAddGroupComponent,
-    TasksCreationComponent,
-    TasksModifyComponent,
-    TasksDeleteComponent,
+    TaskModalComponent,
   ],
   imports: [
     CommonModule,
