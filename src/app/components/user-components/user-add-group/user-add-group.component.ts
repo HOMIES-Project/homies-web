@@ -21,7 +21,8 @@ export class UserAddGroupComponent implements OnInit {
   isLoading!: boolean;
   errorMessage!: string;
 
-  userExists: boolean = true
+  userExists: boolean = true;
+
   constructor(private formBuilder: FormBuilder,  private modalService: NgbModal, private groupsService: GroupsService) { }
 
   ngOnInit(): void {

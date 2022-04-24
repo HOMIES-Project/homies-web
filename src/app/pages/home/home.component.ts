@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   name!: string | undefined;
   surname!: string | undefined;
   groupID!: string | null;
+  login!: string | null;
 
   sub: any;
 
@@ -70,20 +71,13 @@ export class HomeComponent implements OnInit {
 
     //todo - check this subscribepo
     this.usersService.user.subscribe((userInfo) => {
+      console.log(userInfo)
       this.name = userInfo?.user.firstName;
       this.surname = userInfo?.user.lastName;
       this.photo = userInfo?.photo;
       console.log(userInfo)
     });
 
-    this.groupsService.getUserInfo(this.userID).subscribe(
-      (response) => {
-        this.username = response.user.firstName;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
     // this.groupsService.groupID.subscribe(response => {
     //   console.log(response)
     // });
@@ -124,9 +118,10 @@ export class HomeComponent implements OnInit {
         this.groupUsersModelArray = [];
         this.groupsService.getUserInfo(this.groupUsers[i].id).subscribe(
           (groupUserInfo) => {
+            this.login = groupUserInfo.user.login
             let user = new GroupUserModel(
               groupUserInfo.id,
-              groupUserInfo.user.login,
+              this.login!,
               groupUserInfo.photo,
               groupUserInfo.user.firstName,
               groupUserInfo.user.lastName,
@@ -196,4 +191,54 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+
+  exitGroup() {
+    let userToDelete = new GroupUserActionModel(
+      this.userID,
+      this.login!,
+      this.paramID!
+    );
+    console.log(userToDelete.login);
+    console.log(this.userID);
+    console.log(this.paramID);
+    Swal.fire({
+      title: '¡Cuidado! Vas a abandonar el grupo',
+      text: 'Perderás toda la información',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#34ade7',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: `Cancelar`,
+      cancelButtonColor: '#df4759',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.groupsService.performDeleteUserFromGroup(userToDelete).subscribe(
+          (response) => {
+            window.location.reload();
+          },
+          (error) => {
+            console.log(error)
+          }
+        );
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info');
+      }
+    });
+  }
+
+  //TODO delete group with ID
+
+  // deleteGroup() {
+  //   let entry = new GroupUserActionModel(
+  //     this.userID,
+  //     this.login!,
+  //     this.groupID!
+  //   )
+  //   this.groupsService.performDeleteGroup(entry).subscribe(response => {
+  //     console.log('NICE')
+
+  //   }, error => {
+  //     console.log(error)
+  //   })
+  // }
 }

@@ -122,7 +122,11 @@
 
     </div>
     <button
-      class="btn-lg border-0 text-white p-3 mt-3 delete-group">{{this.isAdmin ? 'Eliminar grupo' : 'Abandonar grupo'}}</button>
+      class="btn-lg border-0 text-white p-3 mt-3 delete-group" (click)="exitGroup()">Abandonar grupo
+    </button>
+    <button
+    class="btn-lg border-0 text-white p-3 mt-3 delete-group"  *ngIf="this.isAdmin">Eliminar grupo
+  </button>
   </div>
 </div>
 
