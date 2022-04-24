@@ -67,6 +67,7 @@ export class UserAddGroupComponent implements OnInit {
       this.groupForm.controls.login.value,
       this.idGroup
     );
+    console.log(group)
     this.sent = true;
 
     this.groupsService.performAddUserToGroup(group).subscribe(

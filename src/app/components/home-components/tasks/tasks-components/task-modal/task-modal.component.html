@@ -17,13 +17,24 @@
       <div class="modal-body">
         <form [formGroup]="this.newTaskForm">
           <div class="form-group">
-            <label for="userName"> Nombre de la tarea </label>
+
             <div class="input-group">
               <div class="input-group-text">
                 <img src="../../../assets/svg/username.svg" class="svg-icon" alt="" />
               </div>
-              <input id="taskUser" class="form-control" placeholder="Nombre" formControlName="taskUser" name="dp"
-                [ngClass]="{
+              <select name="" id="" class="form-control col-6">
+                <option value="">Esther</option>
+                <option value="">Carlos</option>
+              </select>
+            </div>
+            <!--END INPUT TASK USER SELECTION-->
+
+            <div class="input-group mt-4">
+              <div class="input-group-text">
+                <img src="../../../assets/svg/tasksIconBlue.svg" class="svg-icon" alt="" />
+              </div>
+              <input id="taskUser" class="form-control col-6 normal-border" placeholder="Nombre de la tarea" formControlName="taskUser"
+                name="dp" [ngClass]="{
                                           'is-invalid':
                                             (this.newTaskForm.controls.taskUser.touched &&
                                               this.newTaskForm.controls.taskUser.errors?.required) ||
@@ -40,35 +51,33 @@
               <div class="invalid-feedback" *ngIf="this.newTaskForm.controls.taskUser.errors?.maxlength">
                 El máximo son 50 caracteres
               </div>
-
-
             </div>
-            <div class="form-group">
-              <label for="taskDescription"> Descripción de la tarea * </label>
-              <div class="input-group">
-                <div class="input-group-text">
-                  <img src="../../../assets/svg/pencilEdit.svg" class="svg-icon" alt="" />
-                </div>
-                <textarea id="dateOfBirth" class="form-control" formControlName="taskDescription"
-                  placeholder="Descripción" name="dp" [ngClass]="{
+            <!--END INPUT TASK NAME-->
+
+            <div class="input-group mt-4">
+              <div class="input-group-text">
+                <img src="../../../assets/svg/pencilEdit.svg" class="svg-icon" alt="" />
+              </div>
+              <textarea id="dateOfBirth" class="form-control normal-border" formControlName="taskDescription"
+                placeholder="Introduce la descripción de la tarea" name="dp" [ngClass]="{
                                               'is-invalid':
                                                 (this.newTaskForm.controls.taskDescription.touched &&
                                                   this.newTaskForm.controls.taskDescription.errors?.required) ||
                                                 this.newTaskForm.controls.taskDescription.errors?.minlength ||
                                                 this.newTaskForm.controls.taskDescription.errors?.maxlength
                                             }"></textarea>
-                <!--Validation-->
-                <div class="invalid-feedback" *ngIf="this.newTaskForm.controls.taskDescription.errors?.required">
-                  ¡Tienes que rellenar este campo!
-                </div>
-                <div class="invalid-feedback" *ngIf="this.newTaskForm.controls.taskDescription.errors?.minlength">
-                  El mínimo son 3 caracteres
-                </div>
-                <div class="invalid-feedback" *ngIf="this.newTaskForm.controls.taskDescription.errors?.maxlength">
-                  El máximo son 100 caracteres
-                </div>
+              <!--Validation-->
+              <div class="invalid-feedback" *ngIf="this.newTaskForm.controls.taskDescription.errors?.required">
+                ¡Tienes que rellenar este campo!
+              </div>
+              <div class="invalid-feedback" *ngIf="this.newTaskForm.controls.taskDescription.errors?.minlength">
+                El mínimo son 3 caracteres
+              </div>
+              <div class="invalid-feedback" *ngIf="this.newTaskForm.controls.taskDescription.errors?.maxlength">
+                El máximo son 100 caracteres
               </div>
             </div>
+            <!--END INPUT TASK DESCRIPTION-->
           </div>
         </form>
       </div>
