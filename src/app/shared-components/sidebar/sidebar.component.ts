@@ -28,19 +28,14 @@ export class SidebarComponent implements OnInit {
     this.usersService.userId.subscribe((response) => {
       this.id = response;
     });
-    this.groupsService.getUserInfo(this.id).subscribe((response) => {
-      this.groups = response.groups;
-    });
-    this.groupsService.groupID.subscribe((response) => {
-      this.groupID = response;
-      if (this.groupID != null) {
-        this.groupsService
-          .getGroupInfo(this.groupID!)
-          .subscribe((groupInfo) => {
-            this.groupName = groupInfo.groupName;
-          });
-      }
-    });
+    this.usersService.user.subscribe(response => {
+      this.groups = response.groups
+      console.log(this.groups)
+    })
+
+    this.groupsService.groupInfo.subscribe( response =>{
+      this.groupName = response?.groupName
+    })
   }
 
   ngOnInit(): void {
