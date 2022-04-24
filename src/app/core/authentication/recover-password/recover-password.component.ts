@@ -50,7 +50,6 @@ export class RecoverPasswordComponent implements OnInit {
       {
         email: ['', [Validators.required, Validators.email]],
       },
-      { validators: this.mustMatchValidator }
     );
     this.recoveryForm = this.formBuilder.group(
       {
@@ -93,7 +92,6 @@ export class RecoverPasswordComponent implements OnInit {
       },
       () => {
         this.isLoading = false;
-        // this.router.navigate(['/landing']);
       }
     );
   }
@@ -122,8 +120,9 @@ export class RecoverPasswordComponent implements OnInit {
       }).then((result) => {
         this.router.navigate(['/login']);
       })
-
-
+    },
+    error => {
+      console.log("entrado en error")
     });
   }
 

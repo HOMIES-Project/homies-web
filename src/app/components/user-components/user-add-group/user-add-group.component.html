@@ -1,0 +1,42 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Añade a un usuario nuevo</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true"> × </span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="this.groupForm" (ngSubmit)="addUserToGroup()">
+      <div class="form-group">
+        <label for="groupName"> Login del usuario * </label>
+        <div class="input-group">
+          <div class="input-group-text">
+            <img src="../../../assets/svg/groupLogo.svg" class="svg-icon" alt="" />
+          </div>
+          <input id="groupName" class="form-control " placeholder="Nombre" formControlName="login" name="dp" [ngClass]="{
+                'is-invalid':
+                !this.userExists  && this.sent
+              }" />
+
+          <!-- Validation -->
+          <div class="invalid-feedback" *ngIf="this.groupForm.controls.login.errors?.required">
+            ¡Tienes que rellenar este campo!
+          </div>
+          <div class="invalid-feedback" *ngIf="!this.userExists">
+            {{this.errorMessage}}
+          </div>
+
+        </div>
+
+      </div>
+        <div class="modal-footer">
+          <button class="btn-sm border-0 p-2 m-2  dashboard-button center text-white"  [ngClass]="{
+            disabled: !this.groupForm.valid
+          }" [disabled]="!this.groupForm.valid">
+          <span class="spinner-border spinner-border-sm mr-1" *ngIf="isLoading"></span>Añadir usuario</button>
+      </div>
+    </form>
+  </div>
+
+</ng-template>
+<button class="btn-sm border-0 p-2 m-2 dashboard-button text-white" (click)="open(content)">Añadir usuario</button>

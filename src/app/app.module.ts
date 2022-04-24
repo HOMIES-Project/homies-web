@@ -1,3 +1,6 @@
+import { SharedComponentsModule } from './shared-components/shared-components.module';
+import { PagesModule } from './pages/pages.module';
+
 import { AuthenticationModule } from './core/authentication/authentication.module';
 import { ServicesModule } from './core/services/services.module';
 import { InterceptorsModule } from './core/interceptors/interceptors.module';
@@ -13,9 +16,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from './core/interceptors/auth-http.interceptor';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -26,8 +27,12 @@ import { AuthHttpInterceptor } from './core/interceptors/auth-http.interceptor';
     InterceptorsModule,
     ServicesModule,
     HttpClientModule,
+    PagesModule,
+    SharedComponentsModule,
   ],
-  providers: [ {provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true}],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

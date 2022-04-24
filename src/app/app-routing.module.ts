@@ -1,10 +1,9 @@
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { ProfileComponent } from './components/profile/profile.component';
-import { ExpensesComponent } from './components/expenses/expenses.component';
-import { GroceriesComponent } from './components/groceries/groceries.component';
-import { TasksComponent } from './components/tasks/tasks.component';
-import { HomeComponent } from './components/home/home.component';
-import { LandingComponent } from './components/landing/landing.component';
+import { ProfileComponent } from './components/user-components/profile/profile.component';
+import { ExpensesComponent } from './components/home-components/expenses/expenses.component';
+import { GroceriesComponent } from './components/home-components/groceries/groceries.component';
+import { TasksComponent } from './components/home-components/tasks/tasks.component';
+import { HomeComponent } from './pages/home/home.component';
+import { LandingComponent } from './pages/landing/landing.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './core/authentication/login/login.component';
@@ -41,24 +40,23 @@ const routes: Routes = [
     component: RecoverPasswordComponent
   },
   {
+    path: 'tasks',
+    component: TasksComponent
+  },
+  {
     path: 'home',
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
-    path: 'tasks',
-    component: TasksComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'groceries',
-    component: GroceriesComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'expenses',
-    component: ExpensesComponent,
-    canActivate: [AuthGuard]
+    path: 'home',
+    canActivate: [AuthGuard],
+    children:[
+      {path:':id', component: HomeComponent},
+      {path:'tasks/:id', component: TasksComponent},
+      {path:'expenses/:id', component: ExpensesComponent},
+      {path:'groceries/:id', component: GroceriesComponent}
+    ]
   },
   {
     path: 'profile',

@@ -1,3 +1,5 @@
+import { GroupsService } from 'src/app/core/services/groups.service';
+import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
 import { UserData } from './../models/user-data.model';
 import { RegisterModel } from '../models/register.model';
 import { environment } from '../../../environments/environment';
@@ -6,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginModel } from '../models/login.model';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import {
   RecoveryCheckModel,
   RecoveryModel,
@@ -18,7 +20,6 @@ const LOGIN_KEY = 'login';
   providedIn: 'root',
 })
 export class UsersService {
-
   //OBSERVABLE - TOKEN
   private loginModelBehaviourSubject: BehaviorSubject<LoginModel | null>;
   public login: Observable<any | null>;
@@ -28,18 +29,24 @@ export class UsersService {
   public userId: Observable<any | null>;
 
   //OBSERVABLE - USER
-  private userBehaviourSubject: BehaviorSubject<UserData | null>;
-  public user: Observable<UserData | null>;
+  private userBehaviourSubject: BehaviorSubject<any | null>;
+  public user: Observable<any | null>;
 
-  constructor(private http: HttpClient, private route: Router) {
+  constructor(
+    private http: HttpClient,
+    private route: Router,
+    private groupsService: GroupsService
+  ) {
     this.loginModelBehaviourSubject = new BehaviorSubject<LoginModel | null>(
       JSON.parse(<string>localStorage.getItem(LOGIN_KEY))
     );
     this.login = this.loginModelBehaviourSubject.asObservable();
+
     this.userIdBehaviourSubject = new BehaviorSubject<string | null>(
       localStorage.getItem('id')
     );
     this.userId = this.userIdBehaviourSubject.asObservable();
+
     this.userBehaviourSubject = new BehaviorSubject<UserData | null>(
       JSON.parse(<string>localStorage.getItem('userInfo'))
     );
@@ -48,7 +55,7 @@ export class UsersService {
 
   /* LOGIN - POST */
 
-  performLogin(entry: LoginModel): Observable<LoginModel> {
+  performLogin(entry: LoginModel): Observable<any> {
     let url = `${environment.BASE_URL}/authenticate`;
     return this.http.post<any>(url, entry).pipe(
       map((APIreturn) => {
@@ -62,10 +69,13 @@ export class UsersService {
   }
 
   performLogout() {
+    localStorage.removeItem('id');
     localStorage.removeItem(LOGIN_KEY);
+    localStorage.removeItem('userInfo');
     this.loginModelBehaviourSubject.next(null);
     this.userIdBehaviourSubject.next(null);
     this.userBehaviourSubject.next(null);
+
     this.route.navigate(['/login']);
   }
 
@@ -102,33 +112,24 @@ export class UsersService {
 
   /* GET USER INFO - GET*/
 
-  getUserInfo(id: number): Observable<any> {
+  getUserInfo(id: string): Observable<any> {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        let userData: UserData = new UserData(
-          response.id,
-          response.photo,
-          response.phone,
-          response.premium,
-          response.birthDate,
-          new RegisterModel(
-            response.user.id,
-            response.user.login,
-            response.user.email,
-            response.user.password,
-            response.user.firstName,
-            response.user.lastName,
-            response.user.langKey,
-            response.user.activated
-          )
-        )
-        this.userBehaviourSubject.next(userData);
-        localStorage.setItem('userInfo', JSON.stringify(userData));
+        console.log(response)
+
+        this.userBehaviourSubject.next(response);
+        localStorage.setItem('userInfo', JSON.stringify(response));
 
         return response;
       })
     );
+  }
+
+  /* EDIT USER - POST */
+  performEditUser(entry: any, id: string): Observable<any> {
+    let url = `${environment.BASE_URL}/user-data/${id}`;
+    return this.http.put<any>(url, entry);
   }
 
   /* DELETE USER - DELETE*/

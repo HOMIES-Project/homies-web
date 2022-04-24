@@ -1,0 +1,65 @@
+@media (min-width: 576px) {
+  .card-columns {
+      column-count: 1;
+  }
+}
+
+@media (min-width: 768px) {
+  .card-columns {
+      column-count: 2;
+  }
+}
+
+@media (min-width: 992px) {
+  .card-columns {
+      column-count: 3;
+  }
+}
+
+.group-info-background {
+  background-color: rgba(97, 212, 255, 0.2);
+  border: none;
+  border-radius: 0 5px 5px 0;
+}
+
+.svg-icon {
+  height: 29px;
+  width: 26px;
+  display: inline-block;
+  filter: brightness(0) saturate(100%) invert(56%) sepia(96%) saturate(861%) hue-rotate(169deg) brightness(94%) contrast(91%);
+}
+
+.dot {
+  height: 35px;
+  width: 35px;
+  background-color: var(--secondaryColor);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.initial {
+  color: var(--primaryColor);
+  font-size: 16px;
+  margin: 20% 0;
+  font-weight: 400;
+}
+
+.wrapper-card {
+  border: none;
+}
+
+.delete-group {
+  background-color: var(--errorColor);
+  width: 300px;
+}
+
+
+.outline {
+  border-color: var(--secondaryColor);
+  color: var(--secondaryColor);
+}
+
+.outline:hover {
+  color: var(--primaryColor);
+  background-color: var(--secondaryColor);
+}

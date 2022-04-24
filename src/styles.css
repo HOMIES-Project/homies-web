@@ -9,12 +9,18 @@
   --secondaryDarkColor: #0074ab;
   --primaryTextColor: #000000;
   --secondaryTextColor: #000000;
+  --errorColor: #F82727;
   box-sizing: border-box;
   height: 100%;
 }
 
 body {
   font-family: "Montserrat", sans-serif;
+}
+
+
+a {
+  cursor: pointer;
 }
 
 .card-login {
@@ -64,4 +70,16 @@ i {
 
 .password-field {
   border-radius: 0ch !important;
+}
+
+.dashboard-button {
+  background-color: var(--secondaryColor);
+  width: 150px;
+  font-size: 1rem;
+}
+
+.dashboard-button-modal {
+  background-color: var(--secondaryColor);
+  width: 100px;
+  font-size: 1rem;
 }

@@ -1,0 +1,47 @@
+<div class="container py-5">
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col-12 col-md-8 col-lg-6 p-0">
+      <div class="card card-login text-black shadow-lg rounded">
+        <div class="card-body text-center">
+          <div class="mb-5 mt-1 pb-2" *ngIf="!this.noTasks">
+            <p class="card-text">Tareitas</p>
+            <table class="table ">
+
+              <tbody>
+                <tr *ngFor="let task of this.tasksList; let indexOfTask=index;" class="">
+                  <td>
+                    <input class="" type="checkbox" value="" >
+                  </td>
+                  <td class="text-left">
+                    <span class="d-block ">{{task.taskName}}</span>
+                    <span style="font-size: 0.8rem">Esther</span>
+                  </td>
+                  <td class="d-flex justify-content-end">
+                    <div style="margin-right: 5%;">
+                      <app-task-modal [isEditting]="this.isEditting"></app-task-modal>
+                    </div>
+                    <img src="../../../assets/svg/blueTrash.svg" style="margin-right: 5%;"
+                      (click)="deleteTask(indexOfTask)" />
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td class="d-flex justify-content-end">
+                    <app-task-modal [isCreating]="this.isCreating"></app-task-modal>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mb-5 mt-1 pb-2" *ngIf="this.noTasks">
+          <p>Aún no tienes tareas
+            <br>
+            Añade una tarea
+          </p>
+          <app-task-modal [isCreating]="this.isCreating"></app-task-modal>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

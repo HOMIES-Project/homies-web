@@ -3,30 +3,34 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LandingComponent } from './landing/landing.component';
-import { HomeComponent } from './home/home.component';
-import { TasksComponent } from './tasks/tasks.component';
-import { ExpensesComponent } from './expenses/expenses.component';
-import { GroceriesComponent } from './groceries/groceries.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { ProfileComponent } from './profile/profile.component';
-import { GroupCreationComponent } from './group-creation/group-creation.component';
+import { TasksComponent } from './home-components/tasks/tasks.component';
+import { ExpensesComponent } from './home-components/expenses/expenses.component';
+import { GroceriesComponent } from './home-components/groceries/groceries.component';
+import { ProfileComponent } from './user-components/profile/profile.component';
+import { GroupCreationComponent } from './user-components/group-creation/group-creation.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UserAddGroupComponent } from './user-components/user-add-group/user-add-group.component';
 
+import { TaskModalComponent } from './home-components/tasks/tasks-components/task-modal/task-modal.component';
 
 @NgModule({
   declarations: [
-    LandingComponent,
-    HomeComponent,
     TasksComponent,
     ExpensesComponent,
     GroceriesComponent,
-    SidebarComponent,
     ProfileComponent,
     GroupCreationComponent,
+    UserAddGroupComponent,
+    TaskModalComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgbModule, BrowserModule,
-    AppRoutingModule,],
-  exports:[SidebarComponent]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgbModule,
+    BrowserModule,
+    AppRoutingModule,
+  ],
+  exports: [GroupCreationComponent, UserAddGroupComponent],
 })
 export class ComponentsModule {}

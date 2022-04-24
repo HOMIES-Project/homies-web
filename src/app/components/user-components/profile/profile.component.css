@@ -1,0 +1,106 @@
+.dot {
+    height: 150px;
+    width: 150px;
+    background-color: var(--secondaryColor);
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.dotEdit {
+    height: 27px;
+    width: 27px;
+    background-color: var(--primaryTextColor);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.buttonEdit {
+    margin-top: -35px;
+    margin-left: 115px;
+}
+
+.initial {
+    color: var(--primaryColor);
+    font-size: 60px;
+    margin: 25% 0;
+    font-weight: 400;
+}
+
+.file-select {
+    position: relative;
+    display: inline-block;
+}
+
+.file-select::before {
+    background-color: var(--primaryTextColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    position: absolute;
+    content: url('../../../../assets/svg/pencilEdit.svg');
+    width: 27px;
+    height: 27px;
+    padding-top: 5px;
+}
+
+.file-select input[type="file"] {
+    opacity: 0;
+    width: 27px;
+    height: 27px;
+    display: inline-block;
+}
+
+form {
+    margin-top: 40px;
+}
+
+
+input {
+    background-color: rgba(97, 212, 255, 0.2);
+    font-size: 1.2rem;
+    border: none;
+}
+
+input:focus {
+    background-color: rgba(97, 212, 255, 0.2);
+    font-size: 1.2rem;
+    border: none;
+}
+
+.svg-icon {
+    height: 20px;
+    width: 18px;
+    display: inline-block;
+    filter: invert(64%) sepia(13%) saturate(2576%) hue-rotate(163deg) brightness(93%) contrast(94%);
+}
+
+h5 {
+    padding-bottom: 5px;
+    font-weight: 400;
+}
+
+.eye-off {
+    filter: invert(11%) sepia(18%) saturate(1673%) hue-rotate(44deg) brightness(103%) contrast(91%) !important;
+    opacity: 0.3 !important;
+    width: 24px !important;
+}
+
+.eye{
+    height: 24px !important;
+    width: 24px !important;
+}
+
+.passwordAccordion {
+    color: var(--primaryTextColor);
+    font-weight: 400;
+    font-size: 18px;
+    margin-left: -10px;
+}
+
+.card-header {
+    background-color: rgba(97, 212, 255, 0.2);
+}
+
+
