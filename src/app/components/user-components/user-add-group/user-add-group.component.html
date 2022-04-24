@@ -23,7 +23,7 @@
             ¡Tienes que rellenar este campo!
           </div>
           <div class="invalid-feedback" *ngIf="!this.userExists">
-            El usuario no existe
+            {{this.errorMessage}}
           </div>
 
         </div>
@@ -32,12 +32,8 @@
         <div class="modal-footer">
           <button class="btn-sm border-0 p-2 m-2  dashboard-button center text-white"  [ngClass]="{
             disabled: !this.groupForm.valid
-          }" [disabled]="!this.groupForm.valid">Añadir usuario</button>
-          <button type="button" class="btn dashboard-button-modal text-white" (click)="modal.close('Save click')">
-            Cancelar
-          </button>
-
-
+          }" [disabled]="!this.groupForm.valid">
+          <span class="spinner-border spinner-border-sm mr-1" *ngIf="isLoading"></span>Añadir usuario</button>
       </div>
     </form>
   </div>

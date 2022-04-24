@@ -48,6 +48,7 @@ export class GroupsService {
   performGroupCreation(entry: GroupCreationModel): Observable<any> {
     let url = `${environment.BASE_URL}/groups`;
     return this.http.post<GroupCreationModel>(url, entry).pipe(map(apireturn => {
+      console.log(apireturn.id)
       this.groupIDBehaviourSubject.next(apireturn.id)
     }))
   }

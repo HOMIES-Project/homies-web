@@ -18,9 +18,11 @@ export class UserAddGroupComponent implements OnInit {
   id: number = 1;
   sent: boolean = false;
   closeResult = '';
-
+  isLoading!: boolean;
+  errorMessage!: string;
 
   userExists: boolean = true;
+
   constructor(private formBuilder: FormBuilder,  private modalService: NgbModal, private groupsService: GroupsService) { }
 
   ngOnInit(): void {
@@ -69,13 +71,25 @@ export class UserAddGroupComponent implements OnInit {
     );
     this.sent = true;
 
+    if (!this.groupForm.valid) return;
+    this.isLoading = true;
+
     this.groupsService.performAddUserToGroup(group).subscribe(
       (response) => {
+        this.userExists =  true;
         window.location.reload()
+        this.isLoading = false;
       },
       (error) => {
-        console.log(error)
+        console.log(error.error.errorKey)
+        if(error.error.errorKey == 'userexists') {
+          this.errorMessage = 'El usuario ya pertenece al grupo'
+        }
+        if (error.error.errorKey == 'UserDoesNotExist') {
+          this.errorMessage = 'El usuario no existe'
+        }
         this.userExists =  false;
+        this.isLoading = false;
       }
     );
   }
