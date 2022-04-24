@@ -144,11 +144,27 @@ export class ProfileComponent implements OnInit {
       this.userProfileFrom.controls.email.value,
       this.langKey = navigator.language,
       this.userProfileFrom.controls.phone.value,
-      this.userProfileFrom.controls.photo.value,
+      // this.userProfileFrom.controls.photo.value,
+      this.photo!, 
       this.photoContentType,
-      this.userProfileFrom.controls.birthDate.value
+      this.userProfileFrom.controls.birthDate.value,
     );
     this.birthDate = this.userProfileFrom.controls.birthDate.value;
+    
+    // console.log("FECHA " + typeof this.birthDate);
+    // let str = this.birthDate.toString();
+    // if (str != "") {
+    //   console.log("FECHA " + str);
+    // } else {
+      
+    // }
+    
+
+    // let str = this.birthDate.toString();
+    // console.log("Fecha:" + str)
+    // this.birthDate = date.toDateStr
+    // let str = this.birthDate.toDateString();
+    // console.log(str)
     this.usersService
       .performEditUser(this.userDataChanged, this.id)
       .subscribe((response) => {
