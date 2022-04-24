@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
   base64ProfileImage!: string;
   photo!: string | undefined;
 
-  paramID!: string | null;
+
 
   isAdmin!: boolean;
   adminID!: string;
@@ -78,9 +78,7 @@ export class HomeComponent implements OnInit {
       console.log(userInfo)
     });
 
-    // this.groupsService.groupID.subscribe(response => {
-    //   console.log(response)
-    // });
+
     this.getGroupDetails();
   }
 
@@ -91,15 +89,14 @@ export class HomeComponent implements OnInit {
   getGroupDetails() {
     this.groupsService.groupID.subscribe((response) => {
       console.log(response)
-      let id = response;
-      if (id == null) {
+      this.groupID = response;
+      if ( this.groupID  == null) {
         this.isLoading = false;
         this.groupsExist = false;
       } else {
         this.isLoading = false;
         this.groupsExist = true;
-        this.paramID = id;
-        this.groupsService.getGroupInfo(id!).subscribe((groupInfo) => {
+        this.groupsService.getGroupInfo(this.groupID).subscribe((groupInfo) => {
           console.log(groupInfo);
           this.groupName = groupInfo.groupName;
           this.groupRelationName = groupInfo.groupRelationName;
@@ -165,7 +162,7 @@ export class HomeComponent implements OnInit {
     let userToDelete = new GroupUserActionModel(
       this.userID,
       login,
-      this.paramID!
+      this.groupID!
     );
     console.log(userToDelete.login);
     console.log(this.userID);
@@ -196,11 +193,10 @@ export class HomeComponent implements OnInit {
     let userToDelete = new GroupUserActionModel(
       this.userID,
       this.login!,
-      this.paramID!
+      this.groupID!
     );
-    console.log(userToDelete.login);
-    console.log(this.userID);
-    console.log(this.paramID);
+    console.log(userToDelete);
+
     Swal.fire({
       title: '¡Cuidado! Vas a abandonar el grupo',
       text: 'Perderás toda la información',

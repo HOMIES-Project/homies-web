@@ -44,6 +44,9 @@ export class TaskModalComponent implements OnInit {
       this.userId = response;
     });
 
+    this.groupsService.groupInfo.subscribe(response =>{
+      console.log(response)
+    })
 
   }
 
@@ -68,7 +71,6 @@ export class TaskModalComponent implements OnInit {
           this.newTaskForm.controls.taskDescription.value
 
         );
-        console.log(task)
         this.sent = true;
         this.tasksService.performTaskCreation(task).subscribe((response) => {
           this.router.navigate(['home/tasks', response.id])
