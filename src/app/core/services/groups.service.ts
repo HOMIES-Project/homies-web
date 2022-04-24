@@ -21,6 +21,11 @@ export class GroupsService {
   private groupIDBehaviourSubject: BehaviorSubject<string | null>;
   public groupID: Observable<string | null>;
 
+
+  //OBSERVABLE -  GROUP INFO
+  private groupInfoBehaviourSubject: BehaviorSubject<any | null>;
+  public groupInfo: Observable<any | null>;
+
   constructor(private http: HttpClient) {
     this.groupsListBehaviourSubject =
       new BehaviorSubject<Array<GroupCreationModel> | null>(
@@ -32,6 +37,11 @@ export class GroupsService {
       JSON.parse(<string>localStorage.getItem('groupID'))
     );
     this.groupID = this.groupIDBehaviourSubject.asObservable();
+
+    this.groupInfoBehaviourSubject = new BehaviorSubject<any | null>(
+      JSON.parse(<string>localStorage.getItem('groupInfo'))
+    );
+    this.groupInfo = this.groupInfoBehaviourSubject.asObservable();
   }
 
   /* GROUP CREATION - POST */
@@ -78,6 +88,7 @@ export class GroupsService {
     let url = `${environment.BASE_URL}/groups/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
+        this.groupInfoBehaviourSubject.next(response)
         return response;
       })
     );
@@ -93,12 +104,24 @@ export class GroupsService {
     return this.http.post<GroupUserActionModel>(url, entry);
   }
 
+  // performDeleteGroup(entry: GroupUserActionModel) {
+  //   let url = `${environment.BASE_URL}/groups`;
+  //   // const options = {
+  //   //   body: {
+  //   //     entry
+  //   //   }
+  //   // }
+  //   return this.http.delete<GroupUserActionModel>(url, entry);
+  // }
+
 
   performLogoutFromGroups(): Observable<any> {
     localStorage.removeItem('groupID');
     localStorage.removeItem('groupsArray');
+    localStorage.removeItem('groupInfo');
     this.groupIDBehaviourSubject.next(null);
     this.groupsListBehaviourSubject.next(null);
+    this.groupInfoBehaviourSubject.next(null);
     return this.groupID;
   }
 }

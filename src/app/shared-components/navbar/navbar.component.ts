@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
   id!: string;
   username!: string | undefined;
   groupID!: string | null;
-  groupName!: string | null;
+  groupName!: any | null;
 
   constructor(
     private usersService: UsersService,
@@ -30,16 +30,9 @@ export class NavbarComponent implements OnInit {
     usersService.user.subscribe((response) => {
       this.username = response?.user.login;
     });
-    this.groupsService.groupID.subscribe((response) => {
-      this.groupID = response;
-      if (this.groupID != null) {
-        this.groupsService
-          .getGroupInfo(this.groupID!)
-          .subscribe((groupInfo) => {
-            this.groupName = groupInfo.groupName;
-          });
-      }
-    });
+    this.groupsService.groupInfo.subscribe( response =>{
+      this.groupName = response?.groupName
+    })
   }
 
   ngOnInit(): void {}

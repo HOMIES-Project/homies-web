@@ -20,7 +20,7 @@ export class UserAddGroupComponent implements OnInit {
   closeResult = '';
 
 
-  userExists!: boolean;
+  userExists: boolean = true;
   constructor(private formBuilder: FormBuilder,  private modalService: NgbModal, private groupsService: GroupsService) { }
 
   ngOnInit(): void {
