@@ -69,6 +69,7 @@ export class UserAddGroupComponent implements OnInit {
       this.groupForm.controls.login.value,
       this.idGroup
     );
+    console.log(group)
     this.sent = true;
 
     if (!this.groupForm.valid) return;
