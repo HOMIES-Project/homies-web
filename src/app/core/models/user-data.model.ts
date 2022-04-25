@@ -60,15 +60,15 @@ export class UserEditModel {
 }
 
 export class UserChangePassword {
-  public password: LoginModel;
+  public currentPassword: LoginModel;
   public newPassword: RegisterModel;
   
   constructor(
-    password: LoginModel,
+    currentPassword: LoginModel,
     newPassword: RegisterModel
   ) {
     
-    this.password = password;
+    this.currentPassword = currentPassword;
     this.newPassword = newPassword;
   }
 }

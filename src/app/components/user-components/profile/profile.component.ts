@@ -1,3 +1,4 @@
+import { UserChangePassword } from './../../../core/models/user-data.model';
 import { UserData, UserEditModel } from '../../../core/models/user-data.model';
 import { RegisterModel } from '../../../core/models/register.model';
 import { Router } from '@angular/router';
@@ -15,6 +16,8 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Observable, ReplaySubject } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+import { DatePipe } from '@angular/common';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-profile',
@@ -35,13 +38,21 @@ export class ProfileComponent implements OnInit {
   userDataChanged!: UserEditModel;
   showPassword: boolean = false;
   userProfileFrom: FormGroup;
+  changePasswordForm: FormGroup;
+  changePassword!: UserChangePassword;
   profilePicture!: File;
   profilePicturePath!: any;
   birthDate!: Date;
   photoContentType = 'image/png';
   langKey!: string;
+  // birthDateTime!: NgbDate;
+  currentPassword!: string;
+  newPassword!: string;
+  passConfirm!: string;
+  sent: boolean = false;
 
   successfullyEdited: boolean = false;
+  successfullyEditedPass: boolean = false;
 
   base64Output!: string;
   base64Image: any;
@@ -56,6 +67,12 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private sanitizer: DomSanitizer
   ) {
+    this.changePasswordForm = this.formBuilder.group({
+      currentPassword: ['',[Validators.required, Validators.minLength(8)]],
+      newPassword: ['', [Validators.required, Validators.minLength(8)]],
+      passConfirm: ['', Validators.required],
+    });
+
     this.userProfileFrom = this.formBuilder.group({
       login: new FormControl(),
       firstName: new FormControl(),
@@ -64,15 +81,19 @@ export class ProfileComponent implements OnInit {
       phone: new FormControl(),
       photo: new FormControl(),
       birthDate: new FormControl(),
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      passConfirm: ['', Validators.required],
+      
     });
   }
+
+  // dateToString() {
+  //   this.birthDate = new Date();
+  //   let latest_date = this.datePipe.transform(this.birthDate, 'yyyy-MM-dd');
+  // }
 
   mustMatchValidator: ValidatorFn = (
     control: AbstractControl
   ): ValidationErrors | null => {
-    let passVal = control.get('password');
+    let passVal = control.get('newPassword');
     let passConfirmVal = control.get('passConfirm');
     return passVal?.value === passConfirmVal?.value ? null : { noMatch: true };
   };
@@ -87,7 +108,7 @@ export class ProfileComponent implements OnInit {
       this.firstName = response?.user.firstName;
       this.lastName = response?.user.lastName;
       this.phone = response?.phone,
-      this.birth = response?.birthDate,
+      this.birthDate = response?.birthDate,
       this.photo = response?.photo;
     });
     /** ADD USER VALUES TO FORM DEFAULT VALUES  **/
@@ -97,7 +118,8 @@ export class ProfileComponent implements OnInit {
       lastName: this.lastName,
       email: this.email,
       phone: this.phone,
-      photo: this.photo
+      photo: this.photo,
+      birthDate: this.birthDate
     });
 
     /** DECODE BASE64 PROFILE PICTURE**/
@@ -107,6 +129,9 @@ export class ProfileComponent implements OnInit {
   showPass() {
     this.showPassword = !this.showPassword;
   }
+
+  /* CONVERT DATE TO LOCALDATE */
+  
 
   /** PROFILE PICTURE **/
   profilePictureImageDecoded() {
@@ -137,6 +162,7 @@ export class ProfileComponent implements OnInit {
   /** SUBMIT CHANGES IN USER PROFILE **/
 
   submitChangeProfileForm() {
+    this.birthDate.toISOString;
     this.userDataChanged = new UserEditModel(
       this.userProfileFrom.controls.login.value,
       this.userProfileFrom.controls.firstName.value,
@@ -149,12 +175,34 @@ export class ProfileComponent implements OnInit {
       this.photoContentType,
       this.userProfileFrom.controls.birthDate.value,
     );
-    this.birthDate = this.userProfileFrom.controls.birthDate.value;
+
+      // this.birthDate.toString();
+
+    // this.birthDate = new Date();
+    //   this.birthDateTime = new NgbDate(
+    //     this.birthDate.getFullYear(),
+    //     this.birthDate.getMonth() + 1,
+    //     this.birthDate.getDay()
+    //   );
+
+    // if(this.birthDate != null || this.phone != null) {
+      
+    //   console.log(this.birthDateTime);
+    //   this.userProfileFrom.controls.phone.value,
+    //   console.log('FECHA ' + typeof this.birthDate);
+      
+
+    //   this.birthDate = this.userProfileFrom.controls.birthDate.value;
+    // } 
     
-    // console.log("FECHA " + typeof this.birthDate);
-    // let str = this.birthDate.toString();
-    // if (str != "") {
-    //   console.log("FECHA " + str);
+
+    
+    
+    console.log("FECHA " + typeof this.birthDate);
+    console.log("FECHA NUEVA " + this.birthDate);
+    //  let str = this.birthDate.toUTCString();
+    //  if (str != "") {
+    //    console.log("FECHA " + str);
     // } else {
       
     // }
@@ -173,9 +221,22 @@ export class ProfileComponent implements OnInit {
       }, error=> {
         console.log(error)
       });
-    console.log(typeof this.birthDate);
     console.log(this.photo);
     console.log(this.userDataChanged);
+  }
+
+  submitChangePassword() {
+    this.changePassword = new UserChangePassword(
+      this.changePasswordForm.controls.currentPassword.value,
+      this.changePasswordForm.controls.newPassword.value,
+    );
+    this.sent = true;
+    this.usersService.performChangePassword(this.changePassword).subscribe((response) => {
+      console.log(response);
+      this.successfullyEditedPass = true
+    }, error=> {
+      console.log(error)
+    })
   }
 
   /** DELETE USER **/
