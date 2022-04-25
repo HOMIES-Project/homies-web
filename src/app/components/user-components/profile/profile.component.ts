@@ -12,12 +12,11 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { UsersService } from 'src/app/core/services/users.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit, LOCALE_ID, Inject } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Observable, ReplaySubject } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DatePipe } from '@angular/common';
-import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -32,20 +31,20 @@ export class ProfileComponent implements OnInit {
   email!: string | undefined;
   phone!: string | undefined;
   photo!: string | undefined;
-  birth!: string | undefined;
+  birth!: string;
   premium: boolean = false;
   userChanged!: RegisterModel;
   userDataChanged!: UserEditModel;
   showPassword: boolean = false;
   userProfileFrom: FormGroup;
-  changePasswordForm: FormGroup;
-  changePassword!: UserChangePassword;
   profilePicture!: File;
   profilePicturePath!: any;
-  birthDate!: Date;
+  birthDate!: string;
   photoContentType = 'image/png';
   langKey!: string;
-  // birthDateTime!: NgbDate;
+
+  changePasswordForm: FormGroup;
+  changePassword!: UserChangePassword;
   currentPassword!: string;
   newPassword!: string;
   passConfirm!: string;
@@ -65,13 +64,16 @@ export class ProfileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private usersService: UsersService,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    @Inject(LOCALE_ID) public locale: string
   ) {
     this.changePasswordForm = this.formBuilder.group({
       currentPassword: ['',[Validators.required, Validators.minLength(8)]],
       newPassword: ['', [Validators.required, Validators.minLength(8)]],
       passConfirm: ['', Validators.required],
-    });
+    },
+    { validators: this.mustMatchValidator }
+    );
 
     this.userProfileFrom = this.formBuilder.group({
       login: new FormControl(),
@@ -84,11 +86,6 @@ export class ProfileComponent implements OnInit {
       
     });
   }
-
-  // dateToString() {
-  //   this.birthDate = new Date();
-  //   let latest_date = this.datePipe.transform(this.birthDate, 'yyyy-MM-dd');
-  // }
 
   mustMatchValidator: ValidatorFn = (
     control: AbstractControl
@@ -129,8 +126,6 @@ export class ProfileComponent implements OnInit {
   showPass() {
     this.showPassword = !this.showPassword;
   }
-
-  /* CONVERT DATE TO LOCALDATE */
   
 
   /** PROFILE PICTURE **/
@@ -145,6 +140,20 @@ export class ProfileComponent implements OnInit {
       this.photo = base64;
       this.base64ProfileImage = `data:image/png;base64,${this.photo}`;
     });
+  }
+
+  /* DELETE PHOTO PROFILEs */
+  removePhoto() {
+    this.photoContentType = "";
+    this.photo = "";
+    console.log(this.photo);
+  }
+
+  /* CONVERT DATE TO FORMATDATE */
+  convertDate() {
+    // this.birthDate.toISOString();
+    this.birthDate = formatDate(this.birthDate, 'yyyy-dd-MM', this.locale);
+    console.log(this.birthDate);
   }
 
   convertFile(file: File): Observable<string> {
@@ -162,7 +171,8 @@ export class ProfileComponent implements OnInit {
   /** SUBMIT CHANGES IN USER PROFILE **/
 
   submitChangeProfileForm() {
-    this.birthDate.toISOString;
+    // this.dateToString();
+    this.convertDate();
     this.userDataChanged = new UserEditModel(
       this.userProfileFrom.controls.login.value,
       this.userProfileFrom.controls.firstName.value,
@@ -170,27 +180,19 @@ export class ProfileComponent implements OnInit {
       this.userProfileFrom.controls.email.value,
       this.langKey = navigator.language,
       this.userProfileFrom.controls.phone.value,
-      // this.userProfileFrom.controls.photo.value,
-      this.photo!,
+      this.photo!, 
       this.photoContentType,
       this.userProfileFrom.controls.birthDate.value,
     );
-    this.birthDate = this.userProfileFrom.controls.birthDate.value;
-
-    // console.log("FECHA " + typeof this.birthDate);
-    // let str = this.birthDate.toString();
-    // if (str != "") {
-    //   console.log("FECHA " + str);
-    // } else {
-
-    // }
-
-
-    // let str = this.birthDate.toString();
-    // console.log("Fecha:" + str)
-    // this.birthDate = date.toDateStr
-    // let str = this.birthDate.toDateString();
-    // console.log(str)
+    // this.birthDate = this.userProfileFrom.controls.birthDate.value;
+      
+      
+      console.log("FECHA " + typeof this.birthDate);
+      console.log("FECHA NUEVA " + this.birthDate);
+      // console.log(this.birthDate.toISOString);
+      
+    
+    
     this.usersService
       .performEditUser(this.userDataChanged, this.id)
       .subscribe((response) => {
@@ -199,20 +201,25 @@ export class ProfileComponent implements OnInit {
       }, error=> {
         console.log(error)
       });
+    // console.log(this.photo);
+    console.log(this.userDataChanged);
   }
 
+  /* SUBMIT CHANGE PASSWORD */
   submitChangePassword() {
     this.changePassword = new UserChangePassword(
       this.changePasswordForm.controls.currentPassword.value,
       this.changePasswordForm.controls.newPassword.value,
     );
     this.sent = true;
-    this.usersService.performChangePassword(this.changePassword).subscribe((response) => {
-      console.log(response);
-      this.successfullyEditedPass = true
-    }, error=> {
-      console.log(error)
-    })
+    this.usersService
+      .performChangePassword(this.changePassword)
+      .subscribe((response) => {
+        console.log(response);
+        this.successfullyEditedPass = true
+      }, error=> {
+        console.log(error)
+      })
   }
 
   /** DELETE USER **/
