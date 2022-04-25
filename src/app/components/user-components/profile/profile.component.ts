@@ -151,9 +151,10 @@ export class ProfileComponent implements OnInit {
 
   /* CONVERT DATE TO FORMATDATE */
   convertDate() {
-    // this.birthDate.toISOString();
-    this.birthDate = formatDate(this.birthDate, 'yyyy-dd-MM', this.locale);
-    console.log(this.birthDate);
+    if(this.birthDate == "") {
+      this.birthDate = formatDate(this.birthDate, 'yyyy-dd-MM', this.locale);
+      console.log(this.birthDate);
+    }
   }
 
   convertFile(file: File): Observable<string> {
@@ -184,7 +185,6 @@ export class ProfileComponent implements OnInit {
       this.photoContentType,
       this.userProfileFrom.controls.birthDate.value,
     );
-    // this.birthDate = this.userProfileFrom.controls.birthDate.value;
       
       
       console.log("FECHA " + typeof this.birthDate);
