@@ -18,11 +18,9 @@ export class TasksComponent implements OnInit {
   isEditting: boolean = true;
   isCreating: boolean = true;
 
-
-  tasksList: Array<any> = []
-  noTasks: boolean = true
-  allTasksList!: Array<any>
-
+  tasksList: Array<any> = [];
+  noTasks: boolean = true;
+  allTasksList!: Array<any>;
 
   constructor(
     private tasksService: TasksService,
@@ -35,51 +33,37 @@ export class TasksComponent implements OnInit {
       this.groupID = groupID;
     });
 
-    this.tasksService.getTasksList().subscribe(response =>{
-      this.allTasksList = response
-      this.getMyTask()
-
+    this.tasksService.getTasksList(this.groupID!).subscribe((response) => {
+      this.tasksList = response.tasks;
+      console.log(this.tasksList.length);
       if (this.tasksList.length == 0) {
-        this.noTasks = true
+        this.noTasks = true;
       } else {
-
-        this.noTasks = false
+        this.noTasks = false;
       }
-
-    })
+      console.log(this.tasksList);
+    });
   }
-
-  getMyTask(){
-    for (var i = 0; i < this.allTasksList.length; i++) {
-      if (this.groupID == this.allTasksList[i].taskList.id) {
-        this.tasksList.push(this.allTasksList[i])
-      }
-    }
-  }
-
 
   openNewTarea() {
     this.open = !this.open;
-
   }
 
-  completeTask() {
+  completeTask() {}
 
-  }
-
-  onCheckboxChanged(event: any){
-    console.log(event.target.value)
+  onCheckboxChanged(event: any) {
+    console.log(event.target.value);
   }
 
   get result() {
-this.tasksList.filter(item => {
-  item.checked;
-  console.log(item)
-})
-    return this.tasksList.filter(item => item.checked)
+    this.tasksList.filter((item) => {
+      item.checked;
+      console.log(item);
+    });
+    return this.tasksList.filter((item) => item.checked);
   }
 
-  deleteTask(taskID:number) {
+  deleteTask(taskID: number) {
     Swal.fire({
       title: '¡Cuidado! Vas a eliminar una tarea',
       text: '¿Estás seguro?',
@@ -93,9 +77,12 @@ this.tasksList.filter(item => {
       if (result.isConfirmed) {
         this.tasksService.performDeleteTask(taskID).subscribe(
           (response) => {
+            console.log(response)
             window.location.reload();
           },
-          (error) => {}
+          (error) => {
+            console.log(error)
+          }
         );
       } else if (result.isDenied) {
         Swal.fire('Changes are not saved', '', 'info');

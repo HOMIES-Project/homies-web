@@ -49,6 +49,7 @@ export class GroupsService {
     return this.http.post<GroupCreationModel>(url, entry).pipe(
       map((apireturn) => {
         this.groupIDBehaviourSubject.next(apireturn.id);
+        return apireturn
       })
     );
   }

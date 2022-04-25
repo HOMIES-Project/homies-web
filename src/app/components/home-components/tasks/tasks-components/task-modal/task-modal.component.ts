@@ -45,7 +45,7 @@ export class TaskModalComponent implements OnInit {
     });
 
     this.groupsService.groupInfo.subscribe(response =>{
-      console.log(response)
+
     })
 
   }
@@ -73,7 +73,8 @@ export class TaskModalComponent implements OnInit {
         );
         this.sent = true;
         this.tasksService.performTaskCreation(task).subscribe((response) => {
-          this.router.navigate(['home/tasks', response.id])
+          console.log(response)
+          console.log('tarea creada')
         },
         (error) => {
         }
@@ -87,31 +88,31 @@ export class TaskModalComponent implements OnInit {
   }
   //TODO edit task
 
-  openEditTask(editTask: any) {
-    this.modalService.open(editTask, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-      (result)=>{
-        let task: TaskCreationModel = new TaskCreationModel(
-          this.userId,
-          this.groupID!,
-          this.newTaskForm.controls.taskUser.value,
-          this.newTaskForm.controls.taskDescription.value
+  // openEditTask(editTask: any) {
+  //   this.modalService.open(editTask, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+  //     (result)=>{
+  //       let task: TaskCreationModel = new TaskCreationModel(
+  //         this.userId,
+  //         this.groupID!,
+  //         this.newTaskForm.controls.taskUser.value,
+  //         this.newTaskForm.controls.taskDescription.value
 
-        );
-        this.sent = true;
-        this.tasksService.performTaskCreation(task).subscribe((response) => {
-          this.router.navigate(['home/tasks', response.id])
-        },
-        (error) => {
-          console.log(error);
-        }
-        );
-        this.closeResult = `Closed width: ${result}`;
-      },
-      (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)} `
-      }
-    )
-  }
+  //       );
+  //       this.sent = true;
+  //       this.tasksService.performTaskCreation(task).subscribe((response) => {
+  //         this.router.navigate(['home/tasks', response.id])
+  //       },
+  //       (error) => {
+  //         console.log(error);
+  //       }
+  //       );
+  //       this.closeResult = `Closed width: ${result}`;
+  //     },
+  //     (reason) => {
+  //       this.closeResult = `Dismissed ${this.getDismissReason(reason)} `
+  //     }
+  //   )
+  // }
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {

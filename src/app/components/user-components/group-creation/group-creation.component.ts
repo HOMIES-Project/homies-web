@@ -19,6 +19,8 @@ export class GroupCreationComponent implements OnInit {
   isLoading!: boolean;
   groupNameExists: boolean = false;
 
+  userGroups: Array<any> | null = []
+
   constructor(
     private modalService: NgbModal,
     private groupsService: GroupsService,
@@ -30,6 +32,10 @@ export class GroupCreationComponent implements OnInit {
     this.usersService.userId.subscribe((response) => {
       this.userId = response;
     });
+
+    this.groupsService.groupsList.subscribe(response => {
+      this.userGroups = response
+    })
   }
 
   groupForm = this.formBuilder.group({
@@ -85,6 +91,9 @@ export class GroupCreationComponent implements OnInit {
 
     this.groupsService.performGroupCreation(group).subscribe(
       (response) => {
+        console.log(response)
+        this.userGroups?.push(response)
+        this.groupsService.updateListOfGroups(this.userGroups)
         this.groupNameExists = false
         this.router.navigate(['home']);
         this.isLoading = false;

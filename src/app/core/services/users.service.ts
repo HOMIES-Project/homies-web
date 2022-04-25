@@ -114,7 +114,6 @@ export class UsersService {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        console.log(response)
 
         this.userBehaviourSubject.next(response);
         localStorage.setItem('userInfo', JSON.stringify(response));

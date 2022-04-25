@@ -14,6 +14,7 @@
                   </td>
                   <td class="text-left">
                     <span class="d-block ">{{task.taskName}}</span>
+                    <span class="d-block ">{{task.id}}</span>
                     <span style="font-size: 0.8rem">Esther</span>
                   </td>
                   <td class="d-flex justify-content-end">
@@ -21,7 +22,7 @@
                       <app-task-modal [isEditting]="this.isEditting"></app-task-modal>
                     </div>
                     <img src="../../../assets/svg/blueTrash.svg" style="margin-right: 5%;"
-                      (click)="deleteTask(indexOfTask)" />
+                      (click)="deleteTask(task.id)" />
                 </tr>
                 <tr>
                   <td></td>

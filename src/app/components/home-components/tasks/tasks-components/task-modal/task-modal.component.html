@@ -1,8 +1,8 @@
 <img src="../../../assets/svg/bluePencil.svg" style="margin-right: 5%;" *ngIf="this.isEditting"
-  (click)="openEditTask(task)" />
+   />
 
 <button class="btn btn-outline-info mt-3 formButton text-white" *ngIf="this.isCreating"
-  (click)="openEditTask(task)">Añadir
+  (click)="openAddTask(task)">Añadir
   tarea</button>
 <ng-template #task let-modal>
   <div class="justify-content-center align-items-center">
