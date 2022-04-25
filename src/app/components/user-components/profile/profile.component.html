@@ -7,7 +7,7 @@
             <form [formGroup]="userProfileFrom" (submit)="submitChangeProfileForm()">
               <div>
                 <img *ngIf="this.photo" [src]="profilePictureImageDecoded()" alt="" width="100px" height="100px"
-                  class="dot  " (change)="getProfilePicture($event)">
+                  class="dot" (change)="getProfilePicture($event)"/>
               </div>
               <span class="dot" *ngIf="!this.photo">
                 <h2 class="initial center">
@@ -20,6 +20,7 @@
                     (change)="getProfilePicture($event)" />
                 </div>
               </div>
+              <a *ngIf="this.photo" (click)="removePhoto()" class="mt-4 btn btn-xs btn-danger">Eliminar Foto</a>
               <div class="mb- mt-4 pb-2">
                 <div class="d-flex flex-column col-10 m-auto justify-content-center">
                   <h5 align="left">Datos personales</h5>
@@ -90,22 +91,23 @@
                       <div class="input-group-text">
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <input id="birthDate" type="date" [(ngModel)]="birthDate" name="birthDate" formControlName="birthDate"
-                        class="fields form-control normal-border" value="{{ this.birthDate }}"
-                        placeholder="Fecha de nacimiento" />
+                      <input id="birthDate" type="date"  name="birthDate"
+                        formControlName="birthDate" class="fields form-control normal-border"
+                        value="{{ this.birthDate }}" placeholder="Fecha de nacimiento" />
                       <!--onfocus="(this.type='date')" -->
                     </div>
                   </div>
-                  <button class="btn formButton btn-lg px-5 text-uppercase mt-4 text-white" type="submit" value="enviar">
-                    <span class="spinner-border spinner-border-sm mr-1" hidden ></span>
+                  <button class="btn formButton btn-lg px-5 text-uppercase mt-4 text-white" type="submit"
+                    value="enviar">
+                    <span class="spinner-border spinner-border-sm mr-1" hidden></span>
                     Guardar cambios
                   </button>
-    
+
                   <div class="bg-success mt-3 py-3 text-white rounded" *ngIf="this.successfullyEdited">
                     Los cambios se han guardado correctamente
                   </div>
+                </div>
               </div>
-            </div>
             </form>
             <form [formGroup]="changePasswordForm" (submit)="submitChangePassword()">
               <div class="mb- mt-4 pb-2">
@@ -114,13 +116,13 @@
                     <div class="card">
                       <div class="card-header" id="headingOne">
                         <h5 class="mb-0" align="left">
-                          <button class="btn btn-link passwordAccordion" data-toggle="collapse" data-target="#collapseOne"
-                            aria-expanded="true" aria-controls="collapseOne">
+                          <a class="btn btn-link passwordAccordion" data-toggle="collapse"
+                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             Cambiar la contraseña
-                          </button>
+                          </a>
                         </h5>
                       </div>
-    
+
                       <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
                           <!--PASSWORD-->
@@ -133,9 +135,11 @@
                               <input id="currentPassword" type="password" name="pass" formControlName="currentPassword"
                                 placeholder="Contraseña actual" [type]="showPassword ? 'text' : 'password'"
                                 class="fields form-control password-field is-invalid" [ngClass]="{
-                                      'is-invalid':
-                                      this.sent && this.changePasswordForm.controls.currentPassword.errors
-                                    }" />
+                                  'is-invalid':
+                                    this.sent &&
+                                    this.changePasswordForm.controls
+                                      .currentPassword.errors
+                                }" />
                               <!-- ICONO NO SEE -->
                               <div class="input-group-text no-see">
                                 <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
@@ -144,12 +148,16 @@
                                   *ngIf="this.showPassword" alt="" />
                               </div>
                               <!--Validation-->
-                              <div class="invalid-feedback" *ngIf="">
+                              <div class="invalid-feedback" *ngIf="
+                                  sent &&
+                                  this.changePasswordForm.controls.currentPassword.errors
+                                    ?.required
+                                ">
                                 ¡Tienes que rellenar este campo!
                               </div>
                             </div>
                           </div>
-    
+
                           <!--NEW PASSWORD-->
                           <div class="form-outline mb-4">
                             <div class="input-group">
@@ -160,9 +168,11 @@
                               <input id="newPassword" type="password" name="pass" formControlName="newPassword"
                                 placeholder="Nueva contraseña" [type]="showPassword ? 'text' : 'password'"
                                 class="fields form-control password-field is-invalid" [ngClass]="{
-                                      'is-invalid':
-                                      this.sent && this.changePasswordForm.controls.newPassword.errors
-                                    }" />
+                                  'is-invalid':
+                                    this.sent &&
+                                    this.changePasswordForm.controls.newPassword
+                                      .errors
+                                }" />
                               <!-- ICONO NO SEE -->
                               <div class="input-group-text no-see">
                                 <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
@@ -171,15 +181,21 @@
                                   *ngIf="this.showPassword" alt="" />
                               </div>
                               <!--Validation-->
-                              <div class="invalid-feedback" *ngIf="">
+                              <div class="invalid-feedback" *ngIf="
+                                  this.sent &&
+                                  this.changePasswordForm.controls.newPassword.errors?.required
+                                ">
                                 ¡Tienes que rellenar este campo!
                               </div>
-                              <div class="invalid-feedback" *ngIf="">
+                              <div class="invalid-feedback" *ngIf="
+                              this.sent &&
+                                  this.changePasswordForm.controls.newPassword.errors?.minlength
+                                ">
                                 La contraseña debe tener al menos 8 caracteres
                               </div>
                             </div>
                           </div>
-    
+
                           <!--PASSWORD CONFIRMATION-->
                           <div class="form-outline mb-4 box-content">
                             <div class="input-group">
@@ -188,11 +204,13 @@
                                 <img src="../../../assets/svg/password.svg" class="svg-icon" alt="" />
                               </div>
                               <input id="passConfirm" type="password" name="passConfirm" formControlName="passConfirm"
-                                class="fields form-control password-field is-invalid" placeholder="Repetir contraseña nueva"
-                                [type]="showPassword ? 'text' : 'password'" [ngClass]="{
-                                      'is-invalid':
-                                      this.sent && this.changePasswordForm.controls.passConfirm.errors
-                                    }" />
+                                class="fields form-control password-field is-invalid"
+                                placeholder="Repetir contraseña nueva" [type]="showPassword ? 'text' : 'password'"
+                                [ngClass]="{
+                                  'is-invalid':
+                                    this.sent &&
+                                    this.changePasswordForm.controls.passConfirm.errors?.required || changePasswordForm.errors?.noMatch
+                                }" />
                               <!-- ICONO NO SEE -->
                               <div class="input-group-text no-see">
                                 <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
@@ -201,41 +219,42 @@
                                   *ngIf="this.showPassword" alt="" />
                               </div>
                               <!--Validation-->
-                              <div class="invalid-feedback" *ngIf="">
+                              <div class="invalid-feedback" *ngIf="
+                                this.sent &&
+                                this.changePasswordForm.controls.passConfirm.errors?.required
+                              ">
                                 ¡Tienes que rellenar este campo!
                               </div>
-                              <div class="invalid-feedback" *ngIf="">
+                              <div class="invalid-feedback" *ngIf="this.sent && changePasswordForm.errors?.noMatch">
                                 Las contraseñas no coinciden
                               </div>
                             </div>
                           </div>
                         </div>
-                      
-                        <button class="btn formButton btn-lg px-5 text-uppercase mb-5 text-white" type="submit" value="enviar">
+
+                        <button class="btn formButton btn-lg px-5 text-uppercase mb-5 text-white" type="submit"
+                          value="enviar">
                           <span class="spinner-border spinner-border-sm mr-1" hidden></span>
                           Cambiar
                         </button>
-          
+
                         <div class="bg-success py-3 text-white rounded mb-3" *ngIf="this.successfullyEditedPass">
                           La contraseña se ha cambiado correctamente
                         </div>
-
                       </div>
                     </div>
                   </div>
                 </div>
-                
               </div>
-              
+
               <button type="button" class="btn btn-danger btn-lg px-5 text-uppercase mt-4 text-white"
                 (click)="deleteUser()">
                 Eliminar cuenta
               </button>
-
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </div>
