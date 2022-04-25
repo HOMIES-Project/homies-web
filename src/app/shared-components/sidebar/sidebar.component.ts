@@ -28,13 +28,19 @@ export class SidebarComponent implements OnInit {
     this.usersService.userId.subscribe((response) => {
       this.id = response;
     });
-    this.usersService.user.subscribe(response => {
-      this.groups = response.groups
-      console.log(this.groups)
-    })
+    // this.usersService.user.subscribe(response => {
+    //   this.groups = response.groups
+    //   console.log(this.groups)
+    // })
 
     this.groupsService.groupInfo.subscribe( response =>{
       this.groupName = response?.groupName
+    })
+
+
+    this.groupsService.groupsList.subscribe( response =>{
+      console.log(response)
+      this.groups = response
     })
   }
 
@@ -48,7 +54,7 @@ export class SidebarComponent implements OnInit {
   }
 
   navigateToHomeGroupID(id: string) {
-    console.log(id)
+
     this.groupsService.updateGroupId(id).subscribe((response) => {
       this.paramID = response;
     });

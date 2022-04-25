@@ -76,13 +76,11 @@ export class TaskModalComponent implements OnInit {
           this.router.navigate(['home/tasks', response.id])
         },
         (error) => {
-          console.log(error);
         }
         );
         this.closeResult = `Closed width: ${result}`;
       },
       (reason) => {
-        console.log(reason);
         this.closeResult = `Dismissed ${this.getDismissReason(reason)} `
       }
     )
@@ -99,7 +97,6 @@ export class TaskModalComponent implements OnInit {
           this.newTaskForm.controls.taskDescription.value
 
         );
-        console.log(task)
         this.sent = true;
         this.tasksService.performTaskCreation(task).subscribe((response) => {
           this.router.navigate(['home/tasks', response.id])
@@ -111,7 +108,6 @@ export class TaskModalComponent implements OnInit {
         this.closeResult = `Closed width: ${result}`;
       },
       (reason) => {
-        console.log(reason);
         this.closeResult = `Dismissed ${this.getDismissReason(reason)} `
       }
     )
@@ -119,10 +115,10 @@ export class TaskModalComponent implements OnInit {
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
-      console.log('ùlso x');
+
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      console.log('ùlso y');
+
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;

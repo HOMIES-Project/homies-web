@@ -51,7 +51,6 @@ export class GroupCreationComponent implements OnInit {
           this.closeResult = `Closed with: ${result}`;
         },
         (reason) => {
-          console.log(reason);
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
@@ -59,10 +58,10 @@ export class GroupCreationComponent implements OnInit {
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
-      console.log('ùlso x');
+
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      console.log('ùlso y');
+
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;

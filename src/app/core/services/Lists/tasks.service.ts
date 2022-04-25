@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
@@ -15,7 +15,7 @@ export class TasksService {
 
   performTaskCreation(entry: TaskCreationModel): Observable<any> {
     let url = `${environment.BASE_URL}/tasks`;
-    console.log('Añadida');
+
     return this.http.post<TaskCreationModel>(url, entry);
   }
 
@@ -23,7 +23,20 @@ export class TasksService {
     let url = `${environment.BASE_URL}/tasks`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        console.log(response);
+        return response;
+      })
+    );
+  }
+
+  getUserTasksList(idGroup: string, login:string): Observable<any> {
+    let url = `${environment.BASE_URL}/task-lists-user`;
+    let params = new HttpParams()
+      .set('idGroup', idGroup)
+      .set('login', login);
+      console.log(params)
+    return this.http.get<any>(url, {params}).pipe(
+      map((response) => {
+        console.log(response)
         return response;
       })
     );

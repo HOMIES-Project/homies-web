@@ -45,7 +45,6 @@ export class UserAddGroupComponent implements OnInit {
           this.closeResult = `Closed with: ${result}`;
         },
         (reason) => {
-          console.log(reason);
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
@@ -82,7 +81,6 @@ export class UserAddGroupComponent implements OnInit {
         this.isLoading = false;
       },
       (error) => {
-        console.log(error.error.errorKey)
         if(error.error.errorKey == 'userexists') {
           this.errorMessage = 'El usuario ya pertenece al grupo'
         }

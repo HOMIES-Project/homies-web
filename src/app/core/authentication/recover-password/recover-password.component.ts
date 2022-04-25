@@ -108,7 +108,7 @@ export class RecoverPasswordComponent implements OnInit {
     this.passwordSent = true;
     if (!this.recoveryForm.valid) return;
     this.isLoading = true;
-    console.log(recovery);
+
     this.usersService.performRecovery(recovery).subscribe((response) => {
       this.isLoading = false
       Swal.fire({

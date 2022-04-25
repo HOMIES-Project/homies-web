@@ -10,7 +10,7 @@
               <tbody>
                 <tr *ngFor="let task of this.tasksList; let indexOfTask=index;" class="">
                   <td>
-                    <input class="" type="checkbox" value="" >
+                    <input class="checkbox" type="checkbox" value="{{indexOfTask}}" [(ngModel)] = "task.checked" (change)="onCheckboxChanged($event)" >
                   </td>
                   <td class="text-left">
                     <span class="d-block ">{{task.taskName}}</span>

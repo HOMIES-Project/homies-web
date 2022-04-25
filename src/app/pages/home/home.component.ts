@@ -1,3 +1,4 @@
+import { TasksService } from 'src/app/core/services/Lists/tasks.service';
 import { UserData } from '../../core/models/user-data.model';
 import { GroupsService } from '../../core/services/groups.service';
 import { UsersService } from 'src/app/core/services/users.service';
@@ -56,6 +57,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private groupsService: GroupsService,
     private usersService: UsersService,
+    private tasksService: TasksService,
     private route: ActivatedRoute,
     private router: Router,
     private sanitizer: DomSanitizer
@@ -71,15 +73,15 @@ export class HomeComponent implements OnInit {
 
     //todo - check this subscribepo
     this.usersService.user.subscribe((userInfo) => {
-      console.log(userInfo)
       this.name = userInfo?.user.firstName;
       this.surname = userInfo?.user.lastName;
       this.photo = userInfo?.photo;
-      console.log(userInfo)
+
     });
 
 
     this.getGroupDetails();
+    this.getUserTasks();
   }
 
   // updateGroupID(id: string) {
@@ -164,8 +166,6 @@ export class HomeComponent implements OnInit {
       login,
       this.groupID!
     );
-    console.log(userToDelete.login);
-    console.log(this.userID);
     Swal.fire({
       title: '¡Cuidado! Vas a eliminar un usuario',
       text: '¿Estás seguro?',
@@ -195,7 +195,6 @@ export class HomeComponent implements OnInit {
       this.login!,
       this.groupID!
     );
-    console.log(userToDelete);
 
     Swal.fire({
       title: '¡Cuidado! Vas a abandonar el grupo',
@@ -237,4 +236,13 @@ export class HomeComponent implements OnInit {
   //     console.log(error)
   //   })
   // }
+
+
+  getUserTasks() {
+    console.log(this.groupID)
+    console.log(this.login)
+    this.tasksService.getUserTasksList(this.groupID!, this.login!).subscribe(response => {
+      console.log(response)
+    })
+  }
 }

@@ -171,42 +171,20 @@ export class ProfileComponent implements OnInit {
       this.langKey = navigator.language,
       this.userProfileFrom.controls.phone.value,
       // this.userProfileFrom.controls.photo.value,
-      this.photo!, 
+      this.photo!,
       this.photoContentType,
       this.userProfileFrom.controls.birthDate.value,
     );
+    this.birthDate = this.userProfileFrom.controls.birthDate.value;
 
-      // this.birthDate.toString();
-
-    // this.birthDate = new Date();
-    //   this.birthDateTime = new NgbDate(
-    //     this.birthDate.getFullYear(),
-    //     this.birthDate.getMonth() + 1,
-    //     this.birthDate.getDay()
-    //   );
-
-    // if(this.birthDate != null || this.phone != null) {
-      
-    //   console.log(this.birthDateTime);
-    //   this.userProfileFrom.controls.phone.value,
-    //   console.log('FECHA ' + typeof this.birthDate);
-      
-
-    //   this.birthDate = this.userProfileFrom.controls.birthDate.value;
-    // } 
-    
-
-    
-    
-    console.log("FECHA " + typeof this.birthDate);
-    console.log("FECHA NUEVA " + this.birthDate);
-    //  let str = this.birthDate.toUTCString();
-    //  if (str != "") {
-    //    console.log("FECHA " + str);
+    // console.log("FECHA " + typeof this.birthDate);
+    // let str = this.birthDate.toString();
+    // if (str != "") {
+    //   console.log("FECHA " + str);
     // } else {
-      
+
     // }
-    
+
 
     // let str = this.birthDate.toString();
     // console.log("Fecha:" + str)
@@ -216,13 +194,11 @@ export class ProfileComponent implements OnInit {
     this.usersService
       .performEditUser(this.userDataChanged, this.id)
       .subscribe((response) => {
-        console.log(response);
+
         this.successfullyEdited = true
       }, error=> {
         console.log(error)
       });
-    console.log(this.photo);
-    console.log(this.userDataChanged);
   }
 
   submitChangePassword() {

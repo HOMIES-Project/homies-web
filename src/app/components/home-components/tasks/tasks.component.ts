@@ -38,7 +38,7 @@ export class TasksComponent implements OnInit {
     this.tasksService.getTasksList().subscribe(response =>{
       this.allTasksList = response
       this.getMyTask()
-      console.log(this.allTasksList.length)
+
       if (this.tasksList.length == 0) {
         this.noTasks = true
       } else {
@@ -60,15 +60,26 @@ export class TasksComponent implements OnInit {
 
   openNewTarea() {
     this.open = !this.open;
-    console.log(this.open);
+
   }
 
   completeTask() {
 
   }
 
+  onCheckboxChanged(event: any){
+    console.log(event.target.value)
+  }
+
+  get result() {
+this.tasksList.filter(item => {
+  item.checked;
+  console.log(item)
+})
+    return this.tasksList.filter(item => item.checked)
+  }
+
   deleteTask(taskID:number) {
-    console.log('eliminada');
     Swal.fire({
       title: '¡Cuidado! Vas a eliminar una tarea',
       text: '¿Estás seguro?',
