@@ -1,6 +1,6 @@
 import { GroupsService } from 'src/app/core/services/groups.service';
 import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
-import { UserData } from './../models/user-data.model';
+import { UserData, UserChangePassword } from './../models/user-data.model';
 import { RegisterModel } from '../models/register.model';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -137,5 +137,11 @@ export class UsersService {
   performDeleteUser(id: string): Observable<any> {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.delete(url);
+  }
+
+  /* CHANGE PASSWORD - POST */
+  performChangePassword(entry: UserChangePassword): Observable<any> {
+    let url = `${environment.BASE_URL}/account/change-password`;
+    return this.http.post<UserChangePassword>(url, entry);
   }
 }

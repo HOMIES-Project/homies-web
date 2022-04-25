@@ -1,3 +1,4 @@
+import { LoginModel } from './login.model';
 import { RegisterModel } from './register.model';
 export class UserData {
   public id: string;
@@ -55,5 +56,19 @@ export class UserEditModel {
     this.photo = photo;
     this.photoContentType = photoContentType;
     this.birthDate = birthDate;
+  }
+}
+
+export class UserChangePassword {
+  public password: LoginModel;
+  public newPassword: RegisterModel;
+  
+  constructor(
+    password: LoginModel,
+    newPassword: RegisterModel
+  ) {
+    
+    this.password = password;
+    this.newPassword = newPassword;
   }
 }
