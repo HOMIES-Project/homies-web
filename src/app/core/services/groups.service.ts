@@ -102,15 +102,10 @@ export class GroupsService {
     return this.http.post<GroupUserActionModel>(url, entry);
   }
 
-  // performDeleteGroup(entry: GroupUserActionModel) {
-  //   let url = `${environment.BASE_URL}/groups`;
-  //   // const options = {
-  //   //   body: {
-  //   //     entry
-  //   //   }
-  //   // }
-  //   return this.http.delete<GroupUserActionModel>(url, entry);
-  // }
+  performDeleteGroup(idGroup:string) {
+    let url = `${environment.BASE_URL}/groups/${idGroup}`;
+    return this.http.delete(url);
+  }
 
   performLogoutFromGroups(): Observable<any> {
     localStorage.removeItem('groupID');

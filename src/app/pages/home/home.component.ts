@@ -256,19 +256,13 @@ export class HomeComponent implements OnInit {
 
   //TODO delete group with ID
 
-  // deleteGroup() {
-  //   let entry = new GroupUserActionModel(
-  //     this.userID,
-  //     this.login!,
-  //     this.groupID!
-  //   )
-  //   this.groupsService.performDeleteGroup(entry).subscribe(response => {
-  //     console.log('NICE')
-
-  //   }, error => {
-  //     console.log(error)
-  //   })
-  // }
+  deleteGroup() {
+    this.groupsService.performDeleteGroup(this.groupID!).subscribe(response => {
+      console.log('NICE')
+    }, error => {
+      console.log(error)
+    })
+  }
 
   getUserTasks() {
     this.tasksService
@@ -287,4 +281,6 @@ export class HomeComponent implements OnInit {
       queryParamsHandling: 'preserve',
     });
   }
+
+
 }

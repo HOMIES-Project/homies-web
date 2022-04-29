@@ -28,10 +28,7 @@ export class SidebarComponent implements OnInit {
     this.usersService.userId.subscribe((response) => {
       this.id = response;
     });
-    this.usersService.user.subscribe(response => {
-      this.groups = response.groups
 
-    })
 
     this.groupsService.groupInfo.subscribe( response =>{
       this.groupName = response?.groupName
