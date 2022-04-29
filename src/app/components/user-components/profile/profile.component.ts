@@ -142,7 +142,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  /* DELETE PHOTO PROFILEs */
+  /* DELETE PHOTO PROFILE */
   removePhoto() {
     this.photoContentType = "";
     this.photo = "";
@@ -151,9 +151,11 @@ export class ProfileComponent implements OnInit {
 
   /* CONVERT DATE TO FORMATDATE */
   convertDate() {
-    // this.birthDate.toISOString();
-    this.birthDate = formatDate(this.birthDate, 'yyyy-dd-MM', this.locale);
-    console.log(this.birthDate);
+    if(this.birthDate == "") {
+      this.birthDate = formatDate(this.birthDate, 'yyyy-dd-MM', this.locale);
+      console.log("FECHA " + this.birthDate);
+      console.log("FECHA DE TIPO " + typeof this.birthDate);
+    }
   }
 
   convertFile(file: File): Observable<string> {
@@ -169,10 +171,9 @@ export class ProfileComponent implements OnInit {
   }
 
   /** SUBMIT CHANGES IN USER PROFILE **/
-
   submitChangeProfileForm() {
-    // this.dateToString();
     this.convertDate();
+
     this.userDataChanged = new UserEditModel(
       this.userProfileFrom.controls.login.value,
       this.userProfileFrom.controls.firstName.value,
@@ -183,15 +184,7 @@ export class ProfileComponent implements OnInit {
       this.photo!, 
       this.photoContentType,
       this.userProfileFrom.controls.birthDate.value,
-    );
-    // this.birthDate = this.userProfileFrom.controls.birthDate.value;
-      
-      
-      console.log("FECHA " + typeof this.birthDate);
-      console.log("FECHA NUEVA " + this.birthDate);
-      // console.log(this.birthDate.toISOString);
-      
-    
+    );    
     
     this.usersService
       .performEditUser(this.userDataChanged, this.id)
@@ -223,7 +216,6 @@ export class ProfileComponent implements OnInit {
   }
 
   /** DELETE USER **/
-
   deleteUser() {
     Swal.fire({
       title: '¡Cuidado! Vas a eliminar tu usuario',
