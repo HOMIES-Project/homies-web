@@ -76,9 +76,11 @@ export class TasksComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.tasksService.performDeleteTask(taskID).subscribe(
+
           (response) => {
+            console.log(taskID)
             console.log(response)
-            window.location.reload();
+            //window.location.reload();
           },
           (error) => {
             console.log(error)

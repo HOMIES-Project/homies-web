@@ -38,8 +38,8 @@ export class TasksService {
     return this.http.get<any>(url)
   }
 
-  performEditTask(id: string, entry: any): Observable<any> {
-    let url = `${environment.BASE_URL}/tasks/${id}`;
+  performEditTask( entry: any): Observable<any> {
+    let url = `${environment.BASE_URL}/tasks/update-tasks`;
     return this.http.put(url, entry);
   }
 

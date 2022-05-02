@@ -258,6 +258,7 @@ export class HomeComponent implements OnInit {
 
   deleteGroup() {
     this.groupsService.performDeleteGroup(this.groupID!).subscribe(response => {
+      console.log(response)
       console.log('NICE')
     }, error => {
       console.log(error)
