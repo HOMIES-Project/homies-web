@@ -22,6 +22,10 @@ export class TasksComponent implements OnInit {
   noTasks: boolean = true;
   allTasksList!: Array<any>;
 
+  display!: boolean;
+
+  isCancelled!: boolean;
+
   constructor(
     private tasksService: TasksService,
     private groupsService: GroupsService,
@@ -41,18 +45,23 @@ export class TasksComponent implements OnInit {
       } else {
         this.noTasks = false;
       }
-      console.log(this.tasksList);
+      console.log(this.groupID);
     });
   }
 
-  openNewTarea() {
-    this.open = !this.open;
+  // openNewTarea() {
+  //   this.open = !this.open;
+  // }
+
+  editTaskFromList() {
+    console.log("pulsado")
   }
 
   completeTask() {}
 
   onCheckboxChanged(event: any) {
     console.log(event.target.value);
+    this.isCancelled = !this.isCancelled
   }
 
   get result() {

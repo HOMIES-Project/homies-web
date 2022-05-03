@@ -85,6 +85,7 @@ export class GroupCreationComponent implements OnInit {
       this.groupForm.controls.groupName.value,
       this.groupForm.controls.groupRelation.value
     );
+    console.log(group)
     this.sent = true;
     if (!this.groupForm.valid) return;
     this.isLoading = true;

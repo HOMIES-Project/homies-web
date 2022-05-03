@@ -25,8 +25,7 @@
                 <img src="../../../assets/svg/username.svg" class="svg-icon" alt="" />
               </div>
               <select name="" id="" class="form-control col-6">
-                <option value="">Esther</option>
-                <option value="">Carlos</option>
+                <option value="" *ngFor="let user of this.groupUsers">{{user.user.login}}</option>
               </select>
             </div>
             <!--END INPUT TASK USER SELECTION-->
@@ -61,7 +60,7 @@
               <div class="input-group-text">
                 <img src="../../../assets/svg/pencilEdit.svg" class="svg-icon" alt="" />
               </div>
-              <textarea id="dateOfBirth" class="form-control normal-border" formControlName="taskDescription"
+              <textarea id="dateOfBirth" class="form-control normal-border" formControlName="taskDescription" rows="3"
                 placeholder="{{this.isEditting ? this.taskFromChild.description : 'Introduce la descripción de la tarea'}}"
                 value="{{this.isEditting ? this.taskFromChild.description : ''}}" name="dp" [ngClass]="{
                                               'is-invalid':

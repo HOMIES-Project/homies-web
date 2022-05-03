@@ -62,7 +62,9 @@ export class HomeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private sanitizer: DomSanitizer
-  ) {}
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.imgBase64 = 'data:image/png;base64,';
@@ -260,6 +262,8 @@ export class HomeComponent implements OnInit {
     this.groupsService.performDeleteGroup(this.groupID!).subscribe(response => {
       console.log(response)
       console.log('NICE')
+      this.groupsService.performLogoutFromGroups();
+      this.usersService.performLogout();
     }, error => {
       console.log(error)
     })

@@ -1,6 +1,5 @@
 import { TaskEditionModel } from './../../../../../core/models/tasksCreation.model';
-import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -21,12 +20,16 @@ export class TaskModalComponent implements OnInit {
   @Input() isCreating!: boolean
   @Input() taskFromChild!: any;
 
+
   username!: string;
   groupID!: string | null;
   userId!: string;
   sent: boolean = false;
   closeResult = '';
   newTaskForm: FormGroup;
+
+  groupUsers!: Array<any>
+
 
 
   constructor(
@@ -52,13 +55,15 @@ export class TaskModalComponent implements OnInit {
   ngOnInit(): void {
     this.groupsService.groupID.subscribe((response) => {
       this.groupID = response;
+      console.log(this.groupID)
     });
     this.usersService.userId.subscribe((response) => {
       this.userId = response;
     });
 
     this.groupsService.groupInfo.subscribe(response =>{
-
+      this.groupUsers = response.userData
+      console.log(this.groupUsers)
     })
 
 
@@ -66,14 +71,12 @@ export class TaskModalComponent implements OnInit {
       this.newTaskForm.patchValue({
         taskName: this.taskFromChild.taskName,
         taskDescription: this.taskFromChild.description
-
       });
     }
-
   }
 
   openAddTask(addTask: any) {
-    this.modalService.open(addTask, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+    this.modalService.open(addTask, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then(
       (result)=>{
 
         this.closeResult = `Closed width: ${result}`;
@@ -86,7 +89,7 @@ export class TaskModalComponent implements OnInit {
  // TODO edit task
 
   openEditTask(idTask: string, editTask: any) {
-    this.modalService.open(editTask, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+    this.modalService.open(editTask, { ariaLabelledBy: 'modal-basic-title' , size: 'lg'}).result.then(
       (result)=>{
 
         this.closeResult = `Closed width: ${result}`;
