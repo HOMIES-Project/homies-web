@@ -88,6 +88,7 @@ export class GroupsService {
     return this.http.get<any>(url).pipe(
       map((response) => {
         console.log(response)
+        localStorage.setItem('groupInfo', JSON.stringify(response));
         this.groupInfoBehaviourSubject.next(response);
         return response;
       })
