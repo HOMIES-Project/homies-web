@@ -37,7 +37,7 @@ export class GroupsService {
     );
     this.groupID = this.groupIDBehaviourSubject.asObservable();
 
-    this.groupInfoBehaviourSubject = new BehaviorSubject<any | null>(
+    this.groupInfoBehaviourSubject = new BehaviorSubject<GroupCreationModel | null>(
       JSON.parse(<string>localStorage.getItem('groupInfo'))
     );
     this.groupInfo = this.groupInfoBehaviourSubject.asObservable();
@@ -58,7 +58,8 @@ export class GroupsService {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        console.log(response);
+        console.log(JSON.stringify(response.groups));
+        localStorage.setItem('groupsArray', JSON.stringify(response.groups));
         this.groupsListBehaviourSubject.next(response.groups);
 
         if (localStorage.getItem('groupID') == null && response.groups > 0) {
@@ -77,7 +78,7 @@ export class GroupsService {
   }
 
   updateListOfGroups(groups: any): Observable<any> {
-    localStorage.setItem('groupsArray', groups);
+    localStorage.setItem('groupsArray', JSON.stringify(groups));
     this.groupsListBehaviourSubject.next(groups);
     return this.groupID;
   }
@@ -86,6 +87,7 @@ export class GroupsService {
     let url = `${environment.BASE_URL}/groups/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
+        console.log(response)
         this.groupInfoBehaviourSubject.next(response);
         return response;
       })

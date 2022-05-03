@@ -44,3 +44,22 @@ export class GroupUserModel {
   }
 
 }
+
+// export class GroupInfoModel {
+//   public id: string;
+//   public groupRelationName: string;
+//   public groupName: string;
+//   public firstName: string;
+//   public lastName: string;
+//   public admin: boolean;
+
+//   constructor(id: string, groupRelationName: string, groupName: string,  firstName: string, lastName: string, admin: boolean) {
+//     this.id = id
+//     this.groupRelationName = groupRelationName
+//     this.groupName = groupName
+//     this.firstName = firstName
+//     this.lastName = lastName
+//     this.admin = admin
+//   }
+
+// }

@@ -123,6 +123,8 @@ export class TaskModalComponent implements OnInit {
       console.log(task)
       console.log(response)
       console.log('tarea creada')
+      this.router.navigate(['/home', 'tasks', this.groupID]);
+      this.modalService.dismissAll()
     },
     (error) => {
     }
