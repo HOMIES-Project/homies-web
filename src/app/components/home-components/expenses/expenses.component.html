@@ -1,85 +1,119 @@
 <div class="container py-5">
-    <div class="row d-flex justify-content-center align-items-center">
-        <div class="col-12 col-md-8 col-lg-6 p-0">
-            <div class="card card-login text-black shadow-lg rounded">
-                <div class="card-body text-center">
-                    <div class="mb-5 mt-1 pb-2">
-                        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-                            <ngb-panel title="Simple">
-                              <ng-template ngbPanelContent>
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
-                                aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-                                sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-                                occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                                labore sustainable VHS.
-                              </ng-template>
-                            </ngb-panel>
-                            <ngb-panel>
-                              <ng-template ngbPanelTitle>
-                                <span>&#9733; <b>Fancy</b> title &#9733;</span>
-                              </ng-template>
-                              <ng-template ngbPanelContent>
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
-                                aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-                                sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-                                occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                                labore sustainable VHS.
-                              </ng-template>
-                            </ngb-panel>
-                            <ngb-panel title="Disabled" [disabled]="true">
-                              <ng-template ngbPanelContent>
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
-                                aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-                                sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-                                occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                                labore sustainable VHS.
-                              </ng-template>
-                            </ngb-panel>
-                          </ngb-accordion>
-                        Esto es solo un ejemplo. TRANQUILOS/AS
-                        <table class="table table-bordered table-dark">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Usuario</th>
-                                    <th scope="col">Concepto</th>
-                                    <th scope="col">Importe</th>
-                                    <th scope="col">Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Mark</td>
-                                    <td>comida</td>
-                                    <td>100</td>
-                                    <td>Jacob</td>
-                                </tr>
-                                <tr>
-                                    <td>Jacob</td>
-                                    <td>cerveza</td>
-                                    <td>100</td>
-                                    <td>luz</td>
-                                </tr>
-                                <tr>
-                                    <td>Mark</td>
-                                    <td>comida</td>
-                                    <td>50</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td colspan="2">Larry the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col-12 col-md-8 col-lg-8 p-0">
+      <div class="card card-login text-black shadow-lg rounded">
+        <div class="card-body text-center">
+          <div class="mb-5 mt-1 pb-2">
 
-                </div>
+            <!-- Nav  -->
+            <ul ngbNav #nav="ngbNav" [(activeId)]="active" [destroyOnHide]="false"
+              class="nav-tabs justify-content-around h3">
+
+              <!-- Expenses -->
+              <li [ngbNavItem]="1" [destroyOnHide]="true">
+                <a ngbNavLink>Gastos</a>
+                <ng-template ngbNavContent >
+                  <!-- <ngb-alert [dismissible]="false" class="d-block mt-3" type="danger">
+                    This tab content DOM will de destroyed when not active
+                  </ngb-alert> -->
+
+                  <!-- Table of Expenses -->
+                  <div class="d-flex justify-content-center">
+                    <table class="table mt-5 w-75">
+                      <tbody>
+                        <tr>
+                          <td class="text-left pl-5">
+                            <h5>Cervezas</h5>
+                            <p class="mb-0">Pagado por Esther</p>
+                            <span>07/05/2022</span>
+                          </td>
+                          <td class="text-left ">
+                            <h5>15€</h5>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="text-left pl-5">
+                            <h5>Comida</h5>
+                            <p class="mb-0">Pagado por Yorch</p>
+                            <span>07/05/2022</span>
+                          </td>
+                          <td class="text-left ">
+                            <h5>5€</h5>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="text-left pl-5">
+                            <h5>Jabón</h5>
+                            <p class="mb-0">Pagado por Álex</p>
+                            <span>10/05/2022</span>
+                          </td>
+                          <td class="text-left ">
+                            <h5>5€</h5>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+
+                </ng-template>
+              </li> <!-- End of Expenses -->
+
+              <!-- Balances -->
+              <li [ngbNavItem]="2">
+                <a ngbNavLink>Saldos</a>
+                <ng-template ngbNavContent>
+                  <!-- <ngb-alert [dismissible]="false" class="d-block mt-3" type="success">
+                    This tab content DOM will always stay in DOM
+                  </ngb-alert> -->
+
+                                <!-- Table of Balances -->
+                                <div class="d-flex justify-content-center">
+                                  <table class="table mt-5 w-75">
+                                    <tbody>
+                                      <tr>
+                                        <td class="text-left pl-5">
+                                          <h5>Iván debe a Esther</h5>
+                                        </td>
+                                        <td class="text-left ">
+                                          <h5>15€</h5>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td class="text-left pl-5">
+                                          <h5>Esther debe a Álex</h5>
+                                        </td>
+                                        <td class="text-left ">
+                                          <h5>15€</h5>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td class="text-left pl-5">
+                                          <h5>Yorch debe a Esther</h5>
+                                        </td>
+                                        <td class="text-left ">
+                                          <h5>15€</h5>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+
+                                </div>
+                </ng-template>
+              </li>
+              <!--End of Balances -->
+
+            </ul>
+
+            <div [ngbNavOutlet]="nav" class="mt-2">
+
             </div>
-        </div>
-    </div>
-</div>
 
+            <!-- <pre>Active: {{ active }}</pre> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

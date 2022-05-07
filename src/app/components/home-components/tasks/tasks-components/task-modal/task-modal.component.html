@@ -24,8 +24,8 @@
               <div class="input-group-text">
                 <img src="../../../assets/svg/username.svg" class="svg-icon" alt="" />
               </div>
-              <select name="" id="" class="form-control col-6">
-                <option value="" *ngFor="let user of this.groupUsers">{{user.user.login}}</option>
+              <select name="" id="" class="form-control col-6" formControlName="login">
+                <option  *ngFor="let user of this.groupUsers" [ngValue]="user.user.login">{{user.user.login}}</option>
               </select>
             </div>
             <!--END INPUT TASK USER SELECTION-->

@@ -49,6 +49,7 @@ export class TaskModalComponent implements OnInit {
         '',
         [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
       ],
+      login: ''
     });
   }
 
@@ -115,15 +116,16 @@ export class TaskModalComponent implements OnInit {
       this.userId,
       this.groupID!,
       this.newTaskForm.controls.taskName.value,
-      this.newTaskForm.controls.taskDescription.value
-
+      this.newTaskForm.controls.taskDescription.value,
+      this.newTaskForm.controls.login.value,
     );
+    console.log(task)
     this.sent = true;
     this.tasksService.performTaskCreation(task).subscribe((response) => {
       console.log(task)
       console.log(response)
       console.log('tarea creada')
-     window.location.reload()
+       //window.location.reload()
       this.modalService.dismissAll()
     },
     (error) => {
@@ -133,12 +135,13 @@ export class TaskModalComponent implements OnInit {
 
   performEditTask() {
     let task: TaskEditionModel = new TaskEditionModel(
-      'esther13',
+      this.newTaskForm.controls.login.value,
       this.groupID!,
       this.taskFromChild.id,
       this.newTaskForm.controls.taskName.value,
       this.newTaskForm.controls.taskDescription.value
     );
+    console.log(task)
     this.sent = true;
     this.tasksService.performEditTask(task).subscribe((response) => {
       //this.router.navigate(['home/tasks', response.id])
