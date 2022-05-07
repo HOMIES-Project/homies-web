@@ -88,7 +88,6 @@ export class UsersService {
   /* ACTIVATION - POST */
   performActivation(entry: any): Observable<any> {
     let url = `${environment.BASE_URL}/activate?key=${entry}`;
-    console.log(url);
     return this.http.get(url);
   }
 
@@ -99,7 +98,6 @@ export class UsersService {
 
     return this.http.post<RecoveryCheckModel>(url, entryString).pipe(
       map((APIreturn) => {
-        console.log(APIreturn);
         return APIreturn;
       })
     );
@@ -116,7 +114,6 @@ export class UsersService {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        console.log(response)
 
         this.userBehaviourSubject.next(response);
         localStorage.setItem('userInfo', JSON.stringify(response));

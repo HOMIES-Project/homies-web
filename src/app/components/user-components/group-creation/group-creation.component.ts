@@ -19,6 +19,8 @@ export class GroupCreationComponent implements OnInit {
   isLoading!: boolean;
   groupNameExists: boolean = false;
 
+  userGroups: Array<any> | null = []
+
   constructor(
     private modalService: NgbModal,
     private groupsService: GroupsService,
@@ -30,6 +32,10 @@ export class GroupCreationComponent implements OnInit {
     this.usersService.userId.subscribe((response) => {
       this.userId = response;
     });
+
+    this.groupsService.groupsList.subscribe(response => {
+      this.userGroups = response
+    })
   }
 
   groupForm = this.formBuilder.group({
@@ -51,7 +57,6 @@ export class GroupCreationComponent implements OnInit {
           this.closeResult = `Closed with: ${result}`;
         },
         (reason) => {
-          console.log(reason);
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
@@ -59,10 +64,10 @@ export class GroupCreationComponent implements OnInit {
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
-      console.log('ùlso x');
+
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      console.log('ùlso y');
+
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;
@@ -80,12 +85,16 @@ export class GroupCreationComponent implements OnInit {
       this.groupForm.controls.groupName.value,
       this.groupForm.controls.groupRelation.value
     );
+    console.log(group)
     this.sent = true;
     if (!this.groupForm.valid) return;
     this.isLoading = true;
 
     this.groupsService.performGroupCreation(group).subscribe(
       (response) => {
+        console.log(response)
+        this.userGroups?.push(response)
+        this.groupsService.updateListOfGroups(this.userGroups)
         this.groupNameExists = false
         this.router.navigate(['home']);
         this.isLoading = false;

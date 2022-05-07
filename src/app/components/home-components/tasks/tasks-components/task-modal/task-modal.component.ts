@@ -1,6 +1,6 @@
-import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { TaskEditionModel } from './../../../../../core/models/tasksCreation.model';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaskCreationModel } from 'src/app/core/models/tasksCreation.model';
@@ -18,12 +18,17 @@ export class TaskModalComponent implements OnInit {
 
   @Input() isEditting!: boolean
   @Input() isCreating!: boolean
+  @Input() taskFromChild!: any;
+
 
   username!: string;
   groupID!: string | null;
   userId!: string;
   sent: boolean = false;
   closeResult = '';
+  newTaskForm: FormGroup;
+
+  groupUsers!: Array<any>
 
 
 
@@ -34,95 +39,123 @@ export class TaskModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private tasksService: TasksService,
-  ) {}
+  ) {
+    this.newTaskForm = this.formBuilder.group({
+      taskName: [
+        '',
+        [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
+      ],
+      taskDescription: [
+        '',
+        [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
+      ],
+    });
+  }
 
   ngOnInit(): void {
     this.groupsService.groupID.subscribe((response) => {
       this.groupID = response;
+      console.log(this.groupID)
     });
     this.usersService.userId.subscribe((response) => {
       this.userId = response;
     });
 
     this.groupsService.groupInfo.subscribe(response =>{
-      console.log(response)
+      this.groupUsers = response.userData
+      console.log(this.groupUsers)
     })
 
-  }
 
-  newTaskForm = this.formBuilder.group({
-    taskUser: [
-      '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
-    ],
-    taskDescription: [
-      '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
-    ],
-  });
+    if(this.isEditting) {
+      this.newTaskForm.patchValue({
+        taskName: this.taskFromChild.taskName,
+        taskDescription: this.taskFromChild.description
+      });
+    }
+  }
 
   openAddTask(addTask: any) {
-    this.modalService.open(addTask, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+    this.modalService.open(addTask, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then(
       (result)=>{
-        let task: TaskCreationModel = new TaskCreationModel(
-          this.userId,
-          this.groupID!,
-          this.newTaskForm.controls.taskUser.value,
-          this.newTaskForm.controls.taskDescription.value
 
-        );
-        this.sent = true;
-        this.tasksService.performTaskCreation(task).subscribe((response) => {
-          this.router.navigate(['home/tasks', response.id])
-        },
-        (error) => {
-          console.log(error);
-        }
-        );
         this.closeResult = `Closed width: ${result}`;
       },
       (reason) => {
-        console.log(reason);
         this.closeResult = `Dismissed ${this.getDismissReason(reason)} `
       }
     )
   }
-  //TODO edit task
+ // TODO edit task
 
-  openEditTask(editTask: any) {
-    this.modalService.open(editTask, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+  openEditTask(idTask: string, editTask: any) {
+    this.modalService.open(editTask, { ariaLabelledBy: 'modal-basic-title' , size: 'lg'}).result.then(
       (result)=>{
-        let task: TaskCreationModel = new TaskCreationModel(
-          this.userId,
-          this.groupID!,
-          this.newTaskForm.controls.taskUser.value,
-          this.newTaskForm.controls.taskDescription.value
 
-        );
-        console.log(task)
-        this.sent = true;
-        this.tasksService.performTaskCreation(task).subscribe((response) => {
-          this.router.navigate(['home/tasks', response.id])
-        },
-        (error) => {
-          console.log(error);
-        }
-        );
         this.closeResult = `Closed width: ${result}`;
+
       },
       (reason) => {
-        console.log(reason);
+
         this.closeResult = `Dismissed ${this.getDismissReason(reason)} `
       }
     )
   }
+
+  submitFormTask() {
+
+    if(this.isCreating) {
+      this.performCreateTask()
+    } else {
+      this.performEditTask()
+    }
+  }
+  performCreateTask() {
+    let task: TaskCreationModel = new TaskCreationModel(
+      this.userId,
+      this.groupID!,
+      this.newTaskForm.controls.taskName.value,
+      this.newTaskForm.controls.taskDescription.value
+
+    );
+    this.sent = true;
+    this.tasksService.performTaskCreation(task).subscribe((response) => {
+      console.log(task)
+      console.log(response)
+      console.log('tarea creada')
+     window.location.reload()
+      this.modalService.dismissAll()
+    },
+    (error) => {
+    }
+    );
+  }
+
+  performEditTask() {
+    let task: TaskEditionModel = new TaskEditionModel(
+      'esther13',
+      this.groupID!,
+      this.taskFromChild.id,
+      this.newTaskForm.controls.taskName.value,
+      this.newTaskForm.controls.taskDescription.value
+    );
+    this.sent = true;
+    this.tasksService.performEditTask(task).subscribe((response) => {
+      //this.router.navigate(['home/tasks', response.id])
+    },
+    (error) => {
+      console.log(error);
+    }
+    );
+  }
+
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
-      console.log('ùlso x');
+
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      console.log('ùlso y');
+
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;

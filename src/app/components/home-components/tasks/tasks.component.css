@@ -1,0 +1,7 @@
+input[type=checkbox]:checked {
+  background-color:  yellowgreen;
+}
+
+.isCancelled {
+  text-decoration: line-through;
+}

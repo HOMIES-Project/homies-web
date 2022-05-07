@@ -1,3 +1,4 @@
+import { TasksService } from 'src/app/core/services/Lists/tasks.service';
 import { UserData } from '../../core/models/user-data.model';
 import { GroupsService } from '../../core/services/groups.service';
 import { UsersService } from 'src/app/core/services/users.service';
@@ -45,7 +46,6 @@ export class HomeComponent implements OnInit {
   photo!: string | undefined;
 
 
-
   isAdmin!: boolean;
   adminID!: string;
 
@@ -53,13 +53,18 @@ export class HomeComponent implements OnInit {
 
   imgBase64!: string;
 
+  userTasks!: Array<any> | null;
+
   constructor(
     private groupsService: GroupsService,
     private usersService: UsersService,
+    private tasksService: TasksService,
     private route: ActivatedRoute,
     private router: Router,
     private sanitizer: DomSanitizer
-  ) {}
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.imgBase64 = 'data:image/png;base64,';
@@ -71,15 +76,18 @@ export class HomeComponent implements OnInit {
 
     //todo - check this subscribepo
     this.usersService.user.subscribe((userInfo) => {
-      console.log(userInfo)
+      this.login = userInfo.user.login;
       this.name = userInfo?.user.firstName;
       this.surname = userInfo?.user.lastName;
       this.photo = userInfo?.photo;
-      console.log(userInfo)
     });
 
+    this.groupsService.getUserInfo(this.userID).subscribe(response => {
+      console.log(response)
+    })
 
     this.getGroupDetails();
+    this.getUserTasks();
   }
 
   // updateGroupID(id: string) {
@@ -87,70 +95,99 @@ export class HomeComponent implements OnInit {
   // }
 
   getGroupDetails() {
+
     this.groupsService.groupID.subscribe((response) => {
-      console.log(response)
+
       this.groupID = response;
-      if ( this.groupID  == null) {
+      if (this.groupID == null) {
         this.isLoading = false;
         this.groupsExist = false;
       } else {
         this.isLoading = false;
         this.groupsExist = true;
+
         this.groupsService.getGroupInfo(this.groupID).subscribe((groupInfo) => {
-          console.log(groupInfo);
           this.groupName = groupInfo.groupName;
           this.groupRelationName = groupInfo.groupRelationName;
           this.groupUsers = groupInfo.userData;
           this.adminID = groupInfo.userAdmin.id;
+          if(this.groupUsers.length > 0) {
+            this.groupUsersModelArray = [];
+            for (var i = 0; i < this.groupUsers!.length; i++) {
+
+              let user = new GroupUserModel(
+                this.groupUsers![i].id,
+                this.groupUsers![i].user.login,
+                this.groupUsers![i].photo,
+                this.groupUsers![i].user.firstName,
+                this.groupUsers![i].user.lastName,
+                false
+              );
+              if (this.groupUsers![i].photo != null) {
+                  this.base64ProfileImage = `data:image/png;base64,${
+                  this.groupUsers![i].photo
+                }`;
+              }
+              if (this.adminID == this.groupUsers![i].id) {
+                user.admin = true;
+                this.groupUsersModelArray.unshift(user);
+              }
+              this.groupUsersModelArray.push(user);
+            }
+            this.groupUsersModel = [...new Set(this.groupUsersModelArray)];
+            if (i == this.groupUsers.length) this.isLodingUsers = false;
+          }
           this.checkIsAdmin();
-          this.getUsersInfo();
         });
       }
     });
   }
 
-  getUsersInfo() {
-    if (this.groupUsers.length > 0) {
-      for (var i = 0; i < this.groupUsers.length; i++) {
-        this.groupUsersModelArray = [];
-        this.groupsService.getUserInfo(this.groupUsers[i].id).subscribe(
-          (groupUserInfo) => {
-            this.login = groupUserInfo.user.login
-            let user = new GroupUserModel(
-              groupUserInfo.id,
-              this.login!,
-              groupUserInfo.photo,
-              groupUserInfo.user.firstName,
-              groupUserInfo.user.lastName,
-              false
-            );
+  // getUsersInfo() {
+  //   if (this.groupUsers.length > 0) {
+  //     for (var i = 0; i < this.groupUsers.length; i++) {
+  //       this.groupUsersModelArray = [];
+  //       this.groupsService.getUserInfo(this.groupUsers[i].id).subscribe(
+  //         (groupUserInfo) => {
+  //           this.login = groupUserInfo.user.login;
+  //           let user = new GroupUserModel(
+  //             groupUserInfo.id,
+  //             this.login!,
+  //             groupUserInfo.photo,
+  //             groupUserInfo.user.firstName,
+  //             groupUserInfo.user.lastName,
+  //             false
+  //           );
 
-            if (groupUserInfo.photo != null) {
-              this.base64ProfileImage = `data:image/png;base64,${groupUserInfo.photo}`;
-            }
-            if (this.adminID == groupUserInfo.id) {
-              user.admin = true;
-              this.groupUsersModelArray.unshift(user);
-            }
+  //           if (groupUserInfo.photo != null) {
+  //             this.base64ProfileImage = `data:image/png;base64,${groupUserInfo.photo}`;
+  //           }
+  //           if (this.adminID == groupUserInfo.id) {
+  //             user.admin = true;
+  //             this.groupUsersModelArray.unshift(user);
+  //           }
 
-            this.groupUsersModelArray.push(user);
-            this.groupUsersModel = [...new Set(this.groupUsersModelArray)];
-          },
-          (error) => {
-            console.log('error from getusersinfo');
-          },
-          () => {
-            if (i == this.groupUsers.length) this.isLodingUsers = false;
-          }
-        );
-      }
-    }
-  }
+  //           this.groupUsersModelArray.push(user);
+  //           this.groupUsersModel = [...new Set(this.groupUsersModelArray)];
+  //         },
+  //         (error) => {
+  //           console.log('error from getusersinfo');
+  //         },
+  //         () => {
+  //           if (i == this.groupUsers.length) this.isLodingUsers = false;
+  //         }
+  //       );
+  //     }
+  //   }
+  // }
+
   profilePictureImageDecoded(picture: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(picture);
   }
 
   checkIsAdmin() {
+
+    // this.adminID == this.userID ? this.isAdmin : !this.isAdmin
     if (this.adminID == this.userID) {
       this.isAdmin = true;
     } else {
@@ -164,8 +201,6 @@ export class HomeComponent implements OnInit {
       login,
       this.groupID!
     );
-    console.log(userToDelete.login);
-    console.log(this.userID);
     Swal.fire({
       title: '¡Cuidado! Vas a eliminar un usuario',
       text: '¿Estás seguro?',
@@ -195,7 +230,6 @@ export class HomeComponent implements OnInit {
       this.login!,
       this.groupID!
     );
-    console.log(userToDelete);
 
     Swal.fire({
       title: '¡Cuidado! Vas a abandonar el grupo',
@@ -213,7 +247,7 @@ export class HomeComponent implements OnInit {
             window.location.reload();
           },
           (error) => {
-            console.log(error)
+            console.log(error);
           }
         );
       } else if (result.isDenied) {
@@ -224,17 +258,34 @@ export class HomeComponent implements OnInit {
 
   //TODO delete group with ID
 
-  // deleteGroup() {
-  //   let entry = new GroupUserActionModel(
-  //     this.userID,
-  //     this.login!,
-  //     this.groupID!
-  //   )
-  //   this.groupsService.performDeleteGroup(entry).subscribe(response => {
-  //     console.log('NICE')
+  deleteGroup() {
+    this.groupsService.performDeleteGroup(this.groupID!).subscribe(response => {
+      console.log(response)
+      console.log('NICE')
+      this.groupsService.performLogoutFromGroups();
+      this.usersService.performLogout();
+    }, error => {
+      console.log(error)
+    })
+  }
 
-  //   }, error => {
-  //     console.log(error)
-  //   })
-  // }
+  getUserTasks() {
+    this.tasksService
+      .getUserTasksList(this.groupID!, this.login!)
+      .subscribe((response) => {
+        this.userTasks = response;
+      });
+  }
+
+  navigateToTasks() {
+    this.groupsService.groupID.subscribe((response) => {
+      this.groupID = response;
+    });
+    this.router.navigate(['/home', 'tasks', this.groupID], {
+      relativeTo: this.route,
+      queryParamsHandling: 'preserve',
+    });
+  }
+
+
 }

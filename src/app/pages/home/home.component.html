@@ -12,21 +12,13 @@
         <p class="card-text">Resumen de tus tareas</p>
         <table class="table ">
           <tbody>
-            <tr>
-              <td>Limpiar</td>
+            <tr *ngFor="let task of this.userTasks; let indexOfTask=index;" class="text-left">
+              <td>{{task.taskName}}</td>
             </tr>
-            <tr>
-              <td>Barrer</td>
-            </tr>
-            <tr>
-              <td>Fregar</td>
-            </tr>
-            <tr>
-              <td>Hacer la compra</td>
-            </tr>
+
             <tr>
               <td>
-                <button class="btn outline mt-3">Añadir producto</button>
+                <button class="btn outline mt-3" (click)="navigateToTasks()">Ir a la lista de tareas</button>
               </td>
             </tr>
           </tbody>
@@ -125,7 +117,7 @@
       class="btn-lg border-0 text-white p-3 mt-3 delete-group" (click)="exitGroup()">Abandonar grupo
     </button>
     <button
-    class="btn-lg border-0 text-white p-3 mt-3 delete-group"  *ngIf="this.isAdmin">Eliminar grupo
+    class="btn-lg border-0 text-white p-3 mt-3 delete-group" (click)="deleteGroup()"  *ngIf="this.isAdmin">Eliminar grupo
   </button>
   </div>
 </div>

@@ -21,7 +21,6 @@ export class GroupsService {
   private groupIDBehaviourSubject: BehaviorSubject<string | null>;
   public groupID: Observable<string | null>;
 
-
   //OBSERVABLE -  GROUP INFO
   private groupInfoBehaviourSubject: BehaviorSubject<any | null>;
   public groupInfo: Observable<any | null>;
@@ -38,7 +37,7 @@ export class GroupsService {
     );
     this.groupID = this.groupIDBehaviourSubject.asObservable();
 
-    this.groupInfoBehaviourSubject = new BehaviorSubject<any | null>(
+    this.groupInfoBehaviourSubject = new BehaviorSubject<GroupCreationModel | null>(
       JSON.parse(<string>localStorage.getItem('groupInfo'))
     );
     this.groupInfo = this.groupInfoBehaviourSubject.asObservable();
@@ -47,20 +46,23 @@ export class GroupsService {
   /* GROUP CREATION - POST */
   performGroupCreation(entry: GroupCreationModel): Observable<any> {
     let url = `${environment.BASE_URL}/groups`;
-    return this.http.post<GroupCreationModel>(url, entry).pipe(map(apireturn => {
-      console.log(apireturn.id)
-      this.groupIDBehaviourSubject.next(apireturn.id)
-    }))
+    return this.http.post<GroupCreationModel>(url, entry).pipe(
+      map((apireturn) => {
+        this.groupIDBehaviourSubject.next(apireturn.id);
+        return apireturn
+      })
+    );
   }
 
   getUserInfo(id: string): Observable<any> {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-
+        console.log(JSON.stringify(response.groups));
+        localStorage.setItem('groupsArray', JSON.stringify(response.groups));
         this.groupsListBehaviourSubject.next(response.groups);
 
-        if (localStorage.getItem('groupID') == null && response.groups >0) {
+        if (localStorage.getItem('groupID') == null && response.groups > 0) {
           this.groupIDBehaviourSubject.next(response.groups[0].id);
         }
 
@@ -69,27 +71,25 @@ export class GroupsService {
     );
   }
 
-
   updateGroupId(id: string): Observable<any> {
     localStorage.setItem('groupID', id);
     this.groupIDBehaviourSubject.next(id);
     return this.groupID;
-
   }
 
-  updateListOfGroups(groups:any): Observable<any> {
-    localStorage.setItem('groupsArray', groups);
+  updateListOfGroups(groups: any): Observable<any> {
+    localStorage.setItem('groupsArray', JSON.stringify(groups));
     this.groupsListBehaviourSubject.next(groups);
     return this.groupID;
   }
-
-
 
   getGroupInfo(id: string): Observable<any> {
     let url = `${environment.BASE_URL}/groups/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        this.groupInfoBehaviourSubject.next(response)
+        console.log(response)
+        localStorage.setItem('groupInfo', JSON.stringify(response));
+        this.groupInfoBehaviourSubject.next(response);
         return response;
       })
     );
@@ -105,16 +105,10 @@ export class GroupsService {
     return this.http.post<GroupUserActionModel>(url, entry);
   }
 
-  // performDeleteGroup(entry: GroupUserActionModel) {
-  //   let url = `${environment.BASE_URL}/groups`;
-  //   // const options = {
-  //   //   body: {
-  //   //     entry
-  //   //   }
-  //   // }
-  //   return this.http.delete<GroupUserActionModel>(url, entry);
-  // }
-
+  performDeleteGroup(idGroup:string) {
+    let url = `${environment.BASE_URL}/groups/${idGroup}`;
+    return this.http.delete(url);
+  }
 
   performLogoutFromGroups(): Observable<any> {
     localStorage.removeItem('groupID');
@@ -126,4 +120,3 @@ export class GroupsService {
     return this.groupID;
   }
 }
-

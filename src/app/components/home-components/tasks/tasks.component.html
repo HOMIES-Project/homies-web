@@ -1,27 +1,37 @@
 <div class="container py-5">
   <div class="row d-flex justify-content-center align-items-center">
-    <div class="col-12 col-md-8 col-lg-6 p-0">
+    <div class="col-12 col-md-8 col-lg-8 p-0">
       <div class="card card-login text-black shadow-lg rounded">
         <div class="card-body text-center">
           <div class="mb-5 mt-1 pb-2" *ngIf="!this.noTasks">
-            <p class="card-text">Tareitas</p>
+            <h2 class="card-text">Tareitas</h2>
             <table class="table ">
 
               <tbody>
                 <tr *ngFor="let task of this.tasksList; let indexOfTask=index;" class="">
-                  <td>
-                    <input class="" type="checkbox" value="" >
+                  <td class="align-middle">
+
+                    <app-task-modal [isEditting]="this.isEditting" [taskFromChild]="task"></app-task-modal>
+
                   </td>
-                  <td class="text-left">
-                    <span class="d-block ">{{task.taskName}}</span>
+                  <td class="text-left" (click)="editTaskFromList()">
+                    <span class="d-block" [ngClass]="{
+                      'isCancelled': this.isCancelled}">{{task.taskName}}</span>
+                    <span class="d-block ">{{task.id}}</span>
                     <span style="font-size: 0.8rem">Esther</span>
+
                   </td>
-                  <td class="d-flex justify-content-end">
-                    <div style="margin-right: 5%;">
-                      <app-task-modal [isEditting]="this.isEditting"></app-task-modal>
-                    </div>
-                    <img src="../../../assets/svg/blueTrash.svg" style="margin-right: 5%;"
-                      (click)="deleteTask(indexOfTask)" />
+
+                  <td class=" align-middle">
+                    <input class="mx-3 p-5" style="width: 18px; height: 18px; background-color: var(--secondaryColor)"
+                      type="checkbox" value="{{indexOfTask}}" [(ngModel)]="task.checked"
+                      (change)="onCheckboxChanged($event)">
+                    <img src="../../../assets/svg/blueTrash.svg" style="width: 18px; height: 24px; margin-top: -10px; ;"
+                      (click)="deleteTask(task.id)" />
+                  </td>
+
+
+
                 </tr>
                 <tr>
                   <td></td>
@@ -34,11 +44,11 @@
             </table>
           </div>
           <div class="mb-5 mt-1 pb-2" *ngIf="this.noTasks">
-          <p>Aún no tienes tareas
-            <br>
-            Añade una tarea
-          </p>
-          <app-task-modal [isCreating]="this.isCreating"></app-task-modal>
+            <p>Aún no tienes tareas
+              <br>
+              Añade una tarea
+            </p>
+            <app-task-modal [isCreating]="this.isCreating"></app-task-modal>
           </div>
         </div>
       </div>
