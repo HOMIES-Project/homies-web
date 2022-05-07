@@ -18,42 +18,43 @@
                   </ngb-alert> -->
 
                   <!-- Table of Expenses -->
-                  <div class="d-flex justify-content-center">
-                    <table class="table mt-5 w-75">
+                  <div class="d-flex flex-column justify-content-center align-items-center">
+                    <table class="table mt-5 w-75 ">
                       <tbody>
                         <tr>
                           <td class="text-left pl-5">
-                            <h5>Cervezas</h5>
+                            <h5 class="mb-0">Cervezas</h5>
                             <p class="mb-0">Pagado por Esther</p>
                             <span>07/05/2022</span>
                           </td>
                           <td class="text-left ">
-                            <h5>15€</h5>
+                            <p class="mt-4">15€</p>
                           </td>
                         </tr>
                         <tr>
                           <td class="text-left pl-5">
-                            <h5>Comida</h5>
+                            <h5 class="mb-0">Comida</h5>
                             <p class="mb-0">Pagado por Yorch</p>
                             <span>07/05/2022</span>
                           </td>
                           <td class="text-left ">
-                            <h5>5€</h5>
+                            <p class="mt-4">15€</p>
                           </td>
                         </tr>
                         <tr>
                           <td class="text-left pl-5">
-                            <h5>Jabón</h5>
+                            <h5 class="mb-0">Jabón</h5>
                             <p class="mb-0">Pagado por Álex</p>
                             <span>10/05/2022</span>
                           </td>
                           <td class="text-left ">
-                            <h5>5€</h5>
+                            <p class="mt-4">15€</p>
                           </td>
                         </tr>
+
                       </tbody>
                     </table>
-
+                    <app-expense-modal [isCreating]="this.isCreating"></app-expense-modal>
                   </div>
 
                 </ng-template>
@@ -71,12 +72,12 @@
                                 <div class="d-flex justify-content-center">
                                   <table class="table mt-5 w-75">
                                     <tbody>
-                                      <tr>
-                                        <td class="text-left pl-5">
-                                          <h5>Iván debe a Esther</h5>
+                                      <tr (click)="confirmPayment()">
+                                        <td class="text-left pl-5" >
+                                          <h5 >Iván debe a Esther</h5>
                                         </td>
                                         <td class="text-left ">
-                                          <h5>15€</h5>
+                                          <p>15€</p>
                                         </td>
                                       </tr>
                                       <tr>
@@ -84,7 +85,7 @@
                                           <h5>Esther debe a Álex</h5>
                                         </td>
                                         <td class="text-left ">
-                                          <h5>15€</h5>
+                                          <p>15€</p>
                                         </td>
                                       </tr>
                                       <tr>
@@ -92,7 +93,7 @@
                                           <h5>Yorch debe a Esther</h5>
                                         </td>
                                         <td class="text-left ">
-                                          <h5>15€</h5>
+                                          <p>15€</p>
                                         </td>
                                       </tr>
                                     </tbody>

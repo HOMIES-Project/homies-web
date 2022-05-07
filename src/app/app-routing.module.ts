@@ -48,17 +48,17 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [AuthGuard],
   },
-  {
-    path: 'expenses',
-    component: ExpensesComponent,
-  },
+  // {
+  //   path: 'expenses',
+  //   component: ExpensesComponent,
+  // },
   {
     path: 'home',
-   // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children:[
       {path:':id', component: HomeComponent},
       {path:'tasks/:id', component: TasksComponent},
-      //{path:'expenses/:id', component: ExpensesComponent},
+      {path:'expenses/:id', component: ExpensesComponent},
       {path:'groceries/:id', component: GroceriesComponent}
     ]
   },

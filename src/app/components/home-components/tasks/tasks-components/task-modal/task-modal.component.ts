@@ -103,7 +103,7 @@ export class TaskModalComponent implements OnInit {
     )
   }
 
-  submitFormTask() {
+  submitTaskForm() {
 
     if(this.isCreating) {
       this.performCreateTask()
