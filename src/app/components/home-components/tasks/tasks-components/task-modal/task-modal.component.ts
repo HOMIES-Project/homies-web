@@ -67,11 +67,15 @@ export class TaskModalComponent implements OnInit {
       console.log(this.groupUsers)
     })
 
+    console.log(this.taskFromChild)
+
 
     if(this.isEditting) {
+
       this.newTaskForm.patchValue({
         taskName: this.taskFromChild.taskName,
-        taskDescription: this.taskFromChild.description
+        taskDescription: this.taskFromChild.description,
+        login: this.taskFromChild.login
       });
     }
   }

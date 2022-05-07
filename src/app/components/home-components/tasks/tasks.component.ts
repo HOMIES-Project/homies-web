@@ -39,7 +39,7 @@ export class TasksComponent implements OnInit {
 
     this.tasksService.getTasksList(this.groupID!).subscribe((response) => {
       this.tasksList = response.tasks;
-      console.log(this.tasksList.length);
+      console.log(this.tasksList);
       if (this.tasksList.length == 0) {
         this.noTasks = true;
       } else {
