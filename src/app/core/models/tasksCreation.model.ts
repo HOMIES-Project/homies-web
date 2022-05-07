@@ -3,12 +3,14 @@ export class TaskCreationModel {
     public idGroup: string;
     public taskName: string;
     public description: string;
+    public login: string;
 
-    constructor(user: string, idGroup: string, taskName: string, description: string) {
+    constructor(user: string, idGroup: string, taskName: string, description: string, login: string) {
       this.user = user
       this.idGroup= idGroup;
       this.taskName = taskName
       this.description = description
+      this.login = login
 
     }
 

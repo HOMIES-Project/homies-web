@@ -12,6 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserAddGroupComponent } from './user-components/user-add-group/user-add-group.component';
 
 import { TaskModalComponent } from './home-components/tasks/tasks-components/task-modal/task-modal.component';
+import { ExpenseModalComponent } from './home-components/expenses/expenses-components/expense-modal/expense-modal.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { TaskModalComponent } from './home-components/tasks/tasks-components/tas
     GroupCreationComponent,
     UserAddGroupComponent,
     TaskModalComponent,
+    ExpenseModalComponent,
   ],
   imports: [
     CommonModule,

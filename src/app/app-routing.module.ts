@@ -48,6 +48,10 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [AuthGuard],
   },
+  // {
+  //   path: 'expenses',
+  //   component: ExpensesComponent,
+  // },
   {
     path: 'home',
     canActivate: [AuthGuard],

@@ -1,0 +1,26 @@
+
+input, textarea, select {
+  background-color: rgba(97, 212, 255, 0.2);
+  font-size: 1.2rem;
+  border: none;
+  border: 0ch;
+  border-radius: 0 5px 5px 0 !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  background-color: rgba(97, 212, 255, 0.2);
+  font-size: 1.2rem;
+  border: none;
+}
+
+.svg-icon {
+  height: 20px;
+  width: 18px;
+  display: inline-block;
+  filter: brightness(0) saturate(100%) invert(55%) sepia(100%) saturate(684%) hue-rotate(169deg) brightness(93%) contrast(94%);
+
+}
+
+
+
+
