@@ -58,7 +58,7 @@ export class GroupsService {
     let url = `${environment.BASE_URL}/user-data/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        console.log(JSON.stringify(response.groups));
+
         localStorage.setItem('groupsArray', JSON.stringify(response.groups));
         this.groupsListBehaviourSubject.next(response.groups);
 
