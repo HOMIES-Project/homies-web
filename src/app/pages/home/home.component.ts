@@ -55,8 +55,7 @@ export class HomeComponent implements OnInit {
 
   userTasks: Array<any> = []
   userTasksModel: Array<any> = []
-  userTasksModelArray: Array<any> = []
-  taskName!: string;
+  noTasks: boolean = true;
 
   constructor(
     private groupsService: GroupsService,
@@ -231,6 +230,7 @@ export class HomeComponent implements OnInit {
   getUserTasks() {
     this.groupsService.groupID.subscribe((response) => {
         this.groupID = response;
+        this.userTasksModel = []
         console.log("desde get user tasks" + this.groupID)
         this.tasksService
           .getUserTasksList(this.groupID!, this.login!)
@@ -238,6 +238,7 @@ export class HomeComponent implements OnInit {
             console.log(response);
             this.userTasks = response;
             if(this.userTasks.length > 0) {
+              this.noTasks = false;
               this.userTasksModel = []
               for (var i = 0; i < this.userTasks!.length; i++) {
                 let task = new TaskModel(
@@ -249,6 +250,8 @@ export class HomeComponent implements OnInit {
                 this.userTasksModel.push(task)
                 console.log("Desd etask" + this.userTasksModel)
               }
+            } else {
+              this.noTasks = true;
             }
           });
     });
