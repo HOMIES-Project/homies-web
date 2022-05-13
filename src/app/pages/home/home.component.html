@@ -165,7 +165,7 @@
                 {{ this.groupUsersModel[indexOfUser].firstName.charAt(0) }}{{  this.groupUsersModel[indexOfUser].lastName.charAt(0) }}
               </h2>
             </span>
-          </div>
+
           <div class="card-title p-2 rounded text-left group-info-background"
             style="float: right; width: 80%; max-height: 40px; align-content: center;">
             <p style="float: left; width: 80%;">{{ this.groupUsersModel[indexOfUser].login}}</p>
@@ -183,6 +183,7 @@
             </div>
           </div>
         </div>
+      </div>
       </div>
       <div *ngIf="this.isAdmin">
         <app-user-add-group [idGroup]="this.groupID!" [idAdminGroup]="this.userID"></app-user-add-group>
