@@ -115,7 +115,7 @@ export class ProfileComponent implements OnInit {
       lastName: this.lastName,
       email: this.email,
       phone: this.phone,
-      photo: this.photo,
+      // photo: this.photo,
       birthDate: this.birthDate
     });
 
@@ -185,8 +185,79 @@ export class ProfileComponent implements OnInit {
       this.photoContentType,
       this.userProfileFrom.controls.birthDate.value,
     );    
-    
-    this.usersService
+
+    /* CHECK EMAIL WHEN IS CHANGED */
+    if(this.userProfileFrom.controls.email.value != this.email) {
+      console.log("SE HA CAMBIADO EL EMAIL");
+      console.log("EMAIL ANTIGUO " + this.email)
+      console.log("EMAIL NUEVO " + this.userProfileFrom.controls.email.value)
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger',
+        },
+        buttonsStyling: true
+      })
+      
+      swalWithBootstrapButtons.fire({
+        title: 'HAS CAMBIADO EL EMAIL',
+        text: "¿Estás seguro de que quieres cambiarlo de " + this.email + " a " + this.userProfileFrom.controls.email.value + "?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'CAMBIAR',
+        confirmButtonColor: '#34ade7',
+        cancelButtonText: 'CANCELAR',
+        cancelButtonColor: '#df4759',
+        reverseButtons: true
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const { value: emailConfirm } = await Swal.fire({
+            title: 'Vuelve a poner el correo nuevo',
+            icon: 'info',
+            input: 'email',
+            inputLabel: 'Nuevo correo introducido: ' + this.userProfileFrom.controls.email.value,
+            inputPlaceholder: 'Correo nuevo'
+          })
+          
+          if (emailConfirm == this.userProfileFrom.controls.email.value) {
+            swalWithBootstrapButtons.fire(
+              '¡CAMBIADO!',
+              'Tu email se ha cambiado a ' + this.userProfileFrom.controls.email.value + ', verifica tu correo.',
+              'success'
+            )
+            this.usersService
+            .performEditUser(this.userDataChanged, this.id)
+            .subscribe((response) => {
+  
+              this.successfullyEdited = true
+            }, error=> {
+              console.log(error)
+            });
+            console.log(this.userDataChanged);
+            this.usersService.performLogout();
+          } else if(emailConfirm != this.userProfileFrom.controls.email.value){
+            Swal.fire({
+              title: 'No coincide el correo, vuelve a ponerlo',
+              icon: 'error',
+              input: 'email',
+              inputLabel: 'Nuevo correo introducido: ' + this.userProfileFrom.controls.email.value,
+              inputPlaceholder: 'Correo nuevo'
+            })
+          }
+          
+        } else if (
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            'CANCELADO',
+            'Tu correo sigue siendo ' + this.email,
+            'error'
+          )
+        }
+      })
+      
+    } else {
+      this.usersService
       .performEditUser(this.userDataChanged, this.id)
       .subscribe((response) => {
 
@@ -196,6 +267,7 @@ export class ProfileComponent implements OnInit {
       });
     // console.log(this.photo);
     console.log(this.userDataChanged);
+    }
   }
 
   /* SUBMIT CHANGE PASSWORD */

@@ -147,13 +147,18 @@
         <div class="spinner-border" style="width: 3rem; height: 3rem; color: #34ade7" role="status">
           <span class="sr-only">Loading...</span>
         </div>
-      </div>
-      <div class="card-body" *ngIf="!this.isLodingUsers">
-        <div class="d-flex " *ngFor="let user of this.groupUsersModel; let indexOfUser=index;">
-          <div style="float: left; width: 20%;">
-            <div><img *ngIf="this.groupUsersModel[indexOfUser].photo!=null"
-                [src]="profilePictureImageDecoded(this.imgBase64 + this.groupUsersModel[indexOfUser].photo)" width="25"
-                height="25" class="dot" alt="">
+        <div class="card-body" *ngIf="!this.isLodingUsers">
+          <div class="d-flex " *ngFor="let user of this.groupUsersModel; let indexOfUser=index;">
+            <div style="float: left; width: 20%;">
+              <div><img *ngIf="this.groupUsersModel[indexOfUser].photo!=null && this.groupUsersModel[indexOfUser].photo!=''"
+                  [src]="profilePictureImageDecoded(this.imgBase64 + this.groupUsersModel[indexOfUser].photo)"
+                  width="25" height="25" class="dot" alt="">
+              </div>
+              <span class="dot" *ngIf="this.groupUsersModel[indexOfUser].photo==null || this.groupUsersModel[indexOfUser].photo == '' ">
+                <h2 class="initial center">
+                  {{ this.groupUsersModel[indexOfUser].firstName.charAt(0) }}{{  this.groupUsersModel[indexOfUser].lastName.charAt(0) }}
+                </h2>
+              </span>
             </div>
             <span class="dot" *ngIf="this.groupUsersModel[indexOfUser].photo==null">
               <h2 class="initial center">
