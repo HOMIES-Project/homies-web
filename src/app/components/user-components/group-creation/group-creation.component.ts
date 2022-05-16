@@ -41,7 +41,7 @@ export class GroupCreationComponent implements OnInit {
   groupForm = this.formBuilder.group({
     groupName: [
       '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
+      [Validators.required, Validators.minLength(3), Validators.maxLength(20)],
     ],
     groupRelation: [
       '',
