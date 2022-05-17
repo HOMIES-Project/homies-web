@@ -32,7 +32,6 @@ export class TasksService {
     let url = `${environment.BASE_URL}/tasks`;
     return this.http.post<TaskCreationModel>(url, entry).pipe(
       map((response) => {
-        console.log(response)
         return response;
       })
     );
@@ -42,7 +41,6 @@ export class TasksService {
     let url = `${environment.BASE_URL}/task-lists/${groupID}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        console.log(response)
         return response;
       })
     );
@@ -52,7 +50,6 @@ export class TasksService {
     let url = `${environment.BASE_URL}/task-lists-user/${groupID}/${login}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
-        console.log(response)
         localStorage.setItem('userTasks', JSON.stringify(response));
         this.userTasksBehaviourSubject.next(response)
         return response;
@@ -67,7 +64,7 @@ export class TasksService {
 
   performDeleteTask(id: number): Observable<any> {
     let url = `${environment.BASE_URL}/tasks/${id}`;
-    console.log('borrada')
+
     return this.http.delete(url);
   }
 

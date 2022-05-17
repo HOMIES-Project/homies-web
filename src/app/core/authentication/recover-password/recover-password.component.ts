@@ -122,7 +122,6 @@ export class RecoverPasswordComponent implements OnInit {
       })
     },
     error => {
-      console.log("entrado en error")
     });
   }
 

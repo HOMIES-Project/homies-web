@@ -92,12 +92,11 @@ export class HomeComponent implements OnInit {
     });
 
     this.groupsService.getUserInfo(this.userID).subscribe((response) => {
-      console.log(response);
+
     });
 
     this.getGroupDetails();
     this.getUserTasks();
-    console.log("inicando")
   }
 
   getGroupDetails() {
@@ -215,7 +214,6 @@ export class HomeComponent implements OnInit {
             window.location.reload();
           },
           (error) => {
-            console.log(error);
           }
         );
       } else if (result.isDenied) {
@@ -229,13 +227,10 @@ export class HomeComponent implements OnInit {
   deleteGroup() {
     this.groupsService.performDeleteGroup(this.groupID!).subscribe(
       (response) => {
-        console.log(response);
-        console.log('NICE');
         this.groupsService.performLogoutFromGroups();
         this.usersService.performLogout();
       },
       (error) => {
-        console.log(error);
       }
     );
   }
@@ -246,11 +241,11 @@ export class HomeComponent implements OnInit {
 
         this.userTasksModel = []
 
-        console.log("desde get user tasks" + this.groupID)
+
         this.tasksService
           .getUserTasksList(this.groupID!, this.login!)
           .subscribe((response) => {
-            console.log(response);
+
             this.userTasks = response;
             if(this.userTasks.length > 0) {
 
@@ -263,9 +258,8 @@ export class HomeComponent implements OnInit {
                   this.userTasks![i].taskName,
                   this.userTasks![i].description,
                 );
-                console.log(task)
+
                 this.userTasksModel.push(task)
-                console.log("Desd etask" + this.userTasksModel)
               }
 
             } else {

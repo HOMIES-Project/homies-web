@@ -50,20 +50,20 @@ export class GroupModalComponent implements OnInit {
   });
   }
   ngOnInit(): void {
-    console.log("id")
+
     this.usersService.userId.subscribe((response) => {
       this.userId = response;
-      console.log(response)
+
     });
 
     this.groupsService.groupsList.subscribe(response => {
       this.userGroups = response
-      console.log(response)
+
     })
 
     this.groupsService.groupID.subscribe(response => {
       this.groupID = response
-      console.log(response)
+
     })
     if(this.isEditing) {
       this.groupsService.groupInfo.subscribe(response=> {
@@ -126,14 +126,12 @@ export class GroupModalComponent implements OnInit {
       this.groupForm.controls.groupName.value,
       this.groupForm.controls.groupRelation.value
     );
-    console.log(group)
     this.sent = true;
     if (!this.groupForm.valid) return;
     this.isLoading = true;
 
     this.groupsService.performGroupCreation(group).subscribe(
       (response) => {
-        console.log(response)
         this.userGroups?.push(response)
         this.groupsService.updateListOfGroups(this.userGroups)
         this.groupNameExists = false
@@ -142,7 +140,6 @@ export class GroupModalComponent implements OnInit {
         this.modalService.dismissAll()
       },
       (error) => {
-        console.log(error);
         this.isLoading = false;
         this.groupNameExists = true
       }
@@ -162,7 +159,6 @@ export class GroupModalComponent implements OnInit {
       this.groupForm.controls.groupName.value,
       this.groupForm.controls.groupRelation.value
     );
-    console.log(group)
     this.sent = true;
     if (!this.groupForm.valid) return;
     this.isLoading = true;
@@ -174,7 +170,6 @@ export class GroupModalComponent implements OnInit {
         window.location.reload()
       },
       (error) => {
-        console.log(error);
         this.isLoading = false;
 
       }

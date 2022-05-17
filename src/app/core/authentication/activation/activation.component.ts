@@ -38,7 +38,6 @@ export class ActivationComponent implements OnInit {
           })
         },
         (error) => {
-          console.log('error');
         }
       );
     });

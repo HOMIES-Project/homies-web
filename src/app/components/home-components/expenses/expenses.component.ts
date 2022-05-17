@@ -29,7 +29,6 @@ export class ExpensesComponent implements OnInit {
       cancelButtonColor: '#df4759',
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log("confirmado")
       } else if (result.isDenied) {
         Swal.fire('Changes are not saved', '', 'info');
       }

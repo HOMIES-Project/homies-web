@@ -27,7 +27,7 @@ export class ExpenseModalComponent implements OnInit {
   ngOnInit(): void {
     this.groupsService.groupInfo.subscribe(response =>{
       this.groupUsers = response.userData
-      console.log(this.groupUsers)
+
     })
 
   }

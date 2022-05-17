@@ -43,13 +43,12 @@ export class TasksComponent implements OnInit {
 
     this.tasksService.getTasksList(this.groupID!).subscribe((response) => {
       this.tasksList = response.tasks;
-      console.log(this.tasksList);
+
       if (this.tasksList.length == 0) {
         this.noTasks = true;
       } else {
         this.noTasks = false;
       }
-      console.log(this.groupID);
     });
   }
 
@@ -58,20 +57,20 @@ export class TasksComponent implements OnInit {
   // }
 
   editTaskFromList() {
-    console.log("pulsado")
+
   }
 
   completeTask() {}
 
   onCheckboxChanged(event: any) {
-    console.log(event.target.value);
+
     this.isCancelled = !this.isCancelled
   }
 
   get result() {
     this.tasksList.filter((item) => {
       item.checked;
-      console.log(item);
+
     });
     return this.tasksList.filter((item) => item.checked);
   }
@@ -91,12 +90,11 @@ export class TasksComponent implements OnInit {
         this.tasksService.performDeleteTask(taskID).subscribe(
 
           (response) => {
-            console.log(taskID)
-            console.log(response)
+
             window.location.reload();
           },
           (error) => {
-            console.log(error)
+
           }
         );
       } else if (result.isDenied) {

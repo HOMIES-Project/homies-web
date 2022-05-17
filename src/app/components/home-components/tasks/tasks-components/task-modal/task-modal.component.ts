@@ -58,7 +58,6 @@ export class TaskModalComponent implements OnInit {
   ngOnInit(): void {
     this.groupsService.groupID.subscribe((response) => {
       this.groupID = response;
-      console.log(this.groupID)
     });
     this.usersService.userId.subscribe((response) => {
       this.userId = response;
@@ -66,11 +65,7 @@ export class TaskModalComponent implements OnInit {
 
     this.groupsService.groupInfo.subscribe(response =>{
       this.groupUsers = response.userData
-      console.log(this.groupUsers)
     })
-
-    console.log(this.taskFromChild)
-
 
     if(this.isEditting) {
 
@@ -125,12 +120,10 @@ export class TaskModalComponent implements OnInit {
       this.newTaskForm.controls.taskDescription.value,
       this.newTaskForm.controls.login.value,
     );
-    console.log( this.newTaskForm.controls.login.value)
+
     this.sent = true;
     this.tasksService.performTaskCreation(task).subscribe((response) => {
-      console.log(task)
-      console.log(response)
-      console.log('tarea creada')
+
        window.location.reload()
       this.modalService.dismissAll()
     },
@@ -147,13 +140,13 @@ export class TaskModalComponent implements OnInit {
       this.newTaskForm.controls.taskName.value,
       this.newTaskForm.controls.taskDescription.value
     );
-    console.log(task)
+
     this.sent = true;
     this.tasksService.performEditTask(task).subscribe((response) => {
       window.location.reload();
     },
     (error) => {
-      console.log(error);
+
     }
     );
   }
