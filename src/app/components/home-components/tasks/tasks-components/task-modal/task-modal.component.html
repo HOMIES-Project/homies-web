@@ -25,7 +25,12 @@
                 <img src="../../../assets/svg/username.svg" class="svg-icon" alt="" />
               </div>
               <select name="" id="" class="form-control col-6" formControlName="login">
-                <option  *ngFor="let user of this.groupUsers" [ngValue]="user.user.login">{{user.user.login}}</option>
+
+
+                <option  *ngFor="let user of this.groupUsers; let indexOfUser = index" [ngValue]="user.user.login" >{{user.user.login}}</option>
+
+                <option  *ngFor="let user of this.groupUsers; let indexOfUser = index" [ngValue]="user.user.login" [selected]="indexOfUser == 1">{{user.user.login}}</option>
+
               </select>
             </div>
             <!--END INPUT TASK USER SELECTION-->

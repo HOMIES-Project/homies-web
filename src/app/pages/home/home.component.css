@@ -1,20 +1,33 @@
 @media (min-width: 576px) {
-  .card-columns {
+  .card-columns-list {
       column-count: 1;
   }
+
 }
 
-@media (min-width: 768px) {
-  .card-columns {
-      column-count: 2;
+@media (max-width: 768px) {
+  .card-columns-list{
+      column-count: 1;
+  }
+  .card-container {
+   flex-direction: column-reverse;
   }
 }
 
 @media (min-width: 992px) {
-  .card-columns {
-      column-count: 3;
+  .card-columns-list {
+      column-count: 2;
   }
+
 }
+
+@media (min-width: 992px) {
+  .card-columns-group {
+    column-count: 1;
+  }
+
+}
+
 
 .group-info-background {
   background-color: rgba(97, 212, 255, 0.2);

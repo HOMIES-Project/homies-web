@@ -12,6 +12,10 @@ import Swal from 'sweetalert2';
   styleUrls: ['./tasks.component.css'],
 })
 export class TasksComponent implements OnInit {
+
+
+
+
   open: boolean = true;
   groupID!: string | null;
 
@@ -39,7 +43,7 @@ export class TasksComponent implements OnInit {
 
     this.tasksService.getTasksList(this.groupID!).subscribe((response) => {
       this.tasksList = response.tasks;
-      console.log(this.tasksList.length);
+      console.log(this.tasksList);
       if (this.tasksList.length == 0) {
         this.noTasks = true;
       } else {

@@ -1,3 +1,4 @@
+import { TaskModel } from './../../core/models/tasksCreation.model';
 import { TasksService } from 'src/app/core/services/Lists/tasks.service';
 import { UserData } from '../../core/models/user-data.model';
 import { GroupsService } from '../../core/services/groups.service';
@@ -45,7 +46,6 @@ export class HomeComponent implements OnInit {
   base64ProfileImage!: string;
   photo!: string | undefined;
 
-
   isAdmin!: boolean;
   adminID!: string;
 
@@ -53,7 +53,13 @@ export class HomeComponent implements OnInit {
 
   imgBase64!: string;
 
-  userTasks!: Array<any> | null;
+  userTasks: Array<any> = []
+  userTasksModel: Array<any> = []
+
+  noTasks: boolean = true;
+
+  userTasksModelArray: Array<any> = []
+
 
   constructor(
     private groupsService: GroupsService,
@@ -62,9 +68,7 @@ export class HomeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private sanitizer: DomSanitizer
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.imgBase64 = 'data:image/png;base64,';
@@ -82,22 +86,17 @@ export class HomeComponent implements OnInit {
       this.photo = userInfo?.photo;
     });
 
-    this.groupsService.getUserInfo(this.userID).subscribe(response => {
-      console.log(response)
-    })
+    this.groupsService.getUserInfo(this.userID).subscribe((response) => {
+      console.log(response);
+    });
 
     this.getGroupDetails();
     this.getUserTasks();
+    console.log("inicando")
   }
 
-  // updateGroupID(id: string) {
-  //   this.groupsService.updateGroupId(id).subscribe();
-  // }
-
   getGroupDetails() {
-
     this.groupsService.groupID.subscribe((response) => {
-
       this.groupID = response;
       if (this.groupID == null) {
         this.isLoading = false;
@@ -111,10 +110,9 @@ export class HomeComponent implements OnInit {
           this.groupRelationName = groupInfo.groupRelationName;
           this.groupUsers = groupInfo.userData;
           this.adminID = groupInfo.userAdmin.id;
-          if(this.groupUsers.length > 0) {
+          if (this.groupUsers.length > 0) {
             this.groupUsersModelArray = [];
             for (var i = 0; i < this.groupUsers!.length; i++) {
-
               let user = new GroupUserModel(
                 this.groupUsers![i].id,
                 this.groupUsers![i].user.login,
@@ -124,7 +122,7 @@ export class HomeComponent implements OnInit {
                 false
               );
               if (this.groupUsers![i].photo != null) {
-                  this.base64ProfileImage = `data:image/png;base64,${
+                this.base64ProfileImage = `data:image/png;base64,${
                   this.groupUsers![i].photo
                 }`;
               }
@@ -143,50 +141,11 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  // getUsersInfo() {
-  //   if (this.groupUsers.length > 0) {
-  //     for (var i = 0; i < this.groupUsers.length; i++) {
-  //       this.groupUsersModelArray = [];
-  //       this.groupsService.getUserInfo(this.groupUsers[i].id).subscribe(
-  //         (groupUserInfo) => {
-  //           this.login = groupUserInfo.user.login;
-  //           let user = new GroupUserModel(
-  //             groupUserInfo.id,
-  //             this.login!,
-  //             groupUserInfo.photo,
-  //             groupUserInfo.user.firstName,
-  //             groupUserInfo.user.lastName,
-  //             false
-  //           );
-
-  //           if (groupUserInfo.photo != null) {
-  //             this.base64ProfileImage = `data:image/png;base64,${groupUserInfo.photo}`;
-  //           }
-  //           if (this.adminID == groupUserInfo.id) {
-  //             user.admin = true;
-  //             this.groupUsersModelArray.unshift(user);
-  //           }
-
-  //           this.groupUsersModelArray.push(user);
-  //           this.groupUsersModel = [...new Set(this.groupUsersModelArray)];
-  //         },
-  //         (error) => {
-  //           console.log('error from getusersinfo');
-  //         },
-  //         () => {
-  //           if (i == this.groupUsers.length) this.isLodingUsers = false;
-  //         }
-  //       );
-  //     }
-  //   }
-  // }
-
   profilePictureImageDecoded(picture: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(picture);
   }
 
   checkIsAdmin() {
-
     // this.adminID == this.userID ? this.isAdmin : !this.isAdmin
     if (this.adminID == this.userID) {
       this.isAdmin = true;
@@ -259,22 +218,55 @@ export class HomeComponent implements OnInit {
   //TODO delete group with ID
 
   deleteGroup() {
-    this.groupsService.performDeleteGroup(this.groupID!).subscribe(response => {
-      console.log(response)
-      console.log('NICE')
-      this.groupsService.performLogoutFromGroups();
-      this.usersService.performLogout();
-    }, error => {
-      console.log(error)
-    })
+    this.groupsService.performDeleteGroup(this.groupID!).subscribe(
+      (response) => {
+        console.log(response);
+        console.log('NICE');
+        this.groupsService.performLogoutFromGroups();
+        this.usersService.performLogout();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   getUserTasks() {
-    this.tasksService
-      .getUserTasksList(this.groupID!, this.login!)
-      .subscribe((response) => {
-        this.userTasks = response;
-      });
+    this.groupsService.groupID.subscribe((response) => {
+        this.groupID = response;
+
+        this.userTasksModel = []
+
+        console.log("desde get user tasks" + this.groupID)
+        this.tasksService
+          .getUserTasksList(this.groupID!, this.login!)
+          .subscribe((response) => {
+            console.log(response);
+            this.userTasks = response;
+            if(this.userTasks.length > 0) {
+
+              this.noTasks = false;
+
+              this.userTasksModel = []
+              for (var i = 0; i < this.userTasks!.length; i++) {
+                let task = new TaskModel(
+                  this.username,
+                  this.userTasks![i].taskName,
+                  this.userTasks![i].description,
+                );
+                console.log(task)
+                this.userTasksModel.push(task)
+                console.log("Desd etask" + this.userTasksModel)
+              }
+
+            } else {
+              this.noTasks = true;
+
+            }
+          });
+    });
+
+
   }
 
   navigateToTasks() {
@@ -286,6 +278,7 @@ export class HomeComponent implements OnInit {
       queryParamsHandling: 'preserve',
     });
   }
+
 
   navigateToGroceries() {
     this.groupsService.groupID.subscribe((response) => {
