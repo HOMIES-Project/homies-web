@@ -68,6 +68,11 @@ export class TasksService {
     return this.http.delete(url);
   }
 
+  performCancelTask(entry: any){
+    let url = `${environment.BASE_URL}/tasks/cancel`;
+    return this.http.put(url, entry)
+  }
+
   asignTaskToUser(){
 
   }

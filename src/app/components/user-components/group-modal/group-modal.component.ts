@@ -132,16 +132,20 @@ export class GroupModalComponent implements OnInit {
 
     this.groupsService.performGroupCreation(group).subscribe(
       (response) => {
+        console.log(response)
         this.userGroups?.push(response)
         this.groupsService.updateListOfGroups(this.userGroups)
+        this.groupsService.updateGroupId(response.id).subscribe()
         this.groupNameExists = false
         this.router.navigate(['home']);
         this.isLoading = false;
         this.modalService.dismissAll()
+
       },
       (error) => {
         this.isLoading = false;
         this.groupNameExists = true
+        console.log(error)
       }
     );
   }

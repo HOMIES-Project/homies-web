@@ -14,19 +14,19 @@
                     <app-task-modal [isEditting]="this.isEditting" [taskFromChild]="task"></app-task-modal>
 
                   </td>
-                  <td class="text-left" (click)="editTaskFromList()">
+                  <td class="text-left" (click)="cancelTask(task.id, task.cancel)">
                     <span class="d-block" [ngClass]="{
-                      'isCancelled': this.isCancelled}">{{task.taskName}}</span>
+                      'isCancelled': task.cancel}">{{task.taskName}}</span>
                     <span class="d-block ">{{task.id}}</span>
-                    <span style="font-size: 0.8rem">{{task.user}}</span>
+                    <span style="font-size: 0.8rem">{{task.userAssigneds}}</span>
 
                   </td>
 
-                  <td class=" align-middle">
-                    <input class="mx-3 p-5" style="width: 18px; height: 18px; background-color: var(--secondaryColor)"
+                  <td class=" align-middle text-right">
+                    <!-- <input class="mx-3 p-5" style="width: 18px; height: 18px; background-color: var(--secondaryColor)"
                       type="checkbox" value="{{indexOfTask}}" [(ngModel)]="task.checked"
-                      (change)="onCheckboxChanged($event)">
-                    <img src="../../../assets/svg/blueTrash.svg" style="width: 18px; height: 24px; margin-top: -10px; ;"
+                      (change)="onCheckboxChanged($event)"> -->
+                    <img src="../../../assets/svg/blueTrash.svg" style="width: 18px; height: 24px; margin-top: -10px; margin-right: 40px;"
                       (click)="deleteTask(task.id)" />
                   </td>
 

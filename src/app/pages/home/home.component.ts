@@ -227,6 +227,7 @@ export class HomeComponent implements OnInit {
   deleteGroup() {
     this.groupsService.performDeleteGroup(this.groupID!).subscribe(
       (response) => {
+        console.log(response)
         this.groupsService.performLogoutFromGroups();
         this.usersService.performLogout();
       },

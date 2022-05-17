@@ -36,7 +36,6 @@ export class TaskCreationModel {
 
   export class TaskModel {
     public login: string;
-
     public taskName: string;
     public description: string;
 
@@ -46,7 +45,19 @@ export class TaskCreationModel {
       this.description = description
 
     }
-
   }
 
+  export class TaskCancelModel {
+    public idTask: number;
+    public idGroup: string;
+    public login: string;
+    public cancel: boolean;
 
+    constructor(idTask: number, idGroup: string,login: string, cancel: boolean) {
+      this.idTask = idTask,
+      this.idGroup = idGroup,
+      this.login = login,
+      this.cancel = cancel
+    }
+
+  }

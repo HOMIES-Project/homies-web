@@ -1,3 +1,4 @@
+import { GroupsService } from 'src/app/core/services/groups.service';
 import { UserChangePassword } from './../../../core/models/user-data.model';
 import { UserData, UserEditModel } from '../../../core/models/user-data.model';
 import { RegisterModel } from '../../../core/models/register.model';
@@ -63,6 +64,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private usersService: UsersService,
+    private groupsService: GroupsService,
     private router: Router,
     private sanitizer: DomSanitizer,
     @Inject(LOCALE_ID) public locale: string
@@ -218,9 +220,10 @@ export class ProfileComponent implements OnInit {
           if (emailConfirm == this.userProfileFrom.controls.email.value) {
             swalWithBootstrapButtons.fire(
               '¡CAMBIADO!',
-              'Tu email se ha cambiado a ' + this.userProfileFrom.controls.email.value + ', verifica tu correo.',
+              'Tu email se ha cambiado a ' + this.userProfileFrom.controls.email.value + ' , verifica tu correo.',
               'success'
             )
+            console.log(this.userDataChanged)
             this.usersService
             .performEditUser(this.userDataChanged, this.id)
             .subscribe((response) => {
@@ -228,6 +231,7 @@ export class ProfileComponent implements OnInit {
             }, error=> {
             });
             this.usersService.performLogout();
+            this.groupsService.performLogoutFromGroups();
           } else if(emailConfirm != this.userProfileFrom.controls.email.value){
             Swal.fire({
               title: 'No coincide el correo, vuelve a ponerlo',
@@ -294,7 +298,7 @@ export class ProfileComponent implements OnInit {
         this.usersService.performDeleteUser(this.id).subscribe(
           (response) => {
             this.usersService.performLogout();
-
+            this.groupsService.performLogoutFromGroups();
             this.router.navigate(['/landing']);
           },
           (error) => {
