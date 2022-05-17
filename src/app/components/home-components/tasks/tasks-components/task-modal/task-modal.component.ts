@@ -150,7 +150,7 @@ export class TaskModalComponent implements OnInit {
     console.log(task)
     this.sent = true;
     this.tasksService.performEditTask(task).subscribe((response) => {
-      //this.router.navigate(['home/tasks', response.id])
+      window.location.reload();
     },
     (error) => {
       console.log(error);

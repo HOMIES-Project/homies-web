@@ -1,7 +1,8 @@
+import { GroupEditModel } from './../../../core/models/groupCreation.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { GroupsService } from '../../../core/services/groups.service';
 import { UsersService } from 'src/app/core/services/users.service';
 import { Router } from '@angular/router';
@@ -19,12 +20,15 @@ export class GroupModalComponent implements OnInit {
   closeResult = '';
   isLoading!: boolean;
   groupNameExists: boolean = false;
+  groupForm: FormGroup
 
   userGroups: Array<any> | null = []
 
-  @Input() isEditting!: boolean
+  @Input() isEditing!: boolean
   @Input() isCreating!: boolean
-  @Input() taskFromChild!: any;
+  @Input() groupInformation!: GroupEditModel
+
+
 
   constructor(
     private modalService: NgbModal,
@@ -32,18 +36,9 @@ export class GroupModalComponent implements OnInit {
     private usersService: UsersService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) {}
-  ngOnInit(): void {
-    this.usersService.userId.subscribe((response) => {
-      this.userId = response;
-    });
+  ) {
 
-    this.groupsService.groupsList.subscribe(response => {
-      this.userGroups = response
-    })
-  }
-
-  groupForm = this.formBuilder.group({
+  this.groupForm = this.formBuilder.group({
     groupName: [
       '',
       [Validators.required, Validators.minLength(3), Validators.maxLength(20)],
@@ -53,8 +48,44 @@ export class GroupModalComponent implements OnInit {
       [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
     ],
   });
+  }
+  ngOnInit(): void {
+    console.log("id")
+    this.usersService.userId.subscribe((response) => {
+      this.userId = response;
+      console.log(response)
+    });
 
-  open(content: any) {
+    this.groupsService.groupsList.subscribe(response => {
+      this.userGroups = response
+      console.log(response)
+    })
+    if(this.isEditing) {
+      this.groupsService.groupInfo.subscribe(response=> {
+        this.groupForm.patchValue({
+          groupName: response.groupName,
+          groupRelation: response.groupRelationName
+
+        });
+      })
+    }
+  }
+
+
+  openCreateGroup(content: any) {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
+  openEditGroup(content: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(

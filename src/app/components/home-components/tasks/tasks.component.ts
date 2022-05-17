@@ -93,7 +93,7 @@ export class TasksComponent implements OnInit {
           (response) => {
             console.log(taskID)
             console.log(response)
-            //window.location.reload();
+            window.location.reload();
           },
           (error) => {
             console.log(error)

@@ -29,7 +29,6 @@
 
                 <option  *ngFor="let user of this.groupUsers; let indexOfUser = index" [ngValue]="user.user.login" >{{user.user.login}}</option>
 
-                <option  *ngFor="let user of this.groupUsers; let indexOfUser = index" [ngValue]="user.user.login" [selected]="indexOfUser == 1">{{user.user.login}}</option>
 
               </select>
             </div>

@@ -20,6 +20,8 @@ export class SidebarComponent implements OnInit {
 
   noGroups!: boolean;
 
+  isCreating: boolean = true;
+
   constructor(
     private groupsService: GroupsService,
     private usersService: UsersService,

@@ -1,6 +1,17 @@
+<a class="w3-bar-item w3-button add-button" (click)="openCreateGroup(content)" style="padding-left: 15px !important;" *ngIf="this.isCreating">
+  <img src="../../../../assets/svg/add_circle.svg" class="svg-add" style=" width: 30px !important;" />
+</a>
+
+<a class="" (click)="openEditGroup(content)"  *ngIf="this.isEditing">
+  <img src="../../../assets/svg/pencilEdit.svg" style="margin-top: 2px; margin-right: 4px;" class="svg-icon"
+  alt="">
+</a>
+
+
+
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Crea tu grupo</h4>
+    <h4 class="modal-title" id="modal-basic-title">{{this.isEditing ? 'Editar grupo' : 'Crear grupo' }}</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true"> × </span>
     </button>
@@ -68,6 +79,4 @@
 
 </ng-template>
 
-<a class="w3-bar-item w3-button add-button" (click)="open(content)" style="padding-left: 15px !important; ">
-  <img src="../../../../assets/svg/add_circle.svg" class="svg-add" style=" width: 30px !important;" />
-</a>
+

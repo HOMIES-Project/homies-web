@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import {
   GroupCreationModel,
+  GroupEditModel,
   GroupUserActionModel,
 } from '../models/groupCreation.model';
 import { map } from 'rxjs/operators';
@@ -93,6 +94,11 @@ export class GroupsService {
         return response;
       })
     );
+  }
+
+  performEditGroup(entry: any, id: string): Observable<any> {
+    let url = `${environment.BASE_URL}/groups/${id}`
+    return this.http.put<GroupEditModel>(url, entry);
   }
 
   performAddUserToGroup(entry: GroupUserActionModel): Observable<any> {

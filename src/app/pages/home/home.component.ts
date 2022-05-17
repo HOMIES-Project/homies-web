@@ -1,3 +1,5 @@
+import { GroupEditModel } from './../../core/models/groupCreation.model';
+
 import { TaskModel } from './../../core/models/tasksCreation.model';
 import { TasksService } from 'src/app/core/services/Lists/tasks.service';
 import { UserData } from '../../core/models/user-data.model';
@@ -60,8 +62,9 @@ export class HomeComponent implements OnInit {
 
   userTasksModelArray: Array<any> = []
 
-  isEditting: boolean = true;
+  isEditing: boolean = true;
   isCreating: boolean = true;
+  groupInformation!: GroupEditModel;
 
   constructor(
     private groupsService: GroupsService,
@@ -112,6 +115,10 @@ export class HomeComponent implements OnInit {
           this.groupRelationName = groupInfo.groupRelationName;
           this.groupUsers = groupInfo.userData;
           this.adminID = groupInfo.userAdmin.id;
+          this.groupInformation = new GroupEditModel(
+            this.groupName = groupInfo.groupName,
+            this.groupRelationName = groupInfo.groupRelationName
+          )
           if (this.groupUsers.length > 0) {
             this.groupUsersModelArray = [];
             for (var i = 0; i < this.groupUsers!.length; i++) {
