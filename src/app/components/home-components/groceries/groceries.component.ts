@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GroceriesComponent implements OnInit {
 
+  isEditting: boolean = true;
+  isCreating: boolean = true;
+
+  noGroceries: boolean = true;
+
   constructor() { }
 
   ngOnInit(): void {

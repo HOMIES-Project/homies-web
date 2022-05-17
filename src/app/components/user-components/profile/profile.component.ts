@@ -228,7 +228,7 @@ export class ProfileComponent implements OnInit {
             this.usersService
             .performEditUser(this.userDataChanged, this.id)
             .subscribe((response) => {
-  
+              console.log(response);
               this.successfullyEdited = true
             }, error=> {
               console.log(error)
@@ -260,7 +260,7 @@ export class ProfileComponent implements OnInit {
       this.usersService
       .performEditUser(this.userDataChanged, this.id)
       .subscribe((response) => {
-
+        // console.log(response);
         this.successfullyEdited = true
       }, error=> {
         console.log(error)
