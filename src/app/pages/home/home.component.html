@@ -45,7 +45,7 @@
             </tr>
             <tr>
               <td>
-                <button class="btn outline mt-3">Añadir tarea</button>
+                <button class="btn outline mt-3" (click)="navigateToGroceries()">Ir a la lista de la compra</button>
               </td>
             </tr>
           </tbody>
@@ -56,8 +56,16 @@
     <div class="card wrapper-card">
       <div class="card">
         <div class="card-body">
+          <div *ngIf="this.isAdmin" align="right" style="margin-top: -10px; margin-right: -10px; margin-bottom: 10px;">
+            <span class="dot" style="background-color: #34ade730;">
+              <img src="../../../assets/svg/pencilEdit.svg" style="margin-top: 2px; margin-right: 4px;" class="svg-icon" 
+                alt="">
+            </span>
+          </div>
+          
           <div class="card-title p-2 rounded text-left group-info-background"
             style="height: 40px; align-content: center;">
+            
             <img src="../../../assets/svg/groupHouseLogo.svg" class="svg-icon"
               style="float: left; width: 30px !important; height: 30px !important; margin-top: -3px;" alt="">
             <h5 style="float: right; width: 80%; margin-right: 20px;">{{this.groupName}}</h5>
