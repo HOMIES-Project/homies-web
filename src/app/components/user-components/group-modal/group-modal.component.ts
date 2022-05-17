@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GroupCreationModel } from 'src/app/core/models/groupCreation.model';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -21,6 +21,10 @@ export class GroupModalComponent implements OnInit {
   groupNameExists: boolean = false;
 
   userGroups: Array<any> | null = []
+
+  @Input() isEditting!: boolean
+  @Input() isCreating!: boolean
+  @Input() taskFromChild!: any;
 
   constructor(
     private modalService: NgbModal,

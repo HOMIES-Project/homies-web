@@ -60,6 +60,8 @@ export class HomeComponent implements OnInit {
 
   userTasksModelArray: Array<any> = []
 
+  isEditting: boolean = true;
+  isCreating: boolean = true;
 
   constructor(
     private groupsService: GroupsService,

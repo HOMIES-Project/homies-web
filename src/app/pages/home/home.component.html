@@ -4,6 +4,7 @@
   </div>
 </div>
 
+
 <div class="container text-center" style="padding-top: 5px;" *ngIf="this.groupsExist  && !this.isLoading">
   <div class="card-columns d-inline-block">
     <div class="card">
@@ -18,6 +19,7 @@
             <tr>
               <td>
                 <button class="btn outline mt-3" (click)="navigateToTasks()">Ir a la lista de tareas</button>
+                <app-group-modal [isEditting]="this.isEditting"></app-group-modal>
               </td>
             </tr>
           </tbody>
