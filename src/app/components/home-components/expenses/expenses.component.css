@@ -1,0 +1,23 @@
+.nav-tabs {
+  border-bottom: 1px solid #34ade7;
+}
+
+a {
+  color: #34ade7;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.nav-link.active {
+  color: #495057;
+  background-color: #fff;
+  border-color: #34ade7 #34ade7 #fff;
+}
+
+.payment-user {
+  font-size: 0.9rem;
+}
+
+.payment-date{
+  font-size: 0.7rem;
+}

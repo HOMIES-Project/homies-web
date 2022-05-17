@@ -12,6 +12,10 @@ import Swal from 'sweetalert2';
   styleUrls: ['./tasks.component.css'],
 })
 export class TasksComponent implements OnInit {
+
+
+
+
   open: boolean = true;
   groupID!: string | null;
 

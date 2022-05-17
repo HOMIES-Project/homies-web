@@ -66,7 +66,7 @@ export class TasksService {
   }
 
   performDeleteTask(id: number): Observable<any> {
-    let url = `${environment.BASE_URL}/task/delete-task/${id}`;
+    let url = `${environment.BASE_URL}/tasks/${id}`;
     console.log('borrada')
     return this.http.delete(url);
   }

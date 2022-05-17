@@ -23,11 +23,11 @@
     filter: brightness(0) saturate(100%) invert(55%) sepia(100%) saturate(684%) hue-rotate(169deg) brightness(93%) contrast(94%);
 }
 
-a:hover .svg-icon, a:hover app-group-creation{
+a:hover .svg-icon, a:hover app-group-modal{
   filter: brightness(0) saturate(100%) invert(95%) sepia(95%) saturate(0%) hue-rotate(71deg) brightness(107%) contrast(105%);
 }
 
-a:hover app-group-creation:hover{
+a:hover app-group-modal:hover{
   filter: none;
 }
 
@@ -106,7 +106,7 @@ text-decoration:none;
 -webkit-transform:translateZ(0) scale(1,1);
 -webkit-transition:all .1s linear;
 transition:all .1s linear;
-  
+
 }
 
 .main-menu .nav-icon {

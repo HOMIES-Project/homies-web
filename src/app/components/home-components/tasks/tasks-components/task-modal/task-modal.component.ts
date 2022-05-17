@@ -49,7 +49,9 @@ export class TaskModalComponent implements OnInit {
         '',
         [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
       ],
-      login: ''
+      login: [
+        null, [ Validators.required ]
+      ],
     });
   }
 
@@ -123,13 +125,13 @@ export class TaskModalComponent implements OnInit {
       this.newTaskForm.controls.taskDescription.value,
       this.newTaskForm.controls.login.value,
     );
-    console.log(task)
+    console.log( this.newTaskForm.controls.login.value)
     this.sent = true;
     this.tasksService.performTaskCreation(task).subscribe((response) => {
       console.log(task)
       console.log(response)
       console.log('tarea creada')
-       //window.location.reload()
+       window.location.reload()
       this.modalService.dismissAll()
     },
     (error) => {
