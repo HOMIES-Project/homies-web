@@ -21,7 +21,7 @@ export class GroupModalComponent implements OnInit {
   isLoading!: boolean;
   groupNameExists: boolean = false;
   groupForm: FormGroup
-
+  groupID!: string | null
   userGroups: Array<any> | null = []
 
   @Input() isEditing!: boolean
@@ -58,6 +58,11 @@ export class GroupModalComponent implements OnInit {
 
     this.groupsService.groupsList.subscribe(response => {
       this.userGroups = response
+      console.log(response)
+    })
+
+    this.groupsService.groupID.subscribe(response => {
+      this.groupID = response
       console.log(response)
     })
     if(this.isEditing) {
@@ -114,7 +119,7 @@ export class GroupModalComponent implements OnInit {
     this.groupsService.updateGroupId(id!).subscribe()
   }
 
-  createGroup() {
+  performCreateGroup() {
     let group: GroupCreationModel = new GroupCreationModel(
       '',
       this.userId,
@@ -140,6 +145,38 @@ export class GroupModalComponent implements OnInit {
         console.log(error);
         this.isLoading = false;
         this.groupNameExists = true
+      }
+    );
+  }
+
+  submitGroupForm() {
+    if(this.isCreating) {
+      this.performCreateGroup()
+    } else {
+      this.performEditGroup()
+    }
+  }
+
+  performEditGroup() {
+    let group: GroupEditModel = new GroupEditModel(
+      this.groupForm.controls.groupName.value,
+      this.groupForm.controls.groupRelation.value
+    );
+    console.log(group)
+    this.sent = true;
+    if (!this.groupForm.valid) return;
+    this.isLoading = true;
+
+    this.groupsService.performEditGroup(group, this.groupID!).subscribe(
+      (response) => {
+        this.isLoading = false;
+        this.modalService.dismissAll()
+        window.location.reload()
+      },
+      (error) => {
+        console.log(error);
+        this.isLoading = false;
+
       }
     );
   }

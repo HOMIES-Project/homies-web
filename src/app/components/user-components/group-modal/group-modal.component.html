@@ -17,7 +17,7 @@
     </button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="this.groupForm" (ngSubmit)="createGroup()">
+    <form [formGroup]="this.groupForm" (ngSubmit)="submitGroupForm()">
       <div class="form-group">
         <label for="groupName"> Nombre del grupo * </label>
         <div class="input-group">
@@ -72,7 +72,7 @@
         <button class="btn-sm border-0 p-2 m-2  dashboard-button center text-white" [ngClass]="{
             disabled: !this.groupForm.valid
           }" [disabled]="!this.groupForm.valid">
-          <span class="spinner-border spinner-border-sm mr-1" *ngIf="isLoading"></span>Crear grupo</button>
+          <span class="spinner-border spinner-border-sm mr-1" *ngIf="isLoading"></span> {{this.isEditing ? 'Editar grupo' : 'Añadir grupo' }} </button>
       </div>
     </form>
   </div>
