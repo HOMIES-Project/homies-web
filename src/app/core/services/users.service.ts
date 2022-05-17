@@ -126,7 +126,15 @@ export class UsersService {
   /* EDIT USER - POST */
   performEditUser(entry: any, id: string): Observable<any> {
     let url = `${environment.BASE_URL}/user-data/${id}`;
-    return this.http.put<any>(url, entry);
+    return this.http.put<any>(url, entry).pipe(
+      map((response) => {
+        
+        this.userBehaviourSubject.next(response);
+        localStorage.setItem('userInfo', JSON.stringify(response));
+
+        return response;
+      })
+    );
   }
 
   /* DELETE USER - DELETE*/

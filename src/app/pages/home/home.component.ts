@@ -278,4 +278,16 @@ export class HomeComponent implements OnInit {
       queryParamsHandling: 'preserve',
     });
   }
+
+
+  navigateToGroceries() {
+    this.groupsService.groupID.subscribe((response) => {
+      this.groupID = response;
+    });
+    this.router.navigate(['/home', 'groceries', this.groupID], {
+      relativeTo: this.route,
+      queryParamsHandling: 'preserve',
+    });
+  }
+
 }
