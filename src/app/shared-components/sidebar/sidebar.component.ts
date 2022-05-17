@@ -3,6 +3,7 @@ import { GroupsService } from '../../core/services/groups.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { windowWhen } from 'rxjs/operators';
+import { TasksService } from 'src/app/core/services/Lists/tasks.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -22,6 +23,7 @@ export class SidebarComponent implements OnInit {
   constructor(
     private groupsService: GroupsService,
     private usersService: UsersService,
+    private tasksService: TasksService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -34,9 +36,7 @@ export class SidebarComponent implements OnInit {
       this.groupName = response?.groupName
     })
 
-    // this.usersService.getUserInfo(this.id).subscribe(response => {
-    //   this.groups = response.groups
-    // })
+    this.tasksService.userTasks.subscribe()
 
 
     this.groupsService.groupsList.subscribe( response =>{

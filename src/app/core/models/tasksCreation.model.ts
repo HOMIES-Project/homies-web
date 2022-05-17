@@ -34,3 +34,19 @@ export class TaskCreationModel {
 
   }
 
+  export class TaskModel {
+    public login: string;
+
+    public taskName: string;
+    public description: string;
+
+    constructor(login: string, taskName: string, description: string) {
+      this.login = login
+      this.taskName = taskName
+      this.description = description
+
+    }
+
+  }
+
+
