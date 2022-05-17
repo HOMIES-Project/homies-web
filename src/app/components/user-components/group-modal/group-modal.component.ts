@@ -7,11 +7,12 @@ import { UsersService } from 'src/app/core/services/users.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-group-creation',
-  templateUrl: './group-creation.component.html',
-  styleUrls: ['./group-creation.component.css'],
+  selector: 'app-group-modal',
+  templateUrl: './group-modal.component.html',
+  styleUrls: ['./group-modal.component.css']
 })
-export class GroupCreationComponent implements OnInit {
+export class GroupModalComponent implements OnInit {
+
   username!: string;
   userId!: number;
   sent: boolean = false;
@@ -107,4 +108,5 @@ export class GroupCreationComponent implements OnInit {
       }
     );
   }
+
 }
