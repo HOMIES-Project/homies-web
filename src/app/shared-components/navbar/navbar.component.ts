@@ -1,3 +1,4 @@
+import { TasksService } from 'src/app/core/services/Lists/tasks.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginModel } from 'src/app/core/models/login.model';
@@ -19,6 +20,7 @@ export class NavbarComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private groupsService: GroupsService,
+    private tasksService: TasksService,
     private router: Router
   ) {
     usersService.login.subscribe((user) => {
@@ -48,5 +50,6 @@ export class NavbarComponent implements OnInit {
   logout(): void {
     this.usersService.performLogout();
     this.groupsService.performLogoutFromGroups();
+    this.tasksService.performLogoutFromTasks()
   }
 }

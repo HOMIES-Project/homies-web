@@ -1,3 +1,4 @@
+import { TasksService } from 'src/app/core/services/Lists/tasks.service';
 import { GroupsService } from 'src/app/core/services/groups.service';
 import { UserChangePassword } from './../../../core/models/user-data.model';
 import { UserData, UserEditModel } from '../../../core/models/user-data.model';
@@ -65,6 +66,7 @@ export class ProfileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private usersService: UsersService,
     private groupsService: GroupsService,
+    private tasksService: TasksService,
     private router: Router,
     private sanitizer: DomSanitizer,
     @Inject(LOCALE_ID) public locale: string
@@ -299,6 +301,7 @@ export class ProfileComponent implements OnInit {
           (response) => {
             this.usersService.performLogout();
             this.groupsService.performLogoutFromGroups();
+            this.tasksService.performLogoutFromTasks()
             this.router.navigate(['/landing']);
           },
           (error) => {

@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit {
 
   isLodingUsers: boolean = true;
 
+  userGroups!:  Array<any> | null;
   groupName!: string | null;
   groupRelationName!: string | null;
   groupUsers: Array<any> = [];
@@ -91,9 +92,10 @@ export class HomeComponent implements OnInit {
       this.photo = userInfo?.photo;
     });
 
-    this.groupsService.getUserInfo(this.userID).subscribe((response) => {
+    this.groupsService.groupsList.subscribe( response =>{
 
-    });
+      this.userGroups = response
+    })
 
     this.getGroupDetails();
     this.getUserTasks();
@@ -211,7 +213,9 @@ export class HomeComponent implements OnInit {
       if (result.isConfirmed) {
         this.groupsService.performDeleteUserFromGroup(userToDelete).subscribe(
           (response) => {
-            window.location.reload();
+            if (this.userGroups!.length != 0) {
+              this.groupID = this.userGroups![0]
+            }
           },
           (error) => {
           }
@@ -230,6 +234,7 @@ export class HomeComponent implements OnInit {
         console.log(response)
         this.groupsService.performLogoutFromGroups();
         this.usersService.performLogout();
+        this.tasksService.performLogoutFromTasks()
       },
       (error) => {
       }

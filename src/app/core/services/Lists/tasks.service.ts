@@ -11,21 +11,15 @@ const URL = environment.BASE_URL;
   providedIn: 'root',
 })
 export class TasksService {
-
   //OBSERVABLE - TASKS
   private userTasksBehaviourSubject: BehaviorSubject<Array<any> | null>;
   public userTasks: Observable<Array<any> | null>;
 
-
-
   constructor(private http: HttpClient) {
-
-    this.userTasksBehaviourSubject =
-      new BehaviorSubject<Array<any> | null>(
-        JSON.parse(<string>localStorage.getItem('userTasks'))
-      );
+    this.userTasksBehaviourSubject = new BehaviorSubject<Array<any> | null>(
+      JSON.parse(<string>localStorage.getItem('userTasks'))
+    );
     this.userTasks = this.userTasksBehaviourSubject.asObservable();
-
   }
 
   performTaskCreation(entry: TaskCreationModel): Observable<any> {
@@ -46,18 +40,18 @@ export class TasksService {
     );
   }
 
-  getUserTasksList(groupID: string, login:string): Observable<any> {
+  getUserTasksList(groupID: string, login: string): Observable<any> {
     let url = `${environment.BASE_URL}/task-lists-user/${groupID}/${login}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
         localStorage.setItem('userTasks', JSON.stringify(response));
-        this.userTasksBehaviourSubject.next(response)
+        this.userTasksBehaviourSubject.next(response);
         return response;
       })
     );
   }
 
-  performEditTask( entry: any): Observable<any> {
+  performEditTask(entry: any): Observable<any> {
     let url = `${environment.BASE_URL}/tasks/update-tasks`;
     return this.http.put(url, entry);
   }
@@ -68,12 +62,15 @@ export class TasksService {
     return this.http.delete(url);
   }
 
-  performCancelTask(entry: any){
+  performCancelTask(entry: any) {
     let url = `${environment.BASE_URL}/tasks/cancel`;
-    return this.http.put(url, entry)
+    return this.http.put(url, entry);
   }
 
-  asignTaskToUser(){
+  asignTaskToUser() {}
 
+  performLogoutFromTasks() {
+    localStorage.removeItem('userTasks')
+    this.userTasksBehaviourSubject.next(null);
   }
 }
