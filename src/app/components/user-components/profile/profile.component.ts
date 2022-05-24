@@ -1,3 +1,5 @@
+import { TasksService } from 'src/app/core/services/Lists/tasks.service';
+import { GroupsService } from 'src/app/core/services/groups.service';
 import { UserChangePassword } from './../../../core/models/user-data.model';
 import { UserData, UserEditModel } from '../../../core/models/user-data.model';
 import { RegisterModel } from '../../../core/models/register.model';
@@ -63,6 +65,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private usersService: UsersService,
+    private groupsService: GroupsService,
+    private tasksService: TasksService,
     private router: Router,
     private sanitizer: DomSanitizer,
     @Inject(LOCALE_ID) public locale: string
@@ -83,7 +87,7 @@ export class ProfileComponent implements OnInit {
       phone: new FormControl(),
       photo: new FormControl(),
       birthDate: new FormControl(),
-      
+
     });
   }
 
@@ -126,7 +130,7 @@ export class ProfileComponent implements OnInit {
   showPass() {
     this.showPassword = !this.showPassword;
   }
-  
+
 
   /** PROFILE PICTURE **/
   profilePictureImageDecoded() {
@@ -146,15 +150,13 @@ export class ProfileComponent implements OnInit {
   removePhoto() {
     this.photoContentType = "";
     this.photo = "";
-    console.log(this.photo);
   }
 
   /* CONVERT DATE TO FORMATDATE */
   convertDate() {
     if(this.birthDate == "") {
       this.birthDate = formatDate(this.birthDate, 'yyyy-dd-MM', this.locale);
-      console.log("FECHA " + this.birthDate);
-      console.log("FECHA DE TIPO " + typeof this.birthDate);
+
     }
   }
 
@@ -181,16 +183,14 @@ export class ProfileComponent implements OnInit {
       this.userProfileFrom.controls.email.value,
       this.langKey = navigator.language,
       this.userProfileFrom.controls.phone.value,
-      this.photo!, 
+      this.photo!,
       this.photoContentType,
       this.userProfileFrom.controls.birthDate.value,
-    );    
+    );
 
     /* CHECK EMAIL WHEN IS CHANGED */
     if(this.userProfileFrom.controls.email.value != this.email) {
-      console.log("SE HA CAMBIADO EL EMAIL");
-      console.log("EMAIL ANTIGUO " + this.email)
-      console.log("EMAIL NUEVO " + this.userProfileFrom.controls.email.value)
+
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: 'btn btn-success',
@@ -198,7 +198,7 @@ export class ProfileComponent implements OnInit {
         },
         buttonsStyling: true
       })
-      
+
       swalWithBootstrapButtons.fire({
         title: 'HAS CAMBIADO EL EMAIL',
         text: "¿Estás seguro de que quieres cambiarlo de " + this.email + " a " + this.userProfileFrom.controls.email.value + "?",
@@ -218,23 +218,22 @@ export class ProfileComponent implements OnInit {
             inputLabel: 'Nuevo correo introducido: ' + this.userProfileFrom.controls.email.value,
             inputPlaceholder: 'Correo nuevo'
           })
-          
+
           if (emailConfirm == this.userProfileFrom.controls.email.value) {
             swalWithBootstrapButtons.fire(
               '¡CAMBIADO!',
-              'Tu email se ha cambiado a ' + this.userProfileFrom.controls.email.value + ', verifica tu correo.',
+              'Tu email se ha cambiado a ' + this.userProfileFrom.controls.email.value + ' , verifica tu correo.',
               'success'
             )
+            console.log(this.userDataChanged)
             this.usersService
             .performEditUser(this.userDataChanged, this.id)
             .subscribe((response) => {
-              console.log(response);
               this.successfullyEdited = true
             }, error=> {
-              console.log(error)
             });
-            console.log(this.userDataChanged);
             this.usersService.performLogout();
+            this.groupsService.performLogoutFromGroups();
           } else if(emailConfirm != this.userProfileFrom.controls.email.value){
             Swal.fire({
               title: 'No coincide el correo, vuelve a ponerlo',
@@ -244,7 +243,7 @@ export class ProfileComponent implements OnInit {
               inputPlaceholder: 'Correo nuevo'
             })
           }
-          
+
         } else if (
           result.dismiss === Swal.DismissReason.cancel
         ) {
@@ -255,18 +254,17 @@ export class ProfileComponent implements OnInit {
           )
         }
       })
-      
+
     } else {
       this.usersService
       .performEditUser(this.userDataChanged, this.id)
       .subscribe((response) => {
-        // console.log(response);
+
         this.successfullyEdited = true
       }, error=> {
-        console.log(error)
+
       });
-    // console.log(this.photo);
-    console.log(this.userDataChanged);
+
     }
   }
 
@@ -280,10 +278,9 @@ export class ProfileComponent implements OnInit {
     this.usersService
       .performChangePassword(this.changePassword)
       .subscribe((response) => {
-        console.log(response);
+
         this.successfullyEditedPass = true
       }, error=> {
-        console.log(error)
       })
   }
 
@@ -303,11 +300,11 @@ export class ProfileComponent implements OnInit {
         this.usersService.performDeleteUser(this.id).subscribe(
           (response) => {
             this.usersService.performLogout();
-            console.log(response);
+            this.groupsService.performLogoutFromGroups();
+            this.tasksService.performLogoutFromTasks()
             this.router.navigate(['/landing']);
           },
           (error) => {
-            console.log(error);
           }
         );
       } else if (result.isDenied) {

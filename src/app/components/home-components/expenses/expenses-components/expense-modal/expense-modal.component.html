@@ -20,47 +20,42 @@
       <div class="modal-body">
         <form [formGroup]="this.newExpenseForm" (ngSubmit)="submitExpensesForm()" >
           <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-text">
-                <img src="../../../assets/svg/username.svg" class="svg-icon" alt="" />
-              </div>
-              <select name="" id="" class="form-control col-6" formControlName="login">
-                <option  *ngFor="let user of this.groupUsers" [ngValue]="user.user.login">{{user.user.login}}</option>
-              </select>
-            </div>
-            <!--END INPUT TASK USER SELECTION-->
 
-            <div class="input-group mt-4">
-              <div class="input-group-text">
-                <img src="../../../assets/svg/tasksIconBlue.svg" class="svg-icon" alt="" />
-              </div>
-              <input id="taskName" class="form-control col-6 normal-border"
-                placeholder="{{this.isEditting ? this.expenseFromChild.taskName : 'Nombre del gasto'}}"
-                formControlName="taskName" name="dp"  [ngClass]="{
-                                          'is-invalid':
-                                            (this.newExpenseForm.controls.taskName.touched &&
-                                              this.newExpenseForm.controls.taskName.errors?.required) ||
-                                            this.newExpenseForm.controls.taskName.errors?.minlength ||
-                                            this.newExpenseForm.controls.taskName.errors?.maxlength
-                                        }" />
-              <!-- Validation -->
-              <div class="invalid-feedback" *ngIf="this.newExpenseForm.controls.taskName.errors?.required">
-                ¡Tienes que rellenar este campo!
-              </div>
-              <div class="invalid-feedback" *ngIf="this.newExpenseForm.controls.taskName.errors?.minlength">
-                El mínimo son 3 caracteres
-              </div>
-              <div class="invalid-feedback" *ngIf="this.newExpenseForm.controls.taskName.errors?.maxlength">
-                El máximo son 50 caracteres
-              </div>
-            </div>
-            <!--END INPUT TASK NAME-->
 
-            <div class="input-group mt-4">
+              <div class="d-flex justify-content-between">
+<div>
+                <div class="input-group mt-4">
+                  <div class="input-group-text">
+                    <img src="../../../assets/svg/tasksIconBlue.svg" class="svg-icon" alt="" />
+                  </div>
+                  <input id="taskName" class="form-control col-6 normal-border"
+                    placeholder="{{this.isEditting ? this.expenseFromChild.taskName : 'Nombre del gasto'}}"
+                    formControlName="taskName" name="dp"  [ngClass]="{
+                                              'is-invalid':
+                                                (this.newExpenseForm.controls.taskName.touched &&
+                                                  this.newExpenseForm.controls.taskName.errors?.required) ||
+                                                this.newExpenseForm.controls.taskName.errors?.minlength ||
+                                                this.newExpenseForm.controls.taskName.errors?.maxlength
+                                            }" />
+                  <!-- Validation -->
+                  <div class="invalid-feedback" *ngIf="this.newExpenseForm.controls.taskName.errors?.required">
+                    ¡Tienes que rellenar este campo!
+                  </div>
+                  <div class="invalid-feedback" *ngIf="this.newExpenseForm.controls.taskName.errors?.minlength">
+                    El mínimo son 3 caracteres
+                  </div>
+                  <div class="invalid-feedback" *ngIf="this.newExpenseForm.controls.taskName.errors?.maxlength">
+                    El máximo son 50 caracteres
+                  </div>
+                </div>
+
+
+
+            <div class="input-group mt-4 ">
               <div class="input-group-text">
                 <img src="../../../assets/svg/pencilEdit.svg" class="svg-icon" alt="" />
               </div>
-              <textarea id="dateOfBirth" class="form-control normal-border" formControlName="taskDescription" rows="3"
+              <textarea id="dateOfBirth" class="form-control normal-border col-6s" formControlName="taskDescription" rows="3"
                 placeholder="{{this.isEditting ? this.expenseFromChild.description : 'Introduce la descripción del gasto'}}"
                 value="{{this.isEditting ? this.expenseFromChild.description : ''}}" name="dp" [ngClass]="{
                                               'is-invalid':
@@ -80,7 +75,35 @@
                 El máximo son 100 caracteres
               </div>
             </div>
-            <!--END INPUT TASK DESCRIPTION-->
+</div>
+
+<div>
+                <div class="input-group">
+                  <div class="input-group-text">
+                    <img src="../../../assets/svg/username.svg" class="svg-icon" alt="" />
+                  </div>
+                  <select name="" id="" class="form-control col-6" formControlName="login">
+                    <option  *ngFor="let user of this.groupUsers" [ngValue]="user.user.login">{{user.user.login}}</option>
+                  </select>
+                </div>
+
+                <div class="input-group">
+                  <div class="input-group-text">
+                    <img src="../../../assets/svg/username.svg" class="svg-icon" alt="" />
+                  </div>
+                  <select name="" id="" class="form-control col-6" formControlName="login">
+                    <option  *ngFor="let user of this.groupUsers" [ngValue]="user.user.login">{{user.user.login}}</option>
+                  </select>
+                </div>
+
+              </div>
+
+
+              </div>
+
+
+
+
           </div>
 
 

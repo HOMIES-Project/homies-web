@@ -1,3 +1,5 @@
+import { GroupEditModel } from './../../core/models/groupCreation.model';
+
 import { TaskModel } from './../../core/models/tasksCreation.model';
 import { TasksService } from 'src/app/core/services/Lists/tasks.service';
 import { UserData } from '../../core/models/user-data.model';
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit {
 
   isLodingUsers: boolean = true;
 
+  userGroups!:  Array<any> | null;
   groupName!: string | null;
   groupRelationName!: string | null;
   groupUsers: Array<any> = [];
@@ -60,6 +63,9 @@ export class HomeComponent implements OnInit {
 
   userTasksModelArray: Array<any> = []
 
+  isEditing: boolean = true;
+  isCreating: boolean = true;
+  groupInformation!: GroupEditModel;
 
   constructor(
     private groupsService: GroupsService,
@@ -86,13 +92,16 @@ export class HomeComponent implements OnInit {
       this.photo = userInfo?.photo;
     });
 
+    this.groupsService.groupsList.subscribe( response =>{
+
+      this.userGroups = response
+    })
     this.groupsService.getUserInfo(this.userID).subscribe((response) => {
-      console.log(response);
+
     });
 
     this.getGroupDetails();
     this.getUserTasks();
-    console.log("inicando")
   }
 
   getGroupDetails() {
@@ -110,6 +119,10 @@ export class HomeComponent implements OnInit {
           this.groupRelationName = groupInfo.groupRelationName;
           this.groupUsers = groupInfo.userData;
           this.adminID = groupInfo.userAdmin.id;
+          this.groupInformation = new GroupEditModel(
+            this.groupName = groupInfo.groupName,
+            this.groupRelationName = groupInfo.groupRelationName
+          )
           if (this.groupUsers.length > 0) {
             this.groupUsersModelArray = [];
             for (var i = 0; i < this.groupUsers!.length; i++) {
@@ -203,10 +216,11 @@ export class HomeComponent implements OnInit {
       if (result.isConfirmed) {
         this.groupsService.performDeleteUserFromGroup(userToDelete).subscribe(
           (response) => {
-            window.location.reload();
+            if (this.userGroups!.length != 0) {
+              this.groupID = this.userGroups![0]
+            }
           },
           (error) => {
-            console.log(error);
           }
         );
       } else if (result.isDenied) {
@@ -220,13 +234,12 @@ export class HomeComponent implements OnInit {
   deleteGroup() {
     this.groupsService.performDeleteGroup(this.groupID!).subscribe(
       (response) => {
-        console.log(response);
-        console.log('NICE');
+        console.log(response)
         this.groupsService.performLogoutFromGroups();
         this.usersService.performLogout();
+        this.tasksService.performLogoutFromTasks()
       },
       (error) => {
-        console.log(error);
       }
     );
   }
@@ -237,11 +250,11 @@ export class HomeComponent implements OnInit {
 
         this.userTasksModel = []
 
-        console.log("desde get user tasks" + this.groupID)
+
         this.tasksService
           .getUserTasksList(this.groupID!, this.login!)
           .subscribe((response) => {
-            console.log(response);
+
             this.userTasks = response;
             if(this.userTasks.length > 0) {
 
@@ -254,9 +267,8 @@ export class HomeComponent implements OnInit {
                   this.userTasks![i].taskName,
                   this.userTasks![i].description,
                 );
-                console.log(task)
+
                 this.userTasksModel.push(task)
-                console.log("Desd etask" + this.userTasksModel)
               }
 
             } else {

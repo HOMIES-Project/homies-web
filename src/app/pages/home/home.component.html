@@ -1,15 +1,17 @@
-<div class="text-center mt-5 d-flex align-items-center justify-content-center " *ngIf="this.isLoading">
+ <div class="text-center mt-5 d-flex align-items-center justify-content-center " *ngIf="this.isLoading">
   <div class="spinner-border" style="width: 3rem; height: 3rem; color: #34ade7" role="status">
     <span class="sr-only">Loading...</span>
   </div>
 </div>
+
 
 <div class="container text-center" style="padding-top: 5px;" *ngIf="this.groupsExist  && !this.isLoading">
   <div class="card-columns d-inline-block">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">TAREAS</h5>
-        <p class="card-text">Resumen de tus tareas</p>
+        <p class="card-text" *ngIf="!this.noTasks">Resumen de tus tareas</p>
+        <p class="card-text" *ngIf="this.noTasks">¡Enhorabuena! <br> No tienes ninguna tarea</p>
         <table class="table ">
           <tbody>
             <tr *ngFor="let task of this.userTasksModel; let indexOfTask=index;" class="text-left">
@@ -18,6 +20,7 @@
             <tr>
               <td>
                 <button class="btn outline mt-3" (click)="navigateToTasks()">Ir a la lista de tareas</button>
+
               </td>
             </tr>
           </tbody>
@@ -56,14 +59,13 @@
         <div class="card-body">
           <div *ngIf="this.isAdmin" align="right" style="margin-top: -10px; margin-right: -10px; margin-bottom: 10px;">
             <span class="dot" style="background-color: #34ade730;">
-              <img src="../../../assets/svg/pencilEdit.svg" style="margin-top: 2px; margin-right: 4px;" class="svg-icon" 
-                alt="">
+              <app-group-modal [isEditing]="this.isEditing"></app-group-modal>
             </span>
           </div>
-          
+
           <div class="card-title p-2 rounded text-left group-info-background"
             style="height: 40px; align-content: center;">
-            
+
             <img src="../../../assets/svg/groupHouseLogo.svg" class="svg-icon"
               style="float: left; width: 30px !important; height: 30px !important; margin-top: -3px;" alt="">
             <h5 style="float: right; width: 80%; margin-right: 20px;">{{this.groupName}}</h5>
@@ -133,6 +135,10 @@
   <img src="../../../assets/images/no-group.png" alt="">
   <div>
     <p class="h2">Aún no tienes ningún grupo</p>
-    <app-group-modal></app-group-modal>
+    <app-group-modal [isCreating]="this.isCreating"></app-group-modal>
   </div>
 </div>
+
+
+
+

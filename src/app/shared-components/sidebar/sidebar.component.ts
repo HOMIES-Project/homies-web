@@ -20,6 +20,8 @@ export class SidebarComponent implements OnInit {
 
   noGroups!: boolean;
 
+  isCreating: boolean = true;
+
   constructor(
     private groupsService: GroupsService,
     private usersService: UsersService,
@@ -40,18 +42,14 @@ export class SidebarComponent implements OnInit {
 
 
     this.groupsService.groupsList.subscribe( response =>{
-      console.log(response)
       this.groups = response
+      console.log(this.groups)
     })
   }
 
   ngOnInit(): void {
 
-    //TODO: HANDLE SIDEBAR IF NO GROUPS.
-    // if(this.groups?.length == 0) {
-    //   this.noGroups = true;
-    //   console.log("cero grupos")
-    // }
+
   }
 
   navigateToHomeGroupID(id: string) {

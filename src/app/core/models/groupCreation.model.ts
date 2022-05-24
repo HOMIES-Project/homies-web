@@ -45,6 +45,17 @@ export class GroupUserModel {
 
 }
 
+export class GroupEditModel {
+  public groupName: string;
+  public groupRelation: string;
+
+  constructor( groupName: string, groupRelation: string) {
+    this.groupName = groupName
+    this.groupRelation = groupRelation
+  }
+
+}
+
 // export class GroupInfoModel {
 //   public id: string;
 //   public groupRelationName: string;

@@ -1,12 +1,24 @@
+<a class="w3-bar-item w3-button add-button" (click)="openCreateGroup(content)" style="padding-left: 15px !important;" *ngIf="this.isCreating">
+  <img src="../../../../assets/svg/add_circle.svg" class="svg-add" style=" width: 30px !important;" />
+</a>
+
+<a class="" (click)="openEditGroup(content)"  *ngIf="this.isEditing">
+
+  <img src="../../../assets/svg/pencilEdit.svg" style="margin-top: 6px; margin-right: 7px;" class="svg-icon"
+  alt="">
+</a>
+
+
+
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Crea tu grupo</h4>
+    <h4 class="modal-title" id="modal-basic-title">{{this.isEditing ? 'Editar grupo' : 'Crear grupo' }}</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true"> × </span>
     </button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="this.groupForm" (ngSubmit)="createGroup()">
+    <form [formGroup]="this.groupForm" (ngSubmit)="submitGroupForm()">
       <div class="form-group">
         <label for="groupName"> Nombre del grupo * </label>
         <div class="input-group">
@@ -61,13 +73,11 @@
         <button class="btn-sm border-0 p-2 m-2  dashboard-button center text-white" [ngClass]="{
             disabled: !this.groupForm.valid
           }" [disabled]="!this.groupForm.valid">
-          <span class="spinner-border spinner-border-sm mr-1" *ngIf="isLoading"></span>Crear grupo</button>
+          <span class="spinner-border spinner-border-sm mr-1" *ngIf="isLoading"></span> {{this.isEditing ? 'Editar grupo' : 'Añadir grupo' }} </button>
       </div>
     </form>
   </div>
 
 </ng-template>
 
-<a class="w3-bar-item w3-button add-button" (click)="open(content)" style="padding-left: 15px !important; ">
-  <img src="../../../../assets/svg/add_circle.svg" class="svg-add" style=" width: 30px !important;" />
-</a>
+

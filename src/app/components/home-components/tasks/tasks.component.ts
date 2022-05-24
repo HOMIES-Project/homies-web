@@ -1,4 +1,7 @@
-import { TaskCreationModel } from './../../../core/models/tasksCreation.model';
+import {
+  TaskCreationModel,
+  TaskCancelModel,
+} from './../../../core/models/tasksCreation.model';
 import { Component, OnInit } from '@angular/core';
 import { GroupsService } from 'src/app/core/services/groups.service';
 import { TasksService } from 'src/app/core/services/Lists/tasks.service';
@@ -12,10 +15,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['./tasks.component.css'],
 })
 export class TasksComponent implements OnInit {
-
-
-
-
   open: boolean = true;
   groupID!: string | null;
 
@@ -28,7 +27,8 @@ export class TasksComponent implements OnInit {
 
   display!: boolean;
 
-  isCancelled!: boolean;
+  isCancelled!: boolean
+  login!: string;
 
   constructor(
     private tasksService: TasksService,
@@ -40,16 +40,18 @@ export class TasksComponent implements OnInit {
     this.groupsService.groupID.subscribe((groupID) => {
       this.groupID = groupID;
     });
+    this.usersService.user.subscribe((userLogin) => {
+      this.login = userLogin.user.login;
+    });
 
     this.tasksService.getTasksList(this.groupID!).subscribe((response) => {
       this.tasksList = response.tasks;
-      console.log(this.tasksList);
+      console.log(response);
       if (this.tasksList.length == 0) {
         this.noTasks = true;
       } else {
         this.noTasks = false;
       }
-      console.log(this.groupID);
     });
   }
 
@@ -57,21 +59,14 @@ export class TasksComponent implements OnInit {
   //   this.open = !this.open;
   // }
 
-  editTaskFromList() {
-    console.log("pulsado")
-  }
+  editTaskFromList() {}
 
   completeTask() {}
 
-  onCheckboxChanged(event: any) {
-    console.log(event.target.value);
-    this.isCancelled = !this.isCancelled
-  }
 
   get result() {
     this.tasksList.filter((item) => {
       item.checked;
-      console.log(item);
     });
     return this.tasksList.filter((item) => item.checked);
   }
@@ -89,19 +84,34 @@ export class TasksComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.tasksService.performDeleteTask(taskID).subscribe(
-
           (response) => {
-            console.log(taskID)
-            console.log(response)
-            //window.location.reload();
+            window.location.reload();
           },
-          (error) => {
-            console.log(error)
-          }
+          (error) => {}
         );
       } else if (result.isDenied) {
         Swal.fire('Changes are not saved', '', 'info');
       }
     });
+  }
+
+  cancelTask(idTask: number, isCancelled: boolean) {
+    this.isCancelled = !isCancelled;
+    let taskToCancel = new TaskCancelModel(
+      idTask,
+      this.groupID!,
+      this.login,
+      this.isCancelled
+    );
+    console.log(taskToCancel);
+    this.tasksService.performCancelTask(taskToCancel).subscribe(
+      (response) => {
+        window.location.reload()
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }
