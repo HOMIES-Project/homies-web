@@ -14,8 +14,9 @@
         <p class="card-text" *ngIf="this.noTasks">¡Enhorabuena! <br> No tienes ninguna tarea</p>
         <table class="table ">
           <tbody>
-            <tr *ngFor="let task of this.userTasksModel; let indexOfTask=index;" class="text-left">
-              <td>{{task.taskName}}</td>
+            <tr *ngFor="let task of this.userTasksModel; let indexOfTask=index;" class="text-left mt-3">
+              <td class="bg-dashboard-item">{{task.taskName}}</td>
+
             </tr>
             <tr>
               <td>
@@ -30,7 +31,32 @@
 
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Compra</h5>
+        <h5 class="card-title">SALDOS</h5>
+        <!-- <p class="card-text">Productos</p> -->
+        <table class="table ">
+
+          <tbody>
+            <tr>
+              <td>Plátanos</td>
+            </tr>
+            <tr>
+              <td>Leche</td>
+            </tr>
+            <tr>
+              <td>Fruta</td>
+            </tr>
+            <tr>
+              <td>
+                <button class="btn outline mt-3" (click)="navigateToGroceries()">Ir a la lista de saldos</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">COMPRA</h5>
         <p class="card-text">Productos</p>
         <table class="table ">
 
@@ -53,6 +79,32 @@
         </table>
       </div>
     </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">GASTOS</h5>
+        <!-- <p class="card-text">Productos</p> -->
+        <table class="table ">
+
+          <tbody>
+            <tr>
+              <td class="bg-dashboard-item">Plátanos</td>
+            </tr>
+            <tr>
+              <td>Leche</td>
+            </tr>
+            <tr>
+              <td>Fruta</td>
+            </tr>
+            <tr>
+              <td>
+                <button class="btn outline mt-3" (click)="navigateToGroceries()">Ir a la lista de gastos</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
 
     <div class="card wrapper-card">
       <div class="card">

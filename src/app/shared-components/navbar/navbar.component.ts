@@ -24,13 +24,13 @@ export class NavbarComponent implements OnInit {
     private tasksService: TasksService,
     private router: Router
   ) {
-    usersService.login.subscribe((user) => {
+    this.usersService.login.subscribe((user) => {
       this.user = user;
     });
-    usersService.userId.subscribe((id) => {
+    this.usersService.userId.subscribe((id) => {
       this.id = id;
     });
-    usersService.user.subscribe((response) => {
+    this.usersService.user.subscribe((response) => {
       this.username = response?.user.login;
     });
     this.groupsService.groupInfo.subscribe( response =>{

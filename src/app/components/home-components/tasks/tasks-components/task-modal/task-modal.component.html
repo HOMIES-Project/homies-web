@@ -1,8 +1,9 @@
 <img src="../../../assets/svg/bluePencil.svg" style="margin-right: 5%;" *ngIf="this.isEditting "
   (click)="openEditTask(this.taskFromChild, task)" />
 
-<button class="btn btn-outline-info mt-3 formButton text-white" *ngIf="this.isCreating"
+<button class=" btn formButton px-5 text-uppercase text-white" *ngIf="this.isCreating"
   (click)="openAddTask(task)">Añadir tarea</button>
+
 
 
 

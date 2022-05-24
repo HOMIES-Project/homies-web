@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GroupsService } from 'src/app/core/services/groups.service';
 import { UsersService } from 'src/app/core/services/users.service';
@@ -16,13 +16,34 @@ export class ExpenseModalComponent implements OnInit {
 
   groupUsers!: Array<any>
   newExpenseForm!: FormGroup
+
+
   constructor(
     private modalService: NgbModal,
     private groupsService: GroupsService,
     private usersService: UsersService,
     private formBuilder: FormBuilder,
     private router: Router,
-    ) { }
+    ) {
+      this.newExpenseForm = this.formBuilder.group({
+        expenseName: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(50),
+          ],
+        ],
+        amount: [
+          '',
+          [
+            Validators.required
+          ],
+        ],
+        payer: [null, Validators.required],
+        debtors: [null, Validators.required],
+      });
+     }
 
   ngOnInit(): void {
     this.groupsService.groupInfo.subscribe(response =>{
@@ -32,8 +53,8 @@ export class ExpenseModalComponent implements OnInit {
 
   }
 
-  openAddExpense(addTask: any) {
-    this.modalService.open(addTask, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then(
+  openAddExpense(expense: any) {
+    this.modalService.open(expense, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then(
       (result)=>{
 
 
@@ -43,23 +64,9 @@ export class ExpenseModalComponent implements OnInit {
       }
     )
   }
- // TODO edit task
 
-  openEditExpense(idTask: string, editTask: any) {
-    this.modalService.open(editTask, { ariaLabelledBy: 'modal-basic-title' , size: 'lg'}).result.then(
-      (result)=>{
-
-
-
-      },
-      (reason) => {
-
-
-      }
-    )
-  }
 
   submitExpensesForm() {
-
+    console.log("añadido")
   }
 }
