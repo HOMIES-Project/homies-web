@@ -42,8 +42,8 @@ export class SidebarComponent implements OnInit {
 
 
     this.groupsService.groupsList.subscribe( response =>{
-
       this.groups = response
+      console.log(this.groups)
     })
   }
 

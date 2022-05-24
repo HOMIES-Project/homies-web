@@ -21,3 +21,16 @@ a {
 .payment-date{
   font-size: 0.7rem;
 }
+
+.expenses {
+  background: rgba(52, 173, 231, 0.07);
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.balances {
+  background: rgba(255,240,240,255);
+  padding: 10px;
+  border-radius: 15px;
+  height: 85.25px;
+}

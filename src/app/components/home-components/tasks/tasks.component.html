@@ -11,25 +11,20 @@
                 <tr *ngFor="let task of this.tasksList; let indexOfTask=index;" class="" style="cursor: pointer;">
                   <td class="align-middle">
 
-                    <app-task-modal [isEditting]="this.isEditting" [taskFromChild]="task"></app-task-modal>
+                    <app-task-modal [isEditting]="this.isEditting" *ngIf="!task.cancel" [taskFromChild]="task"></app-task-modal>
 
                   </td>
                   <td class="text-left" (click)="cancelTask(task.id, task.cancel)" style="cursor: pointer;">
                     <span class="d-block" [ngClass]="{
                       'isCancelled': task.cancel}">{{task.taskName}}</span>
-                    <span class="d-block ">{{task.id}}</span>
-                    <span style="font-size: 0.8rem">{{task.userAssigneds}}</span>
-
+                    <span style="font-size: 0.8rem">{{task.userAssigneds[0].user.login}}</span>
                   </td>
 
                   <td class=" align-middle text-right">
                     <img src="../../../assets/svg/blueTrash.svg"
-                      style="width: 18px; height: 24px; margin-top: -10px; margin-right: 40px;"
+                      style="width: 18px; height: 20px; margin-top: -10px; margin-right: 40px;"
                       (click)="deleteTask(task.id)" />
                   </td>
-
-
-
                 </tr>
                 <tr>
                   <td></td>

@@ -63,9 +63,6 @@ export class TasksComponent implements OnInit {
 
   completeTask() {}
 
-  onCheckboxChanged(event: any) {
-    this.isCancelled = !this.isCancelled;
-  }
 
   get result() {
     this.tasksList.filter((item) => {

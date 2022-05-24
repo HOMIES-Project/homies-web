@@ -1,3 +1,4 @@
+import { TaskUserAddModel } from './../../models/tasksCreation.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -67,7 +68,11 @@ export class TasksService {
     return this.http.put(url, entry);
   }
 
-  asignTaskToUser() {}
+  performAddUserToTask(taskAddUserModel: TaskUserAddModel): Observable<any> {
+    let url = `${environment.BASE_URL}/tasks/add-user`;
+
+    return this.http.post(url, taskAddUserModel);
+  }
 
   performLogoutFromTasks() {
     localStorage.removeItem('userTasks')

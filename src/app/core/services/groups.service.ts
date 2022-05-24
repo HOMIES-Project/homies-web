@@ -61,6 +61,7 @@ export class GroupsService {
       map((response) => {
 
         localStorage.setItem('groupsArray', JSON.stringify(response.groups));
+        console.log(response)
         this.groupsListBehaviourSubject.next(response.groups);
 
         if (localStorage.getItem('groupID') == null && response.groups > 0) {
@@ -80,6 +81,7 @@ export class GroupsService {
 
   updateListOfGroups(groups: any): Observable<any> {
     localStorage.setItem('groupsArray', JSON.stringify(groups));
+    console.log(groups)
     this.groupsListBehaviourSubject.next(groups);
     return this.groupID;
   }
@@ -88,6 +90,7 @@ export class GroupsService {
     let url = `${environment.BASE_URL}/groups/${id}`;
     return this.http.get<any>(url).pipe(
       map((response) => {
+
         localStorage.setItem('groupInfo', JSON.stringify(response));
         this.groupInfoBehaviourSubject.next(response);
         return response;

@@ -10,7 +10,8 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">TAREAS</h5>
-        <p class="card-text">Resumen de tus tareas</p>
+        <p class="card-text" *ngIf="!this.noTasks">Resumen de tus tareas</p>
+        <p class="card-text" *ngIf="this.noTasks">¡Enhorabuena! <br> No tienes ninguna tarea</p>
         <table class="table ">
           <tbody>
             <tr *ngFor="let task of this.userTasksModel; let indexOfTask=index;" class="text-left">

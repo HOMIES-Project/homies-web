@@ -61,3 +61,16 @@ export class TaskCreationModel {
     }
 
   }
+
+  export class TaskUserAddModel {
+    public idTask: number;
+    public login: string;
+    public idList: string;
+
+    constructor(idTask: number, idList: string,login: string, ) {
+      this.idTask = idTask,
+      this.idList = idList,
+      this.login = login
+    }
+
+  }

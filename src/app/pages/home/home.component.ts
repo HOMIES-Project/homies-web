@@ -96,6 +96,9 @@ export class HomeComponent implements OnInit {
 
       this.userGroups = response
     })
+    this.groupsService.getUserInfo(this.userID).subscribe((response) => {
+
+    });
 
     this.getGroupDetails();
     this.getUserTasks();
