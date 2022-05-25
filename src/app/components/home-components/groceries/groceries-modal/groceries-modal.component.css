@@ -4,3 +4,7 @@
     display: inline-block;
     filter: invert(64%) sepia(13%) saturate(2576%) hue-rotate(163deg) brightness(93%) contrast(94%);
 }
+
+.button{
+    background-color: var(--secondaryColor);
+}
