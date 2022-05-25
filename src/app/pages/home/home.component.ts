@@ -67,6 +67,8 @@ export class HomeComponent implements OnInit {
   isCreating: boolean = true;
   groupInformation!: GroupEditModel;
 
+  firstTime:boolean = true
+
   constructor(
     private groupsService: GroupsService,
     private usersService: UsersService,

@@ -92,24 +92,10 @@ export class RegisterComponent implements OnInit {
         });
       },
       (error) => {
+        console.log(error)
         this.loginErrorEN = error.error.title;
-        if (this.loginErrorEN.includes('login')) {
-          if (this.langKey.includes('en')) {
-            this.errorMsg = error.error.title;
-          } else {
-            this.errorMsg = 'El nombre de usuario ya existe';
-          }
-        } else {
-          if (this.langKey.includes('en')) {
-            this.errorMsg = error.error.title;
-          } else {
-            this.errorMsg = 'El email ya existe';
-          }
-        }
+        this.errorMsg = 'El usuario o correo ya existe'
 
-        /*
-        this.errorMsg = `⚠ Fallo en el registro
-        (${error.error.title})`; */
         this.isLoading = false;
       },
       () => {
