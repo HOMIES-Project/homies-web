@@ -3,70 +3,73 @@
       <div class="col-8 col-md-4 col-lg-4 p-0">
         <div class="card card-login text-black shadow-lg rounded">
           <div class="card-body text-center">
-
-            <div class="mb-5 mt-1 pb-2" *ngIf="this.noGroceries">
+            
+            <div class="mb-5 mt-1 pb-2" *ngIf="!this.noGroceries">
               <h5 align="left" style="background-color: #34ade730; padding-left: 20px; padding-top: 10px; padding-bottom: 10px; margin: 10px 0; border-radius: 10px;">Por comprar</h5>
               
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <div class="card" style="float: left; width: 45%; background-color: #34ade730; padding-bottom: 15px; padding-left: 20px; margin-bottom: 10px;">
+                <li class="list-group-item" *ngFor="let grocery of this.groceryList;">
+                  <div class="card" style="float: left; width: 45%; background-color: #34ade730; padding-bottom: 15px; padding-left: 20px; margin: 0 7px 10px 7px;">
                     <img src="../../../../assets/svg/food.svg" style="margin-top: 20px;" class="svg-icon" alt="">
-                    <label style="margin-top: -20px; font-weight: bold;" for="">Sopa</label>
-                  </div>
-                  <div class="card" style="float: right; width: 45%; background-color: #34ade730; padding-bottom: 15px; padding-left: 20px; margin-bottom: 10px;">
-                    <img src="../../../../assets/svg/food.svg" style="margin-top: 20px;" class="svg-icon" alt="">
-                    <label style="margin-top: -20px; font-weight: bold;" for="">Arroz</label>
-                  </div>
-                  <div class="card" style="float: left; width: 45%; background-color: #34ade730; padding-bottom: 15px; padding-left: 20px; margin-bottom: 10px;">
-                    <img src="../../../../assets/svg/liquid.svg" style="margin-top: 20px;" class="svg-icon" alt="">
-                    <label style="margin-top: -20px; font-weight: bold;" for="">Leche</label>
-                  </div>
-                  <div class="card" style="float: right; width: 45%; background-color: #34ade730; padding-bottom: 15px; padding-left: 20px; margin-bottom: 10px;">
-                    <img src="../../../../assets/svg/tools.svg" style="margin-top: 20px;" class="svg-icon" alt="">
-                    <label style="margin-top: -20px; font-weight: bold;" for="">Tornillo</label>
+                    <label style="margin-top: -20px; font-weight: bold;" for="">{{grocery.nameProduct}}</label>
                   </div>
                 </li>
               </ul>
 
               <h5 align="left" style="background-color: #34ade730; padding-left: 20px; padding-top: 10px; padding-bottom: 10px; margin: 10px 0; border-radius: 10px;">Comprado</h5>
-
+              
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                  <div class="card" style="float: left; width: 45%; background-color: #34ade730; padding-bottom: 15px; padding-left: 20px; margin-bottom: 10px;">
+              <!-- <li class="list-group-item"  *ngFor="let groceries of this.groceryList;"> -->
+                  
+                  <div class="card" style="float: left; width: 45%; background-color: #34ade730; padding-bottom: 15px; padding-left: 20px; margin: 0 7px 10px 7px;">
                     <img src="../../../../assets/svg/food.svg" style="margin-top: 20px;" class="svg-icon" alt="">
                     <label style="margin-top: -20px; font-weight: bold;" for="">Sopa</label>
-                  </div>
-                  <div class="card" style="float: right; width: 45%; background-color: #34ade730; padding-bottom: 15px; padding-left: 20px; margin-bottom: 10px;">
-                    <img src="../../../../assets/svg/food.svg" style="margin-top: 20px;" class="svg-icon" alt="">
-                    <label style="margin-top: -20px; font-weight: bold;" for="">Arroz</label>
-                  </div>
-                  <div class="card" style="float: left; width: 45%; background-color: #34ade730; padding-bottom: 15px; padding-left: 20px; margin-bottom: 10px;">
-                    <img src="../../../../assets/svg/liquid.svg" style="margin-top: 20px;" class="svg-icon" alt="">
-                    <label style="margin-top: -20px; font-weight: bold;" for="">Leche</label>
-                  </div>
-                  <div class="card" style="float: right; width: 45%; background-color: #34ade730; padding-bottom: 15px; padding-left: 20px; margin-bottom: 10px;">
-                    <img src="../../../../assets/svg/tools.svg" style="margin-top: 20px;" class="svg-icon" alt="">
-                    <label style="margin-top: -20px; font-weight: bold;" for="">Tornillo</label>
+                    <img src="../../../../assets/svg/check.svg" class="check" alt="">
                   </div>
                 </li>
               </ul>
+                  <!-- <tr *ngFor="let task of this.tasksList; let indexOfTask=index;" class="">
+                    <td class="align-middle">
+  
+                      <app-task-modal [isEditting]="this.isEditting" [taskFromChild]="task"></app-task-modal>
+  
+                    </td>
+                    <td class="text-left" (click)="editTaskFromList()">
+                      <span class="d-block" [ngClass]="{
+                        'isCancelled': this.isCancelled}">{{task.taskName}}</span>
+                      <span class="d-block ">{{task.id}}</span>
+                      <span style="font-size: 0.8rem">Esther</span>
+  
+                    </td>
+  
+                    <td class=" align-middle">
+                      <input class="mx-3 p-5" style="width: 18px; height: 18px; background-color: var(--secondaryColor)"
+                        type="checkbox" value="{{indexOfTask}}" [(ngModel)]="task.checked"
+                        (change)="onCheckboxChanged($event)">
+                      <img src="../../../assets/svg/blueTrash.svg" style="width: 18px; height: 24px; margin-top: -10px; ;"
+                        (click)="deleteTask(task.id)" />
+                    </td>
+  
+  
+  
+                  </tr> -->
 
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <app-groceries-modal  [isCreating]="this.isCreating"></app-groceries-modal>
-                </li>
-              </ul>
-
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <app-groceries-modal  [isCreating]="this.isCreating"></app-groceries-modal>
+                  </li>
+                </ul>
             </div>
 
-            <div class="mb-5 mt-1 pb-2" *ngIf="!this.noGroceries">
+            <div class="mb-5 mt-1 pb-2" *ngIf="this.noGroceries">
               <p>No hay atículos aún
                 <br>
                 Añade uno
               </p>
               <app-groceries-modal [isCreating]="this.isCreating"></app-groceries-modal>
             </div>
-            
+
           </div>
         </div>
       </div>

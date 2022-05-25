@@ -4,3 +4,13 @@
     display: inline-block;
     filter: brightness(0) saturate(100%) invert(70%) sepia(98%) saturate(2447%) hue-rotate(169deg) brightness(91%) contrast(99%);
 }
+
+.check {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    float: right;
+    margin-left: 90px;
+    margin-top: -55px;
+    margin-bottom: 25px;
+}
