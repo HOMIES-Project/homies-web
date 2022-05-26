@@ -16,9 +16,8 @@
                 <li class="list-group-item" >
                   
                   <div *ngFor="let grocery of this.groceryList;">
-                    <!-- <div class="card cardProduct" > -->
-                      <div class="card cardProduct" *ngIf="grocery.purchased == ''" >
-                      <app-groceries-modal style="margin-bottom: -20px;" align="right" [isEditting]="this.isEditting" *ngIf="!grocery.cancel && !this.delete && this.edit" [groceryFromChild]="grocery"></app-groceries-modal>
+                    <div class="card cardProduct" *ngIf="grocery.purchased == null || grocery.purchased == false" >
+                      <app-groceries-modal style="margin-bottom: -20px;" align="right" [isEditting]="this.isEditting" *ngIf="!grocery.purchased && !this.delete && this.edit" [groceryFromChild]="grocery"></app-groceries-modal>
                       <img *ngIf="grocery.typeUnit == 'Comida'" src="../../../../assets/svg/food.svg" style="margin-top: 20px;" class="svg-icon" alt="">
                       <img *ngIf="grocery.typeUnit == 'Líquido'" src="../../../../assets/svg/liquid.svg" style="margin-top: 20px;" class="svg-icon" alt="">
                       <img *ngIf="grocery.typeUnit == 'Herramientas'" src="../../../../assets/svg/tools.svg" style="margin-top: 20px;" class="svg-icon" alt="">
@@ -37,7 +36,7 @@
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                   <div *ngFor="let grocery of this.groceryList;">
-                    <div class="card cardProduct" *ngIf="grocery.purchased != ''">
+                    <div class="card cardProduct" *ngIf="grocery.purchased == true">
                       <img *ngIf="grocery.typeUnit == 'Comida'" src="../../../../assets/svg/food.svg" style="margin-top: 20px;" class="svg-icon" alt="">
                       <img *ngIf="grocery.typeUnit == 'Líquido'" src="../../../../assets/svg/liquid.svg" style="margin-top: 20px;" class="svg-icon" alt="">
                       <img *ngIf="grocery.typeUnit == 'Herramientas'" src="../../../../assets/svg/tools.svg" style="margin-top: 20px;" class="svg-icon" alt="">

@@ -65,7 +65,7 @@
           </div>
         </div>
 
-        <button class="btn outline mt-3" (click)="navigateToGroceries()">
+        <button class="btn outline mt-3" (click)="navigateToExpenses()">
           Ir a la lista de saldos
         </button>
       </div>
@@ -76,14 +76,12 @@
         <h5 class="card-title">LISTA DE LA COMPRA</h5>
         <p class="card-text" *ngIf="!this.noGroceries">Productos sin comprar</p>
         <p class="card-text" *ngIf="this.noGroceries">No tienes ningún producto</p>
-        <div class="text-left mt-3 expenses shadow-sm" *ngFor="let task of this.userTasksModel; let indexOfTask = index">
-          <div class="d-flex justify-content-between mx-5">
+        <div class="text-left mt-3 expenses shadow-sm" *ngFor="let grocery of this.groceryList">
+          <div class="d-flex justify-content-between mx-5" *ngIf="grocery.purchased == null || grocery.purchased == false">
 
-            <div>
 
-              <p class="mb-0 payment-user">{{ task.taskName }}</p>
+              <p class="mb-0 payment-user">{{ grocery.name }}</p>
 
-            </div>
 
           </div>
 
@@ -119,7 +117,7 @@
         </div>
         <button
         class="btn outline mt-3"
-        (click)="navigateToGroceries()"
+        (click)="navigateToExpenses()"
       >
         Ir a la lista de gastos
       </button>
