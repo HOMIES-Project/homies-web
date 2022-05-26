@@ -5,12 +5,51 @@
     filter: brightness(0) saturate(100%) invert(70%) sepia(98%) saturate(2447%) hue-rotate(169deg) brightness(91%) contrast(99%);
 }
 
+.delete-icon {
+    filter: brightness(0) saturate(100%) invert(34%) sepia(83%) saturate(2965%) hue-rotate(342deg) brightness(93%) contrast(109%);
+}
+
 .check {
     height: 30px;
     width: 30px;
     position: relative;
     float: right;
-    margin-left: 90px;
-    margin-top: -55px;
+    align-self: flex-end;
+    margin-top: -50px;
     margin-bottom: 25px;
+}
+
+.cardProduct {
+    float: left; 
+    width: 45%; 
+    background-color: #34ade730; 
+    padding-bottom: 15px; 
+    padding-left: 20px; 
+    margin: 0 10px 10px 10px;
+}
+
+.cardTitle {
+    background-color: #34ade730; 
+    padding-left: 20px; 
+    padding-top: 10px; 
+    padding-bottom: 10px; 
+    margin: 10px 0; 
+    border-radius: 10px;
+}
+
+.nameProduct {
+    margin-top: -20px; 
+    font-weight: bold;
+}
+
+.editLabel {
+    margin-left: 54%;
+    position: absolute;
+    color: var(--secondaryColor);
+}
+
+.cancelLabel {
+    margin-left: 54%;
+    position: absolute;
+    color: var(--errorColor);
 }

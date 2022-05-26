@@ -50,7 +50,11 @@ export class GroceriesService {
 
   performDeleteGrocery(id: number): Observable<any> {
     let url = `${environment.BASE_URL}/products/${id}`;
-    console.log('borrada')
     return this.http.delete(url);
+  }
+
+  performPurchaseGrocery(entry: any) {
+    let url = `${environment.BASE_URL}/product/cancel`;
+    return this.http.put(url, entry);
   }
 }
