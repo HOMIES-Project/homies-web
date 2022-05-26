@@ -22,16 +22,16 @@
               <div align="left">
                 <label>Tipo de artículo</label>
                 <select  formControlName="typeUnit" name="typeUnit" id="typeUnit" class="form-control">
-                      <option >Herramientas</option>
-                      <option >Comida</option>
-                      <option >Líquido</option>
-                      <option >Medicina</option>
-                      <option >Otros</option>
+                      <option >Herramientas</option >
+                      <option>Comida</option>
+                      <option>Líquido</option>
+                      <option>Medicina</option>
+                      <option>Otros</option>
                 </select>
               </div>
               <div  align="left">
                 <label style="margin-top: 10px;" for="">Nombre del artículo</label>
-                <input placeholder="{{this.isEditting ? this.groceryFromChild.name : 'Nombre del producto' }}" class="form-control" formControlName="nameProduct" type="text" name="nameProduct" id="nameProduct">
+                <input placeholder="{{this.isEditting ? this.groceryFromChild.name : 'Nombre del producto' }}" class="form-control" formControlName="nameProduct" type="text" name="nameProduct" id="nameProduct" value="{{this.isEditting ? this.groceryFromChild.name : '' }}">
               </div>
             </div>
             <div class="modal-footer">

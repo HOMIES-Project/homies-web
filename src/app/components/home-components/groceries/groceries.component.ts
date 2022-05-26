@@ -1,9 +1,7 @@
 import { GroceryCancelModel } from './../../../core/models/groceriesCreation.model';
 import Swal from 'sweetalert2';
 import { UsersService } from 'src/app/core/services/users.service';
-import { UserData } from './../../../core/models/user-data.model';
 import { GroceriesService } from './../../../core/services/Lists/groceries.service';
-import { TasksService } from 'src/app/core/services/Lists/tasks.service';
 import { GroupsService } from 'src/app/core/services/groups.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -54,7 +52,7 @@ export class GroceriesComponent implements OnInit {
   
   }
 
-  deleteProduct(productID: string) {
+  deleteProduct(productID: number) {
     Swal.fire({
       title: '¡Cuidado! Vas a eliminar un producto',
       text: '¿Estás seguro?',
@@ -68,9 +66,10 @@ export class GroceriesComponent implements OnInit {
       if (result.isConfirmed) {
         this.groceriesService.performDeleteGrocery(productID).subscribe(
           (response) => {
-            window.location.reload();
-            console.log("BORRADA " + response)
-            // window.location.reload()
+            console.log("BORRANDO " + productID)
+            console.log("BORRADA " + JSON.stringify(response))
+            window.location.reload()
+            
           },
           (error) => {
             console.log("ID " + productID)
@@ -78,7 +77,11 @@ export class GroceriesComponent implements OnInit {
           }
         );
       } else if (result.isDenied) {
-        Swal.fire('Changes are not saved', '', 'info');
+        Swal.fire({
+          title: 'CANCELADO',
+          text: 'Sigues teniendo ese producto',
+          icon: 'info'
+        })
       }
     });
   }

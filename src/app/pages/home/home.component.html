@@ -30,27 +30,23 @@
 
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Compra</h5>
-        <p class="card-text">Productos</p>
+        <h5 class="card-title">LISTA DE LA COMPRA</h5>
+        <p class="card-text" *ngIf="!this.noGroceries">Productos sin comprar</p>
+        <p class="card-text" *ngIf="this.noGroceries">No tienes ningún producto</p>
         <table class="table ">
-
           <tbody>
-            <tr>
-              <td>Plátanos</td>
-            </tr>
-            <tr>
-              <td>Leche</td>
-            </tr>
-            <tr>
-              <td>Fruta</td>
+            <tr *ngFor="let grocery of this.groceryList;" class="text-left">
+              <td *ngIf="grocery.purchased == ''">{{grocery.name}}</td>
             </tr>
             <tr>
               <td>
                 <button class="btn outline mt-3" (click)="navigateToGroceries()">Ir a la lista de la compra</button>
+
               </td>
             </tr>
           </tbody>
         </table>
+        
       </div>
     </div>
 
