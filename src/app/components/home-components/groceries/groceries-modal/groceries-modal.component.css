@@ -8,3 +8,17 @@
 .button{
     background-color: var(--secondaryColor);
 }
+
+input, select {
+    background-color: rgba(97, 212, 255, 0.2);
+    font-size: 1.2rem;
+    border: none;
+    border: 0ch;
+    border-radius: 0 5px 5px 0 !important;
+  }
+  
+  input:focus, select:focus {
+    background-color: rgba(97, 212, 255, 0.2);
+    font-size: 1.2rem;
+    border: none;
+  }

@@ -2,7 +2,7 @@ import { UsersService } from './../../../../core/services/users.service';
 import { GroupsService } from './../../../../core/services/groups.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { GroceriesService } from './../../../../core/services/Lists/groceries.service';
-import { GroceryCreationModel } from './../../../../core/models/groceriesCreation.model';
+import { GroceryCreationModel, GroceryEditionModel } from './../../../../core/models/groceriesCreation.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -25,6 +25,7 @@ export class GroceriesModalComponent implements OnInit {
   typeUnit!: string;
   sent: boolean = false;
   units: string = "1";
+  login!: string;
 
   closeResult = '';
 
@@ -50,20 +51,20 @@ export class GroceriesModalComponent implements OnInit {
   ngOnInit(): void {
     this.groupsService.groupID.subscribe((response) => {
       this.idGroup = response;
-      console.log(this.idGroup)
+    });
+    this.usersService.user.subscribe((response) => {
+      this.login = response?.user.login;
     });
     this.usersService.userId.subscribe((response) => {
       this.idUser = response;
     });
-    console.log(this.groceryFromChild)
 
 
     if(this.isEditting) {
 
       this.newGroceryForm.patchValue({
         nameProduct: this.groceryFromChild.nameProduct,
-        productType: this.groceryFromChild.typeUnit,
-        // login: this.groceryFromChild.login
+        productType: this.groceryFromChild.typeUnit
       });
     }
   }
@@ -117,11 +118,9 @@ export class GroceriesModalComponent implements OnInit {
     console.log(grocery)
     // this.sent = true;
     this.groceriesService.performGroceryCreation(grocery).subscribe((response) => {
-      console.log(grocery)
-      console.log(response)
-      console.log('producto creado')
-      // window.location.reload()
-      // this.modalService.dismissAll()
+      console.log('producto creado ' + response)
+      window.location.reload();
+      this.modalService.dismissAll();
     },
     (error) => {
       console.log("ERROR " + JSON.stringify(error))
@@ -130,14 +129,17 @@ export class GroceriesModalComponent implements OnInit {
   }
 
   performEditProduct() {
-    let grocery: GroceryCreationModel = new GroceryCreationModel(
-      this.idGroup!,
-      this.groceryFromChild.id,
+    console.log("click")
+    let grocery: GroceryEditionModel = new GroceryEditionModel(
+      this.login,
+      this.idGroup!.toString(),
+      this.groceryFromChild.id.toString(),
       this.newGroceryForm.controls.nameProduct.value,
-      this.units,
-      this.newGroceryForm.controls.typeUnit.value
+      this.newGroceryForm.controls.typeUnit.value,
+      this.units
     );
-    console.log(grocery)
+    console.log("Editando " + JSON.stringify(grocery))
+    console.log("login " + this.login)
     this.sent = true;
     this.groceriesService.performEditGrocery(grocery).subscribe((response) => {
       console.log(response)

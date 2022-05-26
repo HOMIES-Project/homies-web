@@ -1,3 +1,4 @@
+import { GroceriesService } from './../../core/services/Lists/groceries.service';
 import { GroupEditModel } from './../../core/models/groupCreation.model';
 
 import { TaskModel } from './../../core/models/tasksCreation.model';
@@ -67,10 +68,15 @@ export class HomeComponent implements OnInit {
   isCreating: boolean = true;
   groupInformation!: GroupEditModel;
 
+  noGroceries: boolean = true;
+
+  groceryList: Array<any> = [];
+
   constructor(
     private groupsService: GroupsService,
     private usersService: UsersService,
     private tasksService: TasksService,
+    private groceriesService: GroceriesService,
     private route: ActivatedRoute,
     private router: Router,
     private sanitizer: DomSanitizer
@@ -102,6 +108,15 @@ export class HomeComponent implements OnInit {
 
     this.getGroupDetails();
     this.getUserTasks();
+
+    this.groceriesService.getGroceryList(this.groupID!).subscribe((response) => {
+      this.groceryList = response.products;
+      if (this.groceryList.length == 0) {
+        this.noGroceries = true;
+      } else {
+        this.noGroceries = false;
+      }
+    });
   }
 
   getGroupDetails() {
