@@ -22,7 +22,7 @@
         <h5 class="card-title">TAREAS</h5>
         <p class="card-text" *ngIf="!this.noTasks">Resumen de tus tareas</p>
         <p class="card-text" *ngIf="this.noTasks">
-          ¡Enhorabuena! <br />
+
           No tienes ninguna tarea
         </p>
 
@@ -46,7 +46,6 @@
 
     <div class="card">
       <div class="card-body">
-
         <h5 class="card-title">SALDOS</h5>
         <p class="card-text" *ngIf="!this.firstTime">Resumen de tus saldos</p>
         <p class="card-text" *ngIf="this.firstTime">
@@ -71,39 +70,28 @@
         </button>
       </div>
     </div>
+
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">COMPRA</h5>
-        <p class="card-text">Productos</p>
-        <table class="table">
-
         <h5 class="card-title">LISTA DE LA COMPRA</h5>
         <p class="card-text" *ngIf="!this.noGroceries">Productos sin comprar</p>
         <p class="card-text" *ngIf="this.noGroceries">No tienes ningún producto</p>
-        <table class="table ">
+        <div class="text-left mt-3 expenses shadow-sm" *ngFor="let task of this.userTasksModel; let indexOfTask = index">
+          <div class="d-flex justify-content-between mx-5">
 
-          <tbody>
-            <tr *ngFor="let grocery of this.groceryList;" class="text-left">
-              <td *ngIf="grocery.purchased == ''">{{grocery.name}}</td>
-            </tr>
-            <tr>
-              <td>
+            <div>
 
-                <button
-                  class="btn outline mt-3"
-                  (click)="navigateToGroceries()"
-                >
-                  Ir a la lista de la compra
-                </button>
+              <p class="mb-0 payment-user">{{ task.taskName }}</p>
 
-                <button class="btn outline mt-3" (click)="navigateToGroceries()">Ir a la lista de la compra</button>
+            </div>
 
+          </div>
 
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        
+        </div>
+        <button class="btn outline mt-3" (click)="navigateToGroceries()">
+          Ir a la lista de la compra
+        </button>
+
       </div>
     </div>
     <div class="card">
