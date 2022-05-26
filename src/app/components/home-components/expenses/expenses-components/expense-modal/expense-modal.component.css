@@ -5,6 +5,7 @@ input, textarea, select {
   border: none;
   border: 0ch;
   border-radius: 0 5px 5px 0 !important;
+  height: 40px;
 }
 
 input:focus, textarea:focus, select:focus {
@@ -20,6 +21,41 @@ input:focus, textarea:focus, select:focus {
   filter: brightness(0) saturate(100%) invert(55%) sepia(100%) saturate(684%) hue-rotate(169deg) brightness(93%) contrast(94%);
 
 }
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+.one {
+  grid-column: 1 ;
+  grid-row: 1;
+ align-self: center;
+
+}
+.two {
+
+  grid-column: 2 ;
+  grid-row: 1 ;
+ align-self: center;
+
+}
+.three {
+
+  grid-column: 1;
+  grid-row: 2;
+ align-self: start;
+
+}
+.four {
+
+  grid-column: 2;
+  grid-row: 2;
+ align-self: start;
+
+}
+
 
 
 

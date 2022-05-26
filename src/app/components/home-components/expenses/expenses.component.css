@@ -34,3 +34,16 @@ a {
   border-radius: 15px;
   height: 85.25px;
 }
+.balances-payed {
+  background: rgba(110, 223, 121, 0.06);
+  padding: 10px;
+  border-radius: 15px;
+  height: 85.25px;
+}
+
+@media (max-width: 776px) {
+  .balances {
+    height: 105.5px;
+  }
+}
+

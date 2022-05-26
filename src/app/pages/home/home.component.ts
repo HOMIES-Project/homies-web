@@ -68,9 +68,12 @@ export class HomeComponent implements OnInit {
   isCreating: boolean = true;
   groupInformation!: GroupEditModel;
 
+  firstTime:boolean = true
+
   noGroceries: boolean = true;
 
   groceryList: Array<any> = [];
+
 
   constructor(
     private groupsService: GroupsService,

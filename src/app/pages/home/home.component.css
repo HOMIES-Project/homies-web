@@ -76,3 +76,18 @@
   color: var(--primaryColor);
   background-color: var(--secondaryColor);
 }
+
+.bg-dashboard-item {
+  background: rgba(52, 173, 231, 0.07);
+  padding: 10px;
+  border-radius: 15px;
+  border: none;
+}
+
+.expenses {
+  background: rgba(52, 173, 231, 0.07);
+  padding: 10px;
+  border-radius: 15px;
+  margin-top: 10px;
+
+}

@@ -1,9 +1,8 @@
 import { Router } from '@angular/router';
 import { GroupsService } from './core/services/groups.service';
 import { UsersService } from './core/services/users.service';
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoginModel } from './core/models/login.model';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -17,10 +16,6 @@ export class AppComponent {
   id!: string;
   username!: string | undefined;
   groupID!: string;
-
-
-  userActivity:any;
-  userInactive: Subject<any> = new Subject();
 
   constructor(
     private usersService: UsersService,
@@ -36,8 +31,6 @@ export class AppComponent {
     usersService.user.subscribe((response) => {
       this.username = response?.user.login;
     });
-    this.setTimeout();
-    this.userInactive.subscribe(() =>this.logout());
   }
 
   ngOnInit(): void {
@@ -50,16 +43,5 @@ export class AppComponent {
 
   logout(): void {
     this.usersService.performLogout();
-  }
-
-
-
-  setTimeout() {
-    this.userActivity = setTimeout(() => this.userInactive.next(undefined), 900000);
-  }
-
-  @HostListener('window:mousemove') refreshUserState() {
-    clearTimeout(this.userActivity);
-    this.setTimeout();
   }
 }
