@@ -71,6 +71,7 @@ export class HomeComponent implements OnInit {
   firstTime:boolean = true
 
   noGroceries: boolean = true;
+  shown: boolean = true;
 
   groceryList: Array<any> = [];
 
@@ -315,6 +316,16 @@ export class HomeComponent implements OnInit {
       this.groupID = response;
     });
     this.router.navigate(['/home', 'groceries', this.groupID], {
+      relativeTo: this.route,
+      queryParamsHandling: 'preserve',
+    });
+  }
+
+  navigateToExpenses() {
+    this.groupsService.groupID.subscribe((response) => {
+      this.groupID = response;
+    });
+    this.router.navigate(['/home', 'expenses', this.groupID], {
       relativeTo: this.route,
       queryParamsHandling: 'preserve',
     });

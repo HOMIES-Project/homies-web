@@ -16,7 +16,7 @@ export class GroceriesModalComponent implements OnInit {
   @Input() isCreating!: boolean
   @Input() isEditting!: boolean
   @Input() groceryFromChild!: any;
-
+  @Input() isCancelled!: boolean;
 
   newGroceryForm: FormGroup;
   idUser!: string;
@@ -26,6 +26,7 @@ export class GroceriesModalComponent implements OnInit {
   sent: boolean = false;
   units: string = "1";
   login!: string;
+  // purchased: boolean = false;
 
   closeResult = '';
 
@@ -116,7 +117,7 @@ export class GroceriesModalComponent implements OnInit {
       this.newGroceryForm.controls.typeUnit.value
     );
     console.log(grocery)
-    // this.sent = true;
+    this.sent = true;
     this.groceriesService.performGroceryCreation(grocery).subscribe((response) => {
       console.log('producto creado ' + response)
       window.location.reload();

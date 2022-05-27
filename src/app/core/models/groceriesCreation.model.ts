@@ -4,15 +4,15 @@ export class GroceryCreationModel {
     public nameProduct: string;
     public units: string
     public typeUnit: string;
-    // public login: string;
+    // public purchased: boolean;
 
-    constructor(idGroup: string, idUserData: string, nameProduct: string, units: string, typeUnit: string, /*login: string*/) {
+    constructor(idGroup: string, idUserData: string, nameProduct: string, units: string, typeUnit: string/*, purchased: boolean*/) {
       this.idGroup= idGroup;
       this.idUserData = idUserData
       this.nameProduct = nameProduct
       this.units = units
       this.typeUnit = typeUnit
-      // this.login = login
+      // this.purchased = purchased
     }
 
   }
