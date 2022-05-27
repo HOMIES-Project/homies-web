@@ -15,6 +15,7 @@ import { TasksService } from 'src/app/core/services/Lists/tasks.service';
   styleUrls: ['./task-modal.component.css'],
 })
 export class TaskModalComponent implements OnInit {
+
   @Input() isEditting!: boolean;
   @Input() isCreating!: boolean;
   @Input() isCancelled!: boolean;
@@ -91,7 +92,6 @@ export class TaskModalComponent implements OnInit {
         }
       );
   }
-  // TODO edit task
 
   openEditTask(idTask: string, editTask: any) {
     this.modalService
@@ -113,6 +113,7 @@ export class TaskModalComponent implements OnInit {
       this.performEditTask();
     }
   }
+
   performCreateTask() {
     let task: TaskCreationModel = new TaskCreationModel(
       this.userId,

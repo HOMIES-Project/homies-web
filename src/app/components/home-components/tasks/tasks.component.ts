@@ -27,7 +27,7 @@ export class TasksComponent implements OnInit {
 
   display!: boolean;
 
-  isCancelled!: boolean
+  isCancelled!: boolean;
   login!: string;
 
   constructor(
@@ -53,22 +53,6 @@ export class TasksComponent implements OnInit {
         this.noTasks = false;
       }
     });
-  }
-
-  // openNewTarea() {
-  //   this.open = !this.open;
-  // }
-
-  editTaskFromList() {}
-
-  completeTask() {}
-
-
-  get result() {
-    this.tasksList.filter((item) => {
-      item.checked;
-    });
-    return this.tasksList.filter((item) => item.checked);
   }
 
   deleteTask(taskID: number) {
@@ -106,7 +90,7 @@ export class TasksComponent implements OnInit {
     console.log(taskToCancel);
     this.tasksService.performCancelTask(taskToCancel).subscribe(
       (response) => {
-        window.location.reload()
+        window.location.reload();
         console.log(response);
       },
       (error) => {

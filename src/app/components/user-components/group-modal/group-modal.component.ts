@@ -10,25 +10,22 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-group-modal',
   templateUrl: './group-modal.component.html',
-  styleUrls: ['./group-modal.component.css']
+  styleUrls: ['./group-modal.component.css'],
 })
 export class GroupModalComponent implements OnInit {
-
   username!: string;
   userId!: number;
   sent: boolean = false;
   closeResult = '';
   isLoading!: boolean;
   groupNameExists: boolean = false;
-  groupForm: FormGroup
-  groupID!: string | null
-  userGroups: Array<any> | null = []
+  groupForm: FormGroup;
+  groupID!: string | null;
+  userGroups: Array<any> | null = [];
 
-  @Input() isEditing!: boolean
-  @Input() isCreating!: boolean
-  @Input() groupInformation!: GroupEditModel
-
-
+  @Input() isEditing!: boolean;
+  @Input() isCreating!: boolean;
+  @Input() groupInformation!: GroupEditModel;
 
   constructor(
     private modalService: NgbModal,
@@ -37,45 +34,46 @@ export class GroupModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router
   ) {
-
-  this.groupForm = this.formBuilder.group({
-    groupName: [
-      '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(20)],
-    ],
-    groupRelation: [
-      '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
-    ],
-  });
+    this.groupForm = this.formBuilder.group({
+      groupName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(20),
+        ],
+      ],
+      groupRelation: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(100),
+        ],
+      ],
+    });
   }
   ngOnInit(): void {
-
     this.usersService.userId.subscribe((response) => {
       this.userId = response;
-
     });
 
-    this.groupsService.groupsList.subscribe(response => {
-      this.userGroups = response
+    this.groupsService.groupsList.subscribe((response) => {
+      this.userGroups = response;
+    });
 
-    })
-
-    this.groupsService.groupID.subscribe(response => {
-      this.groupID = response
-
-    })
-    if(this.isEditing) {
-      this.groupsService.groupInfo.subscribe(response=> {
+    this.groupsService.groupID.subscribe((response) => {
+      this.groupID = response;
+    });
+    if (this.isEditing) {
+      this.groupsService.groupInfo.subscribe((response) => {
         this.groupForm.patchValue({
           groupName: response.groupName,
-          groupRelation: response.groupRelationName
-
+          groupRelation: response.groupRelationName,
         });
-      })
+      });
     }
   }
-
 
   openCreateGroup(content: any) {
     this.modalService
@@ -105,18 +103,16 @@ export class GroupModalComponent implements OnInit {
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
-
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;
     }
   }
 
-  updateGroupID(id:string) {
-    this.groupsService.updateGroupId(id!).subscribe()
+  updateGroupID(id: string) {
+    this.groupsService.updateGroupId(id!).subscribe();
   }
 
   performCreateGroup() {
@@ -132,29 +128,28 @@ export class GroupModalComponent implements OnInit {
 
     this.groupsService.performGroupCreation(group).subscribe(
       (response) => {
-        console.log(response)
-        this.userGroups?.push(response)
-        this.groupsService.updateListOfGroups(this.userGroups)
-        this.groupsService.updateGroupId(response.id).subscribe()
-        this.groupNameExists = false
+        console.log(response);
+        this.userGroups?.push(response);
+        this.groupsService.updateListOfGroups(this.userGroups);
+        this.groupsService.updateGroupId(response.id).subscribe();
+        this.groupNameExists = false;
         this.router.navigate(['home']);
         this.isLoading = false;
-        this.modalService.dismissAll()
-
+        this.modalService.dismissAll();
       },
       (error) => {
         this.isLoading = false;
-        this.groupNameExists = true
-        console.log(error)
+        this.groupNameExists = true;
+        console.log(error);
       }
     );
   }
 
   submitGroupForm() {
-    if(this.isCreating) {
-      this.performCreateGroup()
+    if (this.isCreating) {
+      this.performCreateGroup();
     } else {
-      this.performEditGroup()
+      this.performEditGroup();
     }
   }
 
@@ -170,14 +165,12 @@ export class GroupModalComponent implements OnInit {
     this.groupsService.performEditGroup(group, this.groupID!).subscribe(
       (response) => {
         this.isLoading = false;
-        this.modalService.dismissAll()
-        window.location.reload()
+        this.modalService.dismissAll();
+        window.location.reload();
       },
       (error) => {
         this.isLoading = false;
-
       }
     );
   }
-
 }

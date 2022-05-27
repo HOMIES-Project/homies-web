@@ -1,4 +1,7 @@
-import { BalancesCreationModel, ExpensesCreationModel } from './../../../core/models/expensesCreation.model';
+import {
+  BalancesCreationModel,
+  ExpensesCreationModel,
+} from './../../../core/models/expensesCreation.model';
 import { ExpenseModalComponent } from './expenses-components/expense-modal/expense-modal.component';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
@@ -18,10 +21,13 @@ export class ExpensesComponent implements OnInit {
   balancesArray: Array<BalancesCreationModel> = [];
 
   payed!: boolean;
+  noExpenses: boolean = true;
 
   constructor() {}
 
   ngOnInit(): void {
+
+    // TO DO EXPENSES
     this.expensesarray = [
       {
         debtorUser: 'Esther',
@@ -48,7 +54,6 @@ export class ExpensesComponent implements OnInit {
         userCreditor: 'Esther',
         amount: 15,
       },
-
     ];
   }
 
@@ -64,7 +69,7 @@ export class ExpensesComponent implements OnInit {
       cancelButtonColor: '#df4759',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.payed = !this.payed
+        this.payed = !this.payed;
       } else if (result.isDenied) {
         Swal.fire('Changes are not saved', '', 'info');
       }

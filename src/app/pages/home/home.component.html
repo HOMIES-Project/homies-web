@@ -12,17 +12,17 @@
 </div>
 
 <div
-  class="container text-center"
-  style="padding-top: 5px"
+  class="container text-center global-container"
+  style="padding-top: 5px; height:900pxx"
   *ngIf="this.groupsExist && !this.isLoading"
 >
-  <div class="card-columns d-inline-block">
-    <div class="card">
+<div class="d-flex ">
+  <div class="card-columns wrapper">
+    <div class="card-one card">
       <div class="card-body">
         <h5 class="card-title">TAREAS</h5>
         <p class="card-text" *ngIf="!this.noTasks">Resumen de tus tareas</p>
         <p class="card-text" *ngIf="this.noTasks">
-
           No tienes ninguna tarea
         </p>
 
@@ -44,7 +44,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card card-two">
       <div class="card-body">
         <h5 class="card-title">SALDOS</h5>
         <p class="card-text" *ngIf="!this.firstTime">Resumen de tus saldos</p>
@@ -71,7 +71,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card card-four">
       <div class="card-body">
         <h5 class="card-title">LISTA DE LA COMPRA</h5>
         <p class="card-text" *ngIf="!this.noGroceries">Productos sin comprar</p>
@@ -92,7 +92,7 @@
 
       </div>
     </div>
-    <div class="card">
+    <div class=" card card-three">
       <div class="card-body">
         <h5 class="card-title">GASTOS</h5>
         <p class="card-text" *ngIf="!this.firstTime">Resumen de tus gastos</p>
@@ -123,9 +123,11 @@
       </button>
       </div>
     </div>
+  </div>
 
-    <div class="card wrapper-card">
-      <div class="card">
+
+    <div class="card wrapper-card ">
+      <div class="card-five card ">
         <div class="card-body">
           <div
             *ngIf="this.isAdmin"
@@ -162,7 +164,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card mt-3">
         <div
           class="text-center m-4 d-flex align-items-center justify-content-center"
           *ngIf="this.isLodingUsers"
@@ -274,8 +276,7 @@
           ></app-user-add-group>
         </div>
       </div>
-    </div>
-    <button
+      <button
       class="btn-lg border-0 text-white p-3 mt-3 delete-group"
       (click)="exitGroup()"
     >
@@ -288,9 +289,11 @@
     >
       Eliminar grupo
     </button>
-  </div>
-</div>
+    </div>
 
+
+</div>
+</div>
 <div
   class="container text-center mt-5"
   *ngIf="!this.groupsExist && !this.isLoading"
