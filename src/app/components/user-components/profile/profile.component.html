@@ -6,7 +6,7 @@
           <div class="mb-md-1 mt-md-4 pb-2">
             <form [formGroup]="userProfileFrom" (submit)="submitChangeProfileForm()">
               <div>
-                <img *ngIf="this.photo" [src]="profilePictureImageDecoded()" alt="" width="100px" height="100px"
+                <img *ngIf="this.photo" [src]="profilePictureImageDecoded()" width="100px" height="100px"
                   class="dot" (change)="getProfilePicture($event)"/>
               </div>
               <span class="dot" *ngIf="!this.photo">
@@ -17,7 +17,7 @@
               <div class="buttonEdit">
                 <div class="file-select">
                   <input type="file" name="photo" formControlName="photo" accept="image/png, image/jpeg"
-                    (change)="getProfilePicture($event)" />
+                    (change)="getProfilePicture($event)"/>
                 </div>
               </div>
               <a *ngIf="this.photo" (click)="removePhoto()" class="mt-4 btn btn-xs btn-danger">Eliminar Foto</a>
@@ -29,10 +29,10 @@
                     <div class="input-group">
                       <!-- Icono Usuario -->
                       <div class="input-group-text">
-                        <img src="../../../../assets/svg/username.svg" class="svg-icon" alt="" />
+                        <img src="../../../../assets/svg/username.svg" class="svg-icon"/>
                       </div>
                       <input id="username" type="text" name="username" formControlName="login"
-                        class="fields form-control normal-border" value="{{ this.login }}" placeholder="Usuario" />
+                        class="fields form-control normal-border" value="{{ this.login }}" placeholder="Usuario"/>
                     </div>
                   </div>
 
@@ -44,7 +44,7 @@
                         <i class="fa fa-vcard"></i>
                       </div>
                       <input id="name" type="text" name="name" formControlName="firstName"
-                        class="fields form-control normal-border" value="{{ this.firstName }}" placeholder="Nombre" />
+                        class="fields form-control normal-border" value="{{ this.firstName }}" placeholder="Nombre"/>
                     </div>
                   </div>
 
@@ -56,7 +56,7 @@
                         <i class="fa fa-vcard"></i>
                       </div>
                       <input id="surname" type="text" name="surname" formControlName="lastName"
-                        class="fields form-control normal-border" value="{{ this.lastName }}" placeholder="Apellido" />
+                        class="fields form-control normal-border" value="{{ this.lastName }}" placeholder="Apellido"/>
                     </div>
                   </div>
 
@@ -65,10 +65,10 @@
                     <div class="input-group">
                       <!-- Icono Email -->
                       <div class="input-group-text">
-                        <img src="../../../assets/svg/email.svg" class="svg-icon" alt="" />
+                        <img src="../../../assets/svg/email.svg" class="svg-icon"/>
                       </div>
                       <input id="email" type="text" name="email" formControlName="email"
-                        class="fields form-control normal-border" value="{{ this.email }}" placeholder="Email" />
+                        class="fields form-control normal-border" value="{{ this.email }}" placeholder="Email"/>
                     </div>
                   </div>
 
@@ -80,7 +80,7 @@
                         <i class="fa fa-phone"></i>
                       </div>
                       <input id="phone" type="tel" name="phone" formControlName="phone"
-                        class="fields form-control normal-border" value="{{ this.phone }}" placeholder="Teléfono" />
+                        class="fields form-control normal-border" value="{{ this.phone }}" placeholder="Teléfono"/>
                     </div>
                   </div>
 
@@ -93,8 +93,7 @@
                       </div>
                       <input id="birthDate" type="date"  name="birthDate"
                         formControlName="birthDate" class="fields form-control normal-border"
-                        value="{{ this.birthDate }}" placeholder="Fecha de nacimiento" />
-                      <!--onfocus="(this.type='date')" -->
+                        value="{{ this.birthDate }}" placeholder="Fecha de nacimiento"/>
                     </div>
                   </div>
                   <button class="btn formButton btn-lg px-5 text-uppercase mt-4 text-white" type="submit"
@@ -130,7 +129,7 @@
                             <div class="input-group">
                               <!-- ICONO CANDADO -->
                               <div class="input-group-text">
-                                <img src="../../../assets/svg/password.svg" class="svg-icon" alt="" />
+                                <img src="../../../assets/svg/password.svg" class="svg-icon"/>
                               </div>
                               <input id="currentPassword" type="password" name="pass" formControlName="currentPassword"
                                 placeholder="Contraseña actual" [type]="showPassword ? 'text' : 'password'"
@@ -139,13 +138,13 @@
                                     this.sent &&
                                     this.changePasswordForm.controls
                                       .currentPassword.errors
-                                }" />
+                                }"/>
                               <!-- ICONO NO SEE -->
                               <div class="input-group-text no-see">
                                 <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
-                                  *ngIf="!this.showPassword" alt="" />
+                                  *ngIf="!this.showPassword"/>
                                 <img src="../../../assets/svg/eye.svg" class="svg-icon eye" (click)="showPass()"
-                                  *ngIf="this.showPassword" alt="" />
+                                  *ngIf="this.showPassword"/>
                               </div>
                               <!--Validation-->
                               <div class="invalid-feedback" *ngIf="
@@ -163,7 +162,7 @@
                             <div class="input-group">
                               <!-- ICONO CANDADO -->
                               <div class="input-group-text">
-                                <img src="../../../assets/svg/password.svg" class="svg-icon" alt="" />
+                                <img src="../../../assets/svg/password.svg" class="svg-icon"/>
                               </div>
                               <input id="newPassword" type="password" name="pass" formControlName="newPassword"
                                 placeholder="Nueva contraseña" [type]="showPassword ? 'text' : 'password'"
@@ -172,13 +171,13 @@
                                     this.sent &&
                                     this.changePasswordForm.controls.newPassword
                                       .errors
-                                }" />
+                                }"/>
                               <!-- ICONO NO SEE -->
                               <div class="input-group-text no-see">
                                 <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
-                                  *ngIf="!this.showPassword" alt="" />
+                                  *ngIf="!this.showPassword"/>
                                 <img src="../../../assets/svg/eye.svg" class="svg-icon eye" (click)="showPass()"
-                                  *ngIf="this.showPassword" alt="" />
+                                  *ngIf="this.showPassword"/>
                               </div>
                               <!--Validation-->
                               <div class="invalid-feedback" *ngIf="
@@ -201,7 +200,7 @@
                             <div class="input-group">
                               <!-- ICONO CANDADO -->
                               <div class="input-group-text">
-                                <img src="../../../assets/svg/password.svg" class="svg-icon" alt="" />
+                                <img src="../../../assets/svg/password.svg" class="svg-icon"/>
                               </div>
                               <input id="passConfirm" type="password" name="passConfirm" formControlName="passConfirm"
                                 class="fields form-control password-field is-invalid"
@@ -210,13 +209,13 @@
                                   'is-invalid':
                                     this.sent &&
                                     this.changePasswordForm.controls.passConfirm.errors?.required || changePasswordForm.errors?.noMatch
-                                }" />
+                                }"/>
                               <!-- ICONO NO SEE -->
                               <div class="input-group-text no-see">
                                 <img src="../../../assets/svg/eye-off.svg" class="svg-icon eye-off" (click)="showPass()"
-                                  *ngIf="!this.showPassword" alt="" />
+                                  *ngIf="!this.showPassword"/>
                                 <img src="../../../assets/svg/eye.svg" class="svg-icon eye" (click)="showPass()"
-                                  *ngIf="this.showPassword" alt="" />
+                                  *ngIf="this.showPassword"/>
                               </div>
                               <!--Validation-->
                               <div class="invalid-feedback" *ngIf="

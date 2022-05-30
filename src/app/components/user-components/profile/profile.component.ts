@@ -259,10 +259,10 @@ export class ProfileComponent implements OnInit {
       this.usersService
       .performEditUser(this.userDataChanged, this.id)
       .subscribe((response) => {
-
+        console.log(response)
         this.successfullyEdited = true
       }, error=> {
-
+        console.log(error)
       });
 
     }
@@ -278,9 +278,10 @@ export class ProfileComponent implements OnInit {
     this.usersService
       .performChangePassword(this.changePassword)
       .subscribe((response) => {
-
+        console.log(response)
         this.successfullyEditedPass = true
-      }, error=> {
+      }, (error) => {
+        console.log(error)
       })
   }
 
@@ -299,12 +300,14 @@ export class ProfileComponent implements OnInit {
       if (result.isConfirmed) {
         this.usersService.performDeleteUser(this.id).subscribe(
           (response) => {
+            console.log(response)
             this.usersService.performLogout();
             this.groupsService.performLogoutFromGroups();
             this.tasksService.performLogoutFromTasks()
             this.router.navigate(['/landing']);
           },
           (error) => {
+            console.log(error)
           }
         );
       } else if (result.isDenied) {

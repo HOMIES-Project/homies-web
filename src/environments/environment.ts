@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  BASE_URL: 'https://homies-pruebas-jorge.herokuapp.com/api',
-  //BASE_URL: 'https://homies-pruebas-alex.herokuapp.com/api',
+  BASE_URL: 'https://homies-back-app.herokuapp.com/api'
 };
 
 /*
