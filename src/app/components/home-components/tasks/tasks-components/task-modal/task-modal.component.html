@@ -5,32 +5,26 @@
   (click)="openAddTask(task)">Añadir tarea</button>
 
 
-
-
-
 <ng-template #task let-modal>
   <div class="justify-content-center align-items-center">
     <div class=" text-black shadow-lg rounded">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title"> {{this.isEditting ? 'Editar tarea' : 'Crear tarea' }}</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-        (click)="modal.close('Cerrado desde la ventana')">
+          (click)="modal.close('Cerrado desde la ventana')">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="this.newTaskForm" (ngSubmit)="submitTaskForm()" >
+        <form [formGroup]="this.newTaskForm" (ngSubmit)="submitTaskForm()">
           <div class="form-group">
             <div class="input-group">
               <div class="input-group-text">
                 <img src="../../../assets/svg/username.svg" class="svg-icon" alt="" />
               </div>
               <select name="" id="" class="form-control col-6" formControlName="login">
-
-
-                <option  *ngFor="let user of this.groupUsers; let indexOfUser = index" [ngValue]="user.user.login" >{{user.user.login}}</option>
-
-
+                <option *ngFor="let user of this.groupUsers; let indexOfUser = index" [ngValue]="user.user.login">
+                  {{user.user.login}}</option>
               </select>
             </div>
             <!--END INPUT TASK USER SELECTION-->
@@ -41,7 +35,7 @@
               </div>
               <input id="taskName" class="form-control col-6 normal-border"
                 placeholder="{{this.isEditting ? this.taskFromChild.taskName : 'Nombre de la tarea'}}"
-                formControlName="taskName" name="dp"  [ngClass]="{
+                formControlName="taskName" name="dp" [ngClass]="{
                                           'is-invalid':
                                             (this.newTaskForm.controls.taskName.touched &&
                                               this.newTaskForm.controls.taskName.errors?.required) ||
@@ -88,15 +82,14 @@
             <!--END INPUT TASK DESCRIPTION-->
           </div>
 
-
-      <div class="modal-footer">
-        <button class="btn btn-outline-info"  [ngClass]="{
+          <div class="modal-footer">
+            <button class="btn btn-outline-info" [ngClass]="{
                           disabled: !this.newTaskForm.valid
                         }" [disabled]="!this.newTaskForm.valid">
-          {{this.isEditting ? 'Editar tarea' : 'Añadir tarea' }} </button>
+              {{this.isEditting ? 'Editar tarea' : 'Añadir tarea' }} </button>
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
     </div>
   </div>
 </ng-template>

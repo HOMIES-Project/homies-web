@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
 
   isLodingUsers: boolean = true;
 
-  userGroups!:  Array<any> | null;
+  userGroups!: Array<any> | null;
   groupName!: string | null;
   groupRelationName!: string | null;
   groupUsers: Array<any> = [];
@@ -57,24 +57,23 @@ export class HomeComponent implements OnInit {
 
   imgBase64!: string;
 
-  userTasks: Array<any> = []
-  userTasksModel: Array<any> = []
+  userTasks: Array<any> = [];
+  userTasksModel: Array<any> = [];
 
   noTasks: boolean = true;
 
-  userTasksModelArray: Array<any> = []
+  userTasksModelArray: Array<any> = [];
 
   isEditing: boolean = true;
   isCreating: boolean = true;
   groupInformation!: GroupEditModel;
 
-  firstTime:boolean = true
+  firstTime: boolean = false;
 
   noGroceries: boolean = true;
-  shown: boolean = true;
+  shown: boolean = false;
 
   groceryList: Array<any> = [];
-
 
   constructor(
     private groupsService: GroupsService,
@@ -94,7 +93,6 @@ export class HomeComponent implements OnInit {
       this.userID = userID;
     });
 
-    //todo - check this subscribepo
     this.usersService.user.subscribe((userInfo) => {
       this.login = userInfo.user.login;
       this.name = userInfo?.user.firstName;
@@ -102,27 +100,27 @@ export class HomeComponent implements OnInit {
       this.photo = userInfo?.photo;
     });
 
-    this.groupsService.groupsList.subscribe( response =>{
-
-      this.userGroups = response
-    })
-    this.groupsService.getUserInfo(this.userID).subscribe((response) => {
-
+    this.groupsService.groupsList.subscribe((response) => {
+      this.userGroups = response;
     });
+    this.groupsService.getUserInfo(this.userID).subscribe((response) => {});
 
     this.getGroupDetails();
     this.getUserTasks();
 
-    this.groceriesService.getGroceryList(this.groupID!).subscribe((response) => {
-      this.groceryList = response.products;
-      if (this.groceryList.length == 0) {
-        this.noGroceries = true;
-      } else {
-        this.noGroceries = false;
-      }
-    });
+    this.groceriesService
+      .getGroceryList(this.groupID!)
+      .subscribe((response) => {
+        this.groceryList = response.products;
+        if (this.groceryList.length == 0) {
+          this.noGroceries = true;
+        } else {
+          this.noGroceries = false;
+        }
+      });
   }
 
+  //Get group info
   getGroupDetails() {
     this.groupsService.groupID.subscribe((response) => {
       this.groupID = response;
@@ -139,9 +137,9 @@ export class HomeComponent implements OnInit {
           this.groupUsers = groupInfo.userData;
           this.adminID = groupInfo.userAdmin.id;
           this.groupInformation = new GroupEditModel(
-            this.groupName = groupInfo.groupName,
-            this.groupRelationName = groupInfo.groupRelationName
-          )
+            (this.groupName = groupInfo.groupName),
+            (this.groupRelationName = groupInfo.groupRelationName)
+          );
           if (this.groupUsers.length > 0) {
             this.groupUsersModelArray = [];
             for (var i = 0; i < this.groupUsers!.length; i++) {
@@ -177,8 +175,8 @@ export class HomeComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustResourceUrl(picture);
   }
 
+  //Check if user is admin to show delete group button and delete user
   checkIsAdmin() {
-    // this.adminID == this.userID ? this.isAdmin : !this.isAdmin
     if (this.adminID == this.userID) {
       this.isAdmin = true;
     } else {
@@ -236,11 +234,10 @@ export class HomeComponent implements OnInit {
         this.groupsService.performDeleteUserFromGroup(userToDelete).subscribe(
           (response) => {
             if (this.userGroups!.length != 0) {
-              this.groupID = this.userGroups![0]
+              this.groupID = this.userGroups![0];
             }
           },
-          (error) => {
-          }
+          (error) => {}
         );
       } else if (result.isDenied) {
         Swal.fire('Changes are not saved', '', 'info');
@@ -248,56 +245,45 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  //TODO delete group with ID
-
   deleteGroup() {
     this.groupsService.performDeleteGroup(this.groupID!).subscribe(
       (response) => {
-        console.log(response)
+        console.log(response);
         this.groupsService.performLogoutFromGroups();
         this.usersService.performLogout();
-        this.tasksService.performLogoutFromTasks()
+        this.tasksService.performLogoutFromTasks();
       },
-      (error) => {
-      }
+      (error) => {}
     );
   }
 
   getUserTasks() {
     this.groupsService.groupID.subscribe((response) => {
-        this.groupID = response;
+      this.groupID = response;
+      this.userTasksModel = [];
 
-        this.userTasksModel = []
+      this.tasksService
+        .getUserTasksList(this.groupID!, this.login!)
+        .subscribe((response) => {
+          this.userTasks = response;
+          if (this.userTasks.length > 0) {
+            this.noTasks = false;
 
+            this.userTasksModel = [];
+            for (var i = 0; i < this.userTasks!.length; i++) {
+              let task = new TaskModel(
+                this.username,
+                this.userTasks![i].taskName,
+                this.userTasks![i].description
+              );
 
-        this.tasksService
-          .getUserTasksList(this.groupID!, this.login!)
-          .subscribe((response) => {
-
-            this.userTasks = response;
-            if(this.userTasks.length > 0) {
-
-              this.noTasks = false;
-
-              this.userTasksModel = []
-              for (var i = 0; i < this.userTasks!.length; i++) {
-                let task = new TaskModel(
-                  this.username,
-                  this.userTasks![i].taskName,
-                  this.userTasks![i].description,
-                );
-
-                this.userTasksModel.push(task)
-              }
-
-            } else {
-              this.noTasks = true;
-
+              this.userTasksModel.push(task);
             }
-          });
+          } else {
+            this.noTasks = true;
+          }
+        });
     });
-
-
   }
 
   navigateToTasks() {
@@ -309,7 +295,6 @@ export class HomeComponent implements OnInit {
       queryParamsHandling: 'preserve',
     });
   }
-
 
   navigateToGroceries() {
     this.groupsService.groupID.subscribe((response) => {
@@ -330,5 +315,4 @@ export class HomeComponent implements OnInit {
       queryParamsHandling: 'preserve',
     });
   }
-
 }

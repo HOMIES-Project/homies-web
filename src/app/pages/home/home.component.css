@@ -59,6 +59,8 @@
 
 .wrapper-card {
   border: none;
+  margin-left: 4rem;
+  width: 350px;
 }
 
 .delete-group {
@@ -90,4 +92,41 @@
   border-radius: 15px;
   margin-top: 10px;
 
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+.card-one {
+  grid-column: 1 ;
+  grid-row: 1;
+
+
+}
+.card-two {
+
+  grid-column: 1 ;
+  grid-row: 2 ;
+
+
+}
+.card-three {
+
+  grid-column: 2;
+  grid-row: 1;
+
+}
+.card-four {
+
+  grid-column: 2;
+  grid-row: 2;
+
+
+}
+
+.global-container {
+padding-left: 6.5rem ;
 }
