@@ -1,0 +1,260 @@
+<div
+  class="text-center mt-5 d-flex align-items-center justify-content-center"
+  *ngIf="this.isLoading"
+>
+  <div
+    class="spinner-border"
+    style="width: 3rem; height: 3rem; color: #34ade7"
+    role="status"
+  >
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div
+  class="container text-center global-container"
+  style="padding-top: 5px; height:900pxx"
+  *ngIf="this.groupsExist && !this.isLoading"
+>
+<div class="d-flex ">
+  <div class="card-columns wrapper">
+    <div class="card-one card">
+      <div class="card-body">
+        <h5 class="card-title">TAREAS</h5>
+        <p class="card-text" *ngIf="!this.noTasks">Resumen de tus tareas</p>
+        <p class="card-text" *ngIf="this.noTasks">No tienes ninguna tarea</p>
+
+        <div class="text-left mt-3 expenses shadow-sm" *ngFor="let task of this.userTasksModel; let indexOfTask = index">
+          <div class="d-flex justify-content-between mx-5">
+            <div>
+              <p class="mb-0 payment-user">{{ task.taskName }}</p>
+            </div>
+          </div>
+        </div>
+        <button class="btn outline mt-3" (click)="navigateToTasks()">
+          Ir a la lista de tareas
+        </button>
+      </div>
+    </div>
+
+    <div class="card card-two">
+      <div class="card-body">
+        <h5 class="card-title">SALDOS</h5>
+        <p class="card-text" *ngIf="!this.firstTime">Resumen de tus saldos</p>
+        <p class="card-text" *ngIf="this.firstTime">
+
+          No tienes ningún saldo pendiente
+        </p>
+
+        <div class="text-left mt-3 balances shadow-sm expenses" *ngIf="!this.firstTime">
+          <div class="d-flex justify-content-between mx-2 align-items-center">
+            <div class="mt-3">
+              <h5 class="">Esther debe a Jorge</h5>
+            </div>
+
+            <div class="text-right">
+              <p class="mt-4">25€</p>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn outline mt-3" (click)="navigateToExpenses()">
+          Ir a la lista de saldos
+        </button>
+      </div>
+    </div>
+
+    <div class="card card-four">
+      <div class="card-body">
+        <h5 class="card-title">LISTA DE LA COMPRA</h5>
+        <p class="card-text" *ngIf="!this.noGroceries">Productos sin comprar</p>
+        <p class="card-text" *ngIf="this.noGroceries">No tienes ningún producto</p>
+        <div class="text-left mt-3 expenses shadow-sm" *ngFor="let grocery of this.groceryList">
+          <div class="d-flex justify-content-between mx-5" *ngIf="grocery.purchased == null || grocery.purchased == false">
+            <p class="mb-0 payment-user">{{ grocery.name }}</p>
+          </div>
+
+        </div>
+        <button class="btn outline mt-3" (click)="navigateToGroceries()">
+          Ir a la lista de la compra
+        </button>
+
+      </div>
+    </div>
+    <div class=" card card-three">
+      <div class="card-body">
+        <h5 class="card-title">GASTOS</h5>
+        <p class="card-text" *ngIf="!this.firstTime">Resumen de tus gastos</p>
+        <p class="card-text" *ngIf="this.firstTime">No tienes ningún gasto pendiente</p>
+        <div class="text-left mt-3 expenses shadow-sm" *ngIf="!this.firstTime">
+          <div class="d-flex justify-content-between mx-5">
+
+            <div>
+              <h5 class="mb-0">Cervezas</h5>
+              <p class="mb-0 payment-user">Pagado por Esther</p>
+              <span class="payment-date">26/05/2022</span>
+            </div>
+
+            <div class="text-right">
+              <p class="mt-4">25 €</p>
+            </div>
+          </div>
+
+        </div>
+        <button
+        class="btn outline mt-3"
+        (click)="navigateToExpenses()"
+      >
+        Ir a la lista de gastos
+      </button>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="card wrapper-card ">
+      <div class="card-five card ">
+        <div class="card-body">
+          <div
+            *ngIf="this.isAdmin"
+            align="right"
+            class="isAdmin"
+          >
+            <span class="dot" style="background-color: #34ade730">
+              <app-group-modal [isEditing]="this.isEditing"></app-group-modal>
+            </span>
+          </div>
+
+          <div
+            class="card-title p-2 rounded text-left  expenses  shadow-sm "
+            style="height: 40px; align-content: center"
+          >
+            <img
+              src="../../../assets/svg/groupHouseLogo.svg"
+              class="svg-icon descriptionImg"
+            />
+            <h5 style="float: right; width: 80%; margin-right: 20px">
+              {{ this.groupName }}
+            </h5>
+          </div>
+          <p class="card-title p-2 rounded text-left  expenses  shadow-sm ">
+            {{ this.groupRelationName }}
+          </p>
+        </div>
+      </div>
+
+      <div class="card mt-3">
+        <div
+          class="text-center m-4 d-flex align-items-center justify-content-center"
+          *ngIf="this.isLodingUsers"
+        >
+          <div
+            class="spinner-border"
+            style="width: 3rem; height: 3rem; color: #34ade7"
+            role="status"
+          >
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!this.isLodingUsers">
+          <div
+            class="d-flex"
+            *ngFor="let user of this.groupUsersModel; let indexOfUser = index"
+          >
+            <div style="float: left; width: 20%">
+              <div>
+                <img
+                  *ngIf="
+                    this.groupUsersModel[indexOfUser].photo !== null &&
+                    this.groupUsersModel[indexOfUser].photo != ''
+                  "
+                  [src]="
+                    profilePictureImageDecoded(
+                      this.imgBase64 + this.groupUsersModel[indexOfUser].photo
+                    )
+                  "
+                  width="25"
+                  height="25"
+                  class="dot"
+                />
+              </div>
+              <span
+                class="dot"
+                *ngIf="
+                  this.groupUsersModel[indexOfUser].photo == null ||
+                  this.groupUsersModel[indexOfUser].photo == ''
+                "
+              >
+                <h2 class="initial center">
+                  {{ this.groupUsersModel[indexOfUser].firstName.charAt(0)
+                  }}{{ this.groupUsersModel[indexOfUser].lastName.charAt(0) }}
+                </h2>
+              </span>
+            </div>
+            <div
+              class="card-title p-2 rounded text-left group-info-background card-users"
+            >
+              <p style="float: left; width: 80%">
+                {{ this.groupUsersModel[indexOfUser].login }}
+              </p>
+
+              <div *ngIf="this.isAdmin">
+                <img
+                  *ngIf="this.user.admin"
+                  [src]="'../../../assets/svg/crown.svg'"
+                  class="svg-icon crown-svg"
+                />
+                <img
+                  *ngIf="!this.user.admin"
+                  [src]="'../../../assets/svg/delete.svg'"
+                  class="svg-icon delete-svg"
+                  (click)="
+                    deleteUserFromGroup(this.groupUsersModel[indexOfUser].login)
+                  "
+                />
+              </div>
+              <div *ngIf="!this.isAdmin && this.user.admin">
+                <img
+                  src="../../../assets/svg/crown.svg"
+                  class="svg-icon crown-svg"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="this.isAdmin">
+          <app-user-add-group
+            [idGroup]="this.groupID!"
+            [idAdminGroup]="this.userID"
+          ></app-user-add-group>
+        </div>
+      </div>
+      <button
+      class="btn-lg border-0 text-white p-3 mt-3 delete-group"
+      (click)="exitGroup()"
+    >
+      Abandonar grupo
+    </button>
+    <button
+      class="btn-lg border-0 text-white p-3 mt-3 delete-group"
+      (click)="deleteGroup()"
+      *ngIf="this.isAdmin"
+    >
+      Eliminar grupo
+    </button>
+    </div>
+
+
+</div>
+</div>
+<div
+  class="container text-center mt-5"
+  *ngIf="!this.groupsExist && !this.isLoading"
+>
+  <img src="../../../assets/images/no-group.png"/>
+  <div>
+    <p class="h2">Aún no tienes ningún grupo</p>
+    <app-group-modal [isCreating]="this.isCreating"></app-group-modal>
+  </div>
+</div>

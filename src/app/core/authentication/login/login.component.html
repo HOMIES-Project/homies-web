@@ -1,0 +1,89 @@
+<div class="text-center mt-5 d-flex align-items-center justify-content-center " *ngIf="this.isLoadingWhenLoged">
+
+  <div class="spinner-border" style="width: 3rem; height: 3rem; color: #34ade7" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="!this.isLoadingWhenLoged" class="container py-5">
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col-12 col-md-8 col-lg-6 p-0">
+      <div class="card card-login text-black shadow-lg rounded">
+        <div class="card-body text-center">
+          <div class="mb-5 mt-1 pb-2">
+            <img src="../../../assets/images/homies-logo.png" alt="" style="width: 150px" class="m-5 rounded" />
+
+            <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+              <div class="d-flex flex-column col-10 m-auto justify-content-center">
+                <!--EMAIL-->
+                <div class="form-outline form-white mb-4">
+                  <div class="input-group">
+                    <!-- Icono Usuario -->
+                    <div class="input-group-text">
+                      <img src="../../../../assets/svg/username.svg" class="svg-icon" alt="">
+                    </div>
+                    <input id="nombre" type="text" name="nombre" formControlName="username"
+                      class="fields form-control is-invalid normal-border" placeholder="Usuario" [ngClass]="{
+                        'is-invalid':
+                          this.sent && this.loginForm.controls.username.errors
+                      }" />
+                    <!--Validation-->
+                    <div class="invalid-feedback" *ngIf="
+                        sent &&
+                        this.loginForm.controls.username.errors?.required
+                      ">
+                      ¡Tienes que rellenar este campo!
+                    </div>
+                  </div>
+                </div>
+
+                <!--PASSWORD-->
+                <div class="form-outline mb-4">
+                  <div class="input-group">
+                    <!-- Icono Candado -->
+                    <div class="input-group-text">
+                      <img src="../../../../assets/svg/password.svg" class="svg-icon" alt="">
+                    </div>
+                    <input id="pass" type="password" name="pass" formControlName="password"
+                      class="fields form-control password-field" placeholder="Password"
+                      [type]="showPassword ? 'text' : 'password'" [ngClass]="{
+                        'is-invalid':
+                          this.sent && this.loginForm.controls.password.errors
+                      }" />
+                    <!-- ICONO NO SEE -->
+                    <div class="input-group-text no-see">
+                      <img src="../../../../assets/svg/eye-off.svg" class="svg-icon eye-off" alt="" (click)="showPass()"
+                        *ngIf="!this.showPassword">
+                      <img src="../../../../assets/svg/eye.svg" class="svg-icon eye" alt="" (click)="showPass()"
+                        *ngIf="this.showPassword">
+
+                    </div>
+                    <!--Validation-->
+                    <div class="invalid-feedback" *ngIf="
+                        sent &&
+                        this.loginForm.controls.password.errors?.required
+                      ">
+                      ¡Tienes que rellenar este campo!
+                    </div>
+                  </div>
+                </div>
+                <div class="help mt-4">
+
+                  <a href="/recovery" style="color:var(--secondaryDarkColor)">¿Has olvidado la contraseña?</a>
+
+                </div>
+              </div>
+              <button class="btn formButton btn-lg px-5 text-uppercase mt-4 text-white" type="submit" value="enviar">
+                <span class="spinner-border spinner-border-sm mr-1" *ngIf="isLoading"></span>
+                Login
+              </button>
+              <div *ngIf="errorMsg" class="alert alert-danger text-center m-3">
+                {{ errorMsg }}
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

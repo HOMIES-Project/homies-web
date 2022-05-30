@@ -1,0 +1,179 @@
+/* @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:300); */
+
+@media (max-width: 576px) {
+  .main-menu {
+      display: none;
+  }
+}
+
+.iconoGrupo{
+    width: 50px;
+}
+
+.icon-toggle {
+  filter: brightness(0) saturate(100%) invert(55%) sepia(100%) saturate(684%) hue-rotate(169deg) brightness(93%) contrast(94%) !important;
+}
+
+.svg-icon {
+    height: 25px;
+    width: 25px;
+    display: inline-block;
+    filter: brightness(0) saturate(100%) invert(55%) sepia(100%) saturate(684%) hue-rotate(169deg) brightness(93%) contrast(94%);
+}
+
+a:hover .svg-icon, a:hover app-group-modal{
+  filter: brightness(0) saturate(100%) invert(95%) sepia(95%) saturate(0%) hue-rotate(71deg) brightness(107%) contrast(105%);
+}
+
+a:hover app-group-modal:hover{
+  filter: none;
+}
+
+.height-list{
+  height: 40px;
+}
+
+
+.fa-2x {
+font-size: 2em;
+}
+.fa {
+position: relative;
+display: table-cell;
+width: 60px;
+text-align: center;
+vertical-align: middle;
+font-size:20px;
+}
+
+.grupitos:hover,div.grupitos.expanded {
+  height:150px;
+  overflow:visible;
+  }
+
+
+.main-menu:hover,nav.main-menu.expanded {
+width:250px;
+overflow:visible;
+}
+
+.group-class:hover{
+  color: #fff;
+  background-color: none;
+}
+
+.main-menu{
+
+background: white;
+position: absolute;
+bottom:0;
+max-height: 100vh;
+height: calc(100% - 68.875px);
+width:60px;
+overflow:hidden;
+-webkit-transition:width .05s linear;
+transition:width .07s linear;
+-webkit-transform:translateZ(0) scale(1,1);
+z-index:1000;
+}
+
+.main-menu .acorh {
+  visibility: hidden;
+}
+
+.main-menu:hover .acorh {
+  visibility:visible;
+}
+
+.main-menu li {
+position:relative;
+display:block;
+width:250px;
+margin: 10px;
+}
+
+.main-menu li>a {
+position:relative;
+display:table;
+border-collapse:collapse;
+border-spacing:0;
+color: var(--secondaryColor);
+font-family: Montserrat;
+font-size: 14px;
+text-decoration:none;
+-webkit-transform:translateZ(0) scale(1,1);
+-webkit-transition:all .1s linear;
+transition:all .1s linear;
+
+}
+
+.main-menu .nav-icon {
+position:relative;
+display:table-cell;
+width:60px;
+text-align:center;
+vertical-align:middle;
+font-size:18px;
+}
+
+.main-menu .nav-text {
+position:relative;
+display:table-cell;
+vertical-align:middle;
+width:190px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+}
+
+.main-menu>ul.logout {
+position:absolute;
+left:0;
+bottom:0;
+}
+
+.no-touch .scrollable.hover {
+overflow-y:hidden;
+}
+
+.no-touch .scrollable.hover:hover {
+overflow-y:auto;
+overflow:visible;
+}
+
+a:hover,a:focus {
+text-decoration:none;
+}
+
+nav {
+-webkit-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+-o-user-select:none;
+user-select:none;
+}
+
+nav ul,nav li {
+outline:0;
+margin:0;
+padding:0;
+}
+.main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
+color:#fff;
+background-color: var(--secondaryColor);
+}
+
+.groupsLi{
+  color:#fff;
+  background-color: var(--secondaryColor);
+
+}
+.area {
+float: left;
+background: #e2e2e2;
+width: 100%;
+height: 100%;
+}
+

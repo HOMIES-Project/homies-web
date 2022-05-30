@@ -1,0 +1,91 @@
+
+<nav class="position-fixed main-menu shadow-lg">
+  <ul>
+    <li style="margin: 0px; margin-top: 15px;" >
+      <div style="margin-bottom: 20% !important">
+        <a
+          data-toggle="collapse"
+          href="#collapseExample"
+          role="button"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+          class="collapse-acor"
+        >
+          <i class="fa fa-2x"
+            ><img
+              src="../../../assets/svg/barsIconBlue.svg"
+              class="svg-icon icon-toggle fa fa-laptop fa-2x"
+              alt=""
+              style="width: 25px; margin-left: 30% !important"
+          /></i>
+          <span class="nav-text" style="color: var(--secondaryColor); text-transform: uppercase;"> {{this.groupName}} </span>
+        </a>
+        <div
+          class="collapse card card-login text-black shadow-lg rounded acorh"
+          style="margin: 25px !important;"
+          id="collapseExample"
+        >
+          <li *ngFor="let group of this.groups" class="group-class">
+            <a
+              (click)="navigateToHomeGroupID(group.id)"
+              >{{ group.groupName }}
+            </a>
+          </li>
+        </div>
+      </div>
+    </li>
+    <li
+      class="has-subnav"
+      style="margin: 0px !important; margin-bottom: 35px !important"
+    >
+      <a (click)="navigateToGroceries()" class="height-list">
+        <i class="fa fa-2x"
+          ><img
+            src="../../../assets/svg/compraIconBlue.svg"
+            class="svg-icon"
+            alt=""
+        /></i>
+        <span class="nav-text"> Lista de la compra </span>
+      </a>
+    </li>
+    <li
+      class="has-subnav"
+      style="margin: 0px !important; margin-bottom: 35px !important"
+    >
+      <a (click)="navigateToTasks()" class="height-list">
+        <i class="fa fa-2x"
+          ><img
+            src="../../../assets/svg/tasksIconBlue.svg"
+            class="svg-icon"
+            alt=""
+        /></i>
+        <span class="nav-text"> Lista de tareas </span>
+      </a>
+    </li>
+    <li
+      class="has-subnav"
+      style="margin: 0px !important; margin-bottom: 35px !important"
+    >
+      <a (click)="navigateToExpenses()" class="height-list">
+        <i class="fa fa-2x"
+          ><img
+            src="../../../assets/svg/expenseIconBlue.svg"
+            class="svg-icon"
+            alt=""
+        /></i>
+        <span class="nav-text"> Lista de saldos </span>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="logout">
+    <li style="margin: 0px !important">
+      <a class="mine">
+        <i class="fa fa-2x" style="width: 25px; margin-left: 30% !important">
+          <app-group-modal [isCreating]="this.isCreating"></app-group-modal>
+        </i>
+        <span class="nav-text"> Añadir grupo </span>
+      </a>
+    </li>
+  </ul>
+</nav>

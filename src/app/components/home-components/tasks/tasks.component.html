@@ -1,0 +1,50 @@
+<div class="container py-5">
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col-12 col-md-8 col-lg-8 p-0">
+      <div class="card card-login text-black shadow-lg rounded">
+        <div class="card-body text-center">
+          <div class="mb-5 mt-1 pb-2" *ngIf="!this.noTasks">
+            <h2 class="card-text">Tareitas</h2>
+            <table class="table ">
+
+              <tbody>
+                <tr *ngFor="let task of this.tasksList; let indexOfTask=index;" class="" style="cursor: pointer;">
+                  <td class="align-middle">
+
+                    <app-task-modal [isEditting]="this.isEditting" *ngIf="!task.cancel" [taskFromChild]="task"></app-task-modal>
+
+                  </td>
+                  <td class="text-left" (click)="cancelTask(task.id, task.cancel)" style="cursor: pointer;">
+                    <span class="d-block" [ngClass]="{
+                      'isCancelled': task.cancel}">{{task.taskName}}</span>
+                    <span style="font-size: 0.8rem">{{task.userAssigneds[0].user.login}}</span>
+                  </td>
+
+                  <td class=" align-middle text-right">
+                    <img src="../../../assets/svg/blueTrash.svg"
+                      style="width: 18px; height: 20px; margin-top: -10px; margin-right: 40px;"
+                      (click)="deleteTask(task.id)" />
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td class="d-flex justify-content-end">
+                    <app-task-modal [isCreating]="this.isCreating"></app-task-modal>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mb-5 mt-1 pb-2" *ngIf="this.noTasks">
+            <p>Aún no tienes tareas
+              <br>
+              Añade una tarea
+            </p>
+            <app-task-modal [isCreating]="this.isCreating"></app-task-modal>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

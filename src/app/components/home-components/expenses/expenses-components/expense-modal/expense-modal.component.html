@@ -1,0 +1,123 @@
+<button class="btn btn-outline-info mt-3 formButton text-white" *ngIf="this.isCreating"
+  (click)="openAddExpense(expense)">Añadir gasto</button>
+
+
+
+
+<ng-template #expense let-modal>
+  <div class="justify-content-center align-items-center">
+    <div class=" text-black shadow-lg rounded">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title"> {{this.isEditting ? 'Editar gasto' : 'Crear gasto' }}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="modal.close('Cerrado desde la ventana')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="this.newExpenseForm" (ngSubmit)="submitExpensesForm()">
+          <div class="form-group">
+
+            <div class="wrapper">
+
+
+              <div class="one">
+                <div class="input-group ">
+                  <div class="input-group-text">
+                    <img src="../../../../../../assets/svg/assignment.svg" class="svg-icon" alt="" />
+                  </div>
+                  <input id="expenseName" class="form-control col-6s normal-border" placeholder="Nombre del gasto"
+                    formControlName="expenseName" name="dp" [ngClass]="{
+                                              'is-invalid':
+                                                (this.newExpenseForm.controls.expenseName.touched &&
+                                                  this.newExpenseForm.controls.expenseName.errors?.required) ||
+                                                this.newExpenseForm.controls.expenseName.errors?.minlength ||
+                                                this.newExpenseForm.controls.expenseName.errors?.maxlength
+                                            }" />
+                  <!-- Validation -->
+                  <div class="invalid-feedback" *ngIf="this.newExpenseForm.controls.expenseName.errors?.required">
+                    ¡Tienes que rellenar este campo!
+                  </div>
+                  <div class="invalid-feedback" *ngIf="this.newExpenseForm.controls.expenseName.errors?.minlength">
+                    El mínimo son 3 caracteres
+                  </div>
+                  <div class="invalid-feedback" *ngIf="this.newExpenseForm.controls.expenseName.errors?.maxlength">
+                    El máximo son 50 caracteres
+                  </div>
+                </div>
+              </div> <!-- END INPUT TASK NAME -->
+
+
+
+              <div class="three">
+                <div class="input-group ">
+                  <div class="input-group-text">
+                    <img src="../../../../../../assets/svg/expenseIconBlue.svg" class="svg-icon" alt="" />
+                  </div>
+                  <input id="amount" class="form-control col-6s normal-border" placeholder="Cantidad a pagar"
+                    formControlName="amount" name="dp" [ngClass]="{
+                                              'is-invalid':
+                                                (this.newExpenseForm.controls.amount.touched &&
+                                                  this.newExpenseForm.controls.amount.errors?.required)
+                                            }" />
+                  <!-- Validation -->
+                  <div class="invalid-feedback" *ngIf="this.newExpenseForm.controls.amount.errors?.required">
+                    ¡Tienes que rellenar este campo!
+                  </div>
+                  <div class="invalid-feedback" *ngIf="this.newExpenseForm.controls.amount.errors?.minlength">
+                    El mínimo son 3 caracteres
+                  </div>
+                  <div class="invalid-feedback" *ngIf="this.newExpenseForm.controls.amount.errors?.maxlength">
+                    El máximo son 50 caracteres
+                  </div>
+                </div>
+              </div> <!-- END INPUT TASK NAME -->
+              <div class="two">
+                <div class="input-group">
+                  <div class="input-group-text">
+                    <img src="../../../assets/svg/username.svg" class="svg-icon" alt="" />
+                  </div>
+                  <select name="" id="payer" class="form-control col-6s" formControlName="payer">
+                    <option disabled >Selecciona quién paga</option>
+                    <option> Esther
+                    </option>
+                    <option> Yorch
+                    </option>
+                  </select>
+                </div>
+              </div> <!-- END DESCRIPTION -->
+
+
+              <div class="four">
+
+                <div class="input-group">
+                  <div class="input-group-text">
+                    <img src="../../../assets/svg/username.svg" class="svg-icon" alt="" />
+                  </div>
+                  <select name="" id="debtors" class="form-control col-6s" formControlName="debtors">
+                    <option value="" disabled >Selecciona para quién</option>
+                    <option value="Esther"> Esther
+                    </option>
+                    <option value="Yorch"> Yorch
+                    </option>
+                  </select>
+                </div>
+              </div> <!-- END INPUT USER TO WHOM -->
+            </div>
+
+
+
+          </div>
+
+
+          <div class="modal-footer">
+            <button class="btn btn-outline-info btn-lg" [ngClass]="{
+                          disabled: !this.newExpenseForm.valid
+                        }" [disabled]="!this.newExpenseForm.valid">
+              Añadir gasto </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>

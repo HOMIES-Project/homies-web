@@ -1,0 +1,72 @@
+<div class="container py-5">
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col-8 col-md-4 col-lg-6 p-0">
+      <div class="card card-login text-black shadow-lg rounded">
+        <div class="card-body text-center">
+          <div class="mb-5 mt-1 pb-2" *ngIf="!this.noGroceries">
+
+            <h5 align="left" class="cardTitle">Por comprar
+              <label align="right" class="editLabel" *ngIf="!this.delete" (click)="editProduct()">Editar</label>
+              <label align="right" class="cancelLabel" *ngIf="this.delete" (click)="this.delete = false">Cancelar</label>
+            </h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <div *ngFor="let grocery of this.groceryList;">
+                  <div class="card cardProduct" *ngIf="grocery.purchased == null || grocery.purchased == false" >
+                    <app-groceries-modal style="margin-bottom: -20px;" align="right" [isEditting]="this.isEditting" *ngIf="!grocery.purchased && !this.delete && this.edit" [groceryFromChild]="grocery"></app-groceries-modal>
+                    <img *ngIf="grocery.typeUnit == 'Comida'" src="../../../../assets/svg/food.svg" style="margin-top: 20px;" class="svg-icon">
+                    <img *ngIf="grocery.typeUnit == 'Líquido'" src="../../../../assets/svg/liquid.svg" style="margin-top: 20px;" class="svg-icon">
+                    <img *ngIf="grocery.typeUnit == 'Herramientas'" src="../../../../assets/svg/tools.svg" style="margin-top: 20px;" class="svg-icon">
+                    <img *ngIf="grocery.typeUnit == 'Medicina'" src="../../../../assets/svg/medicine.svg" style="margin-top: 20px;" class="svg-icon">
+                    <img *ngIf="grocery.typeUnit == 'Otros'" src="../../../../assets/svg/groceriesLogo.svg" style="margin-top: 20px;" class="svg-icon">
+                    <label class="nameProduct" (click)="cancelProduct(grocery.id, grocery.purchased)">{{grocery.name}}</label>
+                    <img src="../../../../assets/svg/delete.svg" *ngIf="this.delete" (click)="deleteProduct(grocery.id)"  class="check delete-icon">
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+            <h5 align="left" class="cardTitle">Comprado</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <div *ngFor="let grocery of this.groceryList;">
+                  <div class="card cardProduct" *ngIf="grocery.purchased == true">
+                    <img *ngIf="grocery.typeUnit == 'Comida'" src="../../../../assets/svg/food.svg" style="margin-top: 20px;" class="svg-icon">
+                    <img *ngIf="grocery.typeUnit == 'Líquido'" src="../../../../assets/svg/liquid.svg" style="margin-top: 20px;" class="svg-icon">
+                    <img *ngIf="grocery.typeUnit == 'Herramientas'" src="../../../../assets/svg/tools.svg" style="margin-top: 20px;" class="svg-icon">
+                    <img *ngIf="grocery.typeUnit == 'Medicina'" src="../../../../assets/svg/medicine.svg" style="margin-top: 20px;" class="svg-icon">
+                    <img *ngIf="grocery.typeUnit == 'Otros'" src="../../../../assets/svg/groceriesLogo.svg" style="margin-top: 20px;" class="svg-icon">
+                    <label class="nameProduct" (click)="cancelProduct(grocery.id, grocery.purchased)">{{grocery.name}}</label>
+                    <img src="../../../../assets/svg/check.svg" *ngIf="!this.delete" class="check">
+                    <img src="../../../../assets/svg/delete.svg" *ngIf="this.delete" (click)="deleteProduct(grocery.id)"  class="check delete-icon">
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <app-groceries-modal  [isCreating]="this.isCreating"></app-groceries-modal>
+              </li>
+            </ul>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <button (click)="changeDelete()" class="btn btn-danger px-5 text-uppercase text-white">Eliminar</button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mb-5 mt-1 pb-2" *ngIf="this.noGroceries">
+            <p>No hay productos aún
+              <br>
+              Añade uno
+            </p>
+            <app-groceries-modal [isCreating]="this.isCreating"></app-groceries-modal>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  

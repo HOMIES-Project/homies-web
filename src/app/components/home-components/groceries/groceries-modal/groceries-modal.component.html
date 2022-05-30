@@ -1,0 +1,48 @@
+<img src="../../../assets/svg/bluePencil.svg" style="margin-right: 5%;" data-toggle="modal" data-target="#exampleModalCenter" *ngIf="this.isEditting"
+  (click)="openEditProduct(this.groceryFromChild, grocery)"/>
+
+<button type="button" class="btn formButton px-5 text-uppercase text-white" data-toggle="modal" data-target="#exampleModalCenter" *ngIf="this.isCreating" (click)="openAddProduct(grocery)">
+    Añadir producto
+</button>
+  
+  <!-- MODAL -->
+<ng-template #grocery let-modal>
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">{{this.isEditting ? 'Editar producto' : 'Debes de introducir un producto' }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.close('Cerrado desde la ventana')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="this.newGroceryForm" (ngSubmit)="submitProductForm()">
+            <div class="form-group">            
+              <div align="left">
+                <label>Tipo de artículo</label>
+                <select formControlName="typeUnit" name="typeUnit" id="typeUnit" class="form-control">
+                      <option>Herramientas</option>
+                      <option>Comida</option>
+                      <option>Líquido</option>
+                      <option>Medicina</option>
+                      <option>Otros</option>
+                </select>
+              </div>
+              <div align="left">
+                <label style="margin-top: 10px;">Nombre del artículo</label>
+                <input placeholder="{{this.isEditting ? this.groceryFromChild.name : 'Nombre del producto' }}" class="form-control" formControlName="nameProduct" type="text" name="nameProduct" id="nameProduct" value="{{this.isEditting ? this.groceryFromChild.name : '' }}">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn button text-white" [ngClass]="{
+                    disabled: !this.newGroceryForm.valid
+                }" [disabled]="!this.newGroceryForm.valid">
+                {{this.isEditting ? 'Editar producto' : 'Crear producto' }} </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

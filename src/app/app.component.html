@@ -1,0 +1,10 @@
+<app-navbar></app-navbar>
+
+<section>
+  
+  <router-outlet>
+    <div *ngIf="isLogged()">
+      <app-sidebar></app-sidebar>
+    </div>
+  </router-outlet>
+</section>

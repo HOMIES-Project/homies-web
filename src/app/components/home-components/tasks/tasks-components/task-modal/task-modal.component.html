@@ -1,0 +1,95 @@
+<img src="../../../assets/svg/bluePencil.svg" style="margin-right: 5%;" *ngIf="this.isEditting "
+  (click)="openEditTask(this.taskFromChild, task)" />
+
+<button class=" btn formButton px-5 text-uppercase text-white" *ngIf="this.isCreating"
+  (click)="openAddTask(task)">Añadir tarea</button>
+
+
+<ng-template #task let-modal>
+  <div class="justify-content-center align-items-center">
+    <div class=" text-black shadow-lg rounded">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title"> {{this.isEditting ? 'Editar tarea' : 'Crear tarea' }}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="modal.close('Cerrado desde la ventana')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="this.newTaskForm" (ngSubmit)="submitTaskForm()">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-text">
+                <img src="../../../assets/svg/username.svg" class="svg-icon" alt="" />
+              </div>
+              <select name="" id="" class="form-control col-6" formControlName="login">
+                <option *ngFor="let user of this.groupUsers; let indexOfUser = index" [ngValue]="user.user.login">
+                  {{user.user.login}}</option>
+              </select>
+            </div>
+            <!--END INPUT TASK USER SELECTION-->
+
+            <div class="input-group mt-4">
+              <div class="input-group-text">
+                <img src="../../../assets/svg/tasksIconBlue.svg" class="svg-icon" alt="" />
+              </div>
+              <input id="taskName" class="form-control col-6 normal-border"
+                placeholder="{{this.isEditting ? this.taskFromChild.taskName : 'Nombre de la tarea'}}"
+                formControlName="taskName" name="dp" [ngClass]="{
+                                          'is-invalid':
+                                            (this.newTaskForm.controls.taskName.touched &&
+                                              this.newTaskForm.controls.taskName.errors?.required) ||
+                                            this.newTaskForm.controls.taskName.errors?.minlength ||
+                                            this.newTaskForm.controls.taskName.errors?.maxlength
+                                        }" />
+              <!-- Validation -->
+              <div class="invalid-feedback" *ngIf="this.newTaskForm.controls.taskName.errors?.required">
+                ¡Tienes que rellenar este campo!
+              </div>
+              <div class="invalid-feedback" *ngIf="this.newTaskForm.controls.taskName.errors?.minlength">
+                El mínimo son 3 caracteres
+              </div>
+              <div class="invalid-feedback" *ngIf="this.newTaskForm.controls.taskName.errors?.maxlength">
+                El máximo son 50 caracteres
+              </div>
+            </div>
+            <!--END INPUT TASK NAME-->
+
+            <div class="input-group mt-4">
+              <div class="input-group-text">
+                <img src="../../../assets/svg/pencilEdit.svg" class="svg-icon" alt="" />
+              </div>
+              <textarea id="dateOfBirth" class="form-control normal-border" formControlName="taskDescription" rows="3"
+                placeholder="{{this.isEditting ? this.taskFromChild.description : 'Introduce la descripción de la tarea'}}"
+                value="{{this.isEditting ? this.taskFromChild.description : ''}}" name="dp" [ngClass]="{
+                                              'is-invalid':
+                                                (this.newTaskForm.controls.taskDescription.touched &&
+                                                  this.newTaskForm.controls.taskDescription.errors?.required) ||
+                                                this.newTaskForm.controls.taskDescription.errors?.minlength ||
+                                                this.newTaskForm.controls.taskDescription.errors?.maxlength
+                                            }"></textarea>
+              <!--Validation-->
+              <div class="invalid-feedback" *ngIf="this.newTaskForm.controls.taskDescription.errors?.required">
+                ¡Tienes que rellenar este campo!
+              </div>
+              <div class="invalid-feedback" *ngIf="this.newTaskForm.controls.taskDescription.errors?.minlength">
+                El mínimo son 3 caracteres
+              </div>
+              <div class="invalid-feedback" *ngIf="this.newTaskForm.controls.taskDescription.errors?.maxlength">
+                El máximo son 100 caracteres
+              </div>
+            </div>
+            <!--END INPUT TASK DESCRIPTION-->
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-outline-info" [ngClass]="{
+                          disabled: !this.newTaskForm.valid
+                        }" [disabled]="!this.newTaskForm.valid">
+              {{this.isEditting ? 'Editar tarea' : 'Añadir tarea' }} </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>

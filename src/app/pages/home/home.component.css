@@ -1,0 +1,151 @@
+@media (min-width: 576px) {
+  .card-columns-list {
+    column-count: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-columns-list{
+    column-count: 1;
+  }
+  .card-container {
+    flex-direction: column-reverse;
+  }
+}
+
+@media (min-width: 992px) {
+  .card-columns-list {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 992px) {
+  .card-columns-group {
+    column-count: 1;
+  }
+}
+
+.group-info-background {
+  background-color: rgba(97, 212, 255, 0.2);
+  border: none;
+  border-radius: 0 5px 5px 0;
+}
+
+.svg-icon {
+  height: 29px;
+  width: 26px;
+  display: inline-block;
+  filter: brightness(0) saturate(100%) invert(56%) sepia(96%) saturate(861%) hue-rotate(169deg) brightness(94%) contrast(91%);
+}
+
+.dot {
+  height: 35px;
+  width: 35px;
+  background-color: var(--secondaryColor);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.initial {
+  color: var(--primaryColor);
+  font-size: 16px;
+  margin: 20% 0;
+  font-weight: 400;
+}
+
+.wrapper-card {
+  border: none;
+  margin-left: 4rem;
+  width: 350px;
+}
+
+.delete-group {
+  background-color: var(--errorColor);
+  width: 300px;
+}
+
+.outline {
+  border-color: var(--secondaryColor);
+  color: var(--secondaryColor);
+}
+
+.outline:hover {
+  color: var(--primaryColor);
+  background-color: var(--secondaryColor);
+}
+
+.bg-dashboard-item {
+  background: rgba(52, 173, 231, 0.07);
+  padding: 10px;
+  border-radius: 15px;
+  border: none;
+}
+
+.expenses {
+  background: rgba(52, 173, 231, 0.07);
+  padding: 10px;
+  border-radius: 15px;
+  margin-top: 10px;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.card-one {
+  grid-column: 1 ;
+  grid-row: 1;
+}
+.card-two {
+  grid-column: 1 ;
+  grid-row: 2 ;
+}
+
+.card-three {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.card-four {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.global-container {
+padding-left: 6.5rem ;
+}
+
+.isAdmin {
+  margin-top: -10px; 
+  margin-right: -10px; 
+  margin-bottom: 10px
+}
+
+.descriptionImg {
+  float: left;
+  width: 30px !important;
+  height: 30px !important;
+  margin-top: -3px;
+}
+
+.crown-svg {
+  float: right;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.delete-svg {
+  float: right;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.card-users {
+  float: right;
+  width: 80%;
+  max-height: 40px;
+  align-content: center;
+}

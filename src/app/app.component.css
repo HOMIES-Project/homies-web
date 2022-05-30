@@ -1,0 +1,14 @@
+app-navbar {
+    position: fixed;
+    width: 100%;
+    z-index: 3;
+}
+
+router-outlet {
+    z-index: 1;
+    position: absolute;
+}
+
+section {
+    padding-top: calc(68.875px + 15px);
+}
