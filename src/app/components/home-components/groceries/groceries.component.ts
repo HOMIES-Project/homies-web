@@ -11,7 +11,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./groceries.component.css']
 })
 export class GroceriesComponent implements OnInit {
-
   isEditting: boolean = true;
   isCreating: boolean = true;
 
@@ -20,7 +19,7 @@ export class GroceriesComponent implements OnInit {
   groceryList: Array<any> = [];
   
   groupID!: string | null;
-  isCancelled!: boolean
+  isCancelled!: boolean;
   login!: string;
 
   delete: boolean = false;
@@ -30,8 +29,7 @@ export class GroceriesComponent implements OnInit {
     private groceriesService: GroceriesService,
     private groupsService: GroupsService,
     private usersService: UsersService
-  ) { 
-  }
+  ) { }
 
   ngOnInit(): void {
     this.groupsService.groupID.subscribe((response) => {
@@ -49,9 +47,9 @@ export class GroceriesComponent implements OnInit {
         this.noGroceries = false;
       }
     });
-  
   }
 
+  // DELETE PRODUCT
   deleteProduct(productID: number) {
     Swal.fire({
       title: '¡Cuidado! Vas a eliminar un producto',
@@ -66,14 +64,14 @@ export class GroceriesComponent implements OnInit {
       if (result.isConfirmed) {
         this.groceriesService.performDeleteGrocery(productID).subscribe(
           (response) => {
-            console.log("BORRANDO " + productID)
-            console.log("BORRADA " + JSON.stringify(response))
-            window.location.reload()
+            console.log("BORRANDO " + productID);
+            console.log("BORRADA " + JSON.stringify(response));
+            window.location.reload();
             
           },
           (error) => {
-            console.log("ID " + productID)
-            console.log("ERROR " + JSON.stringify(error))
+            console.log("ID " + productID);
+            console.log("ERROR " + JSON.stringify(error));
           }
         );
       } else if (result.isDenied) {
@@ -86,6 +84,7 @@ export class GroceriesComponent implements OnInit {
     });
   }
 
+  // PURCHASED PRODUCT
   cancelProduct(idProduct: number, isCancelled: boolean) {
     this.isCancelled = !isCancelled;
     let productToCancel = new GroceryCancelModel(
@@ -97,7 +96,7 @@ export class GroceriesComponent implements OnInit {
     console.log(productToCancel);
     this.groceriesService.performPurchaseGrocery(productToCancel).subscribe(
       (response) => {
-        window.location.reload()
+        window.location.reload();
         console.log(response);
       },
       (error) => {

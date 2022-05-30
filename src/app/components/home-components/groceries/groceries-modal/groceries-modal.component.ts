@@ -12,7 +12,6 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./groceries-modal.component.css']
 })
 export class GroceriesModalComponent implements OnInit {
-
   @Input() isCreating!: boolean
   @Input() isEditting!: boolean
   @Input() groceryFromChild!: any;
@@ -26,7 +25,6 @@ export class GroceriesModalComponent implements OnInit {
   sent: boolean = false;
   units: string = "1";
   login!: string;
-  // purchased: boolean = false;
 
   closeResult = '';
 
@@ -60,9 +58,7 @@ export class GroceriesModalComponent implements OnInit {
       this.idUser = response;
     });
 
-
     if(this.isEditting) {
-
       this.newGroceryForm.patchValue({
         nameProduct: this.groceryFromChild.nameProduct,
         productType: this.groceryFromChild.typeUnit
@@ -73,7 +69,6 @@ export class GroceriesModalComponent implements OnInit {
   openAddProduct(addProduct: any) {
     this.modalService.open(addProduct, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then(
       (result)=>{
-
         this.closeResult = `Closed width: ${result}`;
       },
       (reason) => {
@@ -85,19 +80,15 @@ export class GroceriesModalComponent implements OnInit {
   openEditProduct(idProduct: string, editProduct: any) {
     this.modalService.open(editProduct, { ariaLabelledBy: 'modal-basic-title' , size: 'lg'}).result.then(
       (result)=>{
-
         this.closeResult = `Closed width: ${result}`;
-
       },
       (reason) => {
-
         this.closeResult = `Dismissed ${this.getDismissReason(reason)} `
       }
     )
   }
 
   submitProductForm() {
-
     if(this.isCreating) {
       console.log("CREANDO")
       this.performCreateProduct()
@@ -107,8 +98,8 @@ export class GroceriesModalComponent implements OnInit {
     }
   }
 
+  // CREATE PRODUCT
   performCreateProduct() {
-    console.log("click")
     let grocery: GroceryCreationModel = new GroceryCreationModel(
       this.idGroup!,
       this.idUser,
@@ -129,8 +120,8 @@ export class GroceriesModalComponent implements OnInit {
     );
   }
 
+  // EDIT PRODUCT
   performEditProduct() {
-    console.log("click")
     let grocery: GroceryEditionModel = new GroceryEditionModel(
       this.login,
       this.idGroup!.toString(),
@@ -140,7 +131,6 @@ export class GroceriesModalComponent implements OnInit {
       this.units
     );
     console.log("Editando " + JSON.stringify(grocery))
-    console.log("login " + this.login)
     this.sent = true;
     this.groceriesService.performEditGrocery(grocery).subscribe((response) => {
       console.log(response)
@@ -154,10 +144,8 @@ export class GroceriesModalComponent implements OnInit {
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
-
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;

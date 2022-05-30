@@ -23,6 +23,7 @@ export class TasksService {
     this.userTasks = this.userTasksBehaviourSubject.asObservable();
   }
 
+  /* CREATE TASK - POST */
   performTaskCreation(entry: TaskCreationModel): Observable<any> {
     let url = `${environment.BASE_URL}/tasks`;
     return this.http.post<TaskCreationModel>(url, entry).pipe(
@@ -32,6 +33,7 @@ export class TasksService {
     );
   }
 
+  /* TASK LIST - GET */
   getTasksList(groupID: string): Observable<any> {
     let url = `${environment.BASE_URL}/task-lists/${groupID}`;
     return this.http.get<any>(url).pipe(
@@ -41,6 +43,7 @@ export class TasksService {
     );
   }
 
+  /* TASK LIST USER - GET */
   getUserTasksList(groupID: string, login: string): Observable<any> {
     let url = `${environment.BASE_URL}/task-lists-user/${groupID}/${login}`;
     return this.http.get<any>(url).pipe(
@@ -52,28 +55,31 @@ export class TasksService {
     );
   }
 
+  /* EDIT TASK - PUT */
   performEditTask(entry: any): Observable<any> {
     let url = `${environment.BASE_URL}/tasks/update-tasks`;
     return this.http.put(url, entry);
   }
 
+  /* DELETE TASK - DELETE */
   performDeleteTask(id: number): Observable<any> {
     let url = `${environment.BASE_URL}/tasks/${id}`;
-
     return this.http.delete(url);
   }
 
+  /* CANCEL TASK - PUT */
   performCancelTask(entry: any) {
     let url = `${environment.BASE_URL}/tasks/cancel`;
     return this.http.put(url, entry);
   }
 
+  /* ADD USER TO TASK - POST */
   performAddUserToTask(taskAddUserModel: TaskUserAddModel): Observable<any> {
     let url = `${environment.BASE_URL}/tasks/add-user`;
-
     return this.http.post(url, taskAddUserModel);
   }
 
+  /* LOGOUT FROM TASK */
   performLogoutFromTasks() {
     localStorage.removeItem('userTasks')
     this.userTasksBehaviourSubject.next(null);
